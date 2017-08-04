@@ -267,7 +267,7 @@
       "in": "header"
     },
     "api_secret": {
-      "type": "basic",
+      "type": "apiKey",
       "name": "x-api-secret",
       "in": "header"
     }
