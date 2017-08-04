@@ -20,18 +20,6 @@
             "type": "string"
           },
           {
-            "name": "x-api-secret",
-            "in": "header",
-            "required": true,
-            "type": "string"
-          },
-          {
-            "name": "x-api-key",
-            "in": "header",
-            "required": true,
-            "type": "string"
-          },
-          {
             "name": "order",
             "in": "query",
             "required": false,
