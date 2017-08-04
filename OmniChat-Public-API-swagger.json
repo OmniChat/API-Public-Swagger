@@ -1,0 +1,390 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "version": "2017-08-04T18:44:54Z",
+    "title": "OmniChat - 2"
+  },
+  "host": "7k3we833c9.execute-api.us-east-1.amazonaws.com",
+  "basePath": "/v1",
+  "schemes": [
+    "https"
+  ],
+  "paths": {
+    "/products": {
+      "get": {
+        "parameters": [
+          {
+            "name": "limit",
+            "in": "query",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "x-api-secret",
+            "in": "header",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "order",
+            "in": "query",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "offset",
+            "in": "query",
+            "required": false,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "200 response"
+          }
+        },
+        "security": [
+          {
+            "api_key": []
+          }
+        ]
+      },
+      "post": {
+        "consumes": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "x-api-secret",
+            "in": "header",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "in": "body",
+            "name": "Product",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/Product"
+            }
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "201 response"
+          },
+          "500": {
+            "description": "500 response"
+          }
+        },
+        "security": [
+          {
+            "api_key": []
+          }
+        ]
+      }
+    },
+    "/products/count": {
+      "get": {
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "x-api-secret",
+            "in": "header",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "200 response",
+            "schema": {
+              "$ref": "#/definitions/Empty"
+            }
+          }
+        },
+        "security": [
+          {
+            "api_key": []
+          }
+        ]
+      }
+    },
+    "/products/{objectId}": {
+      "get": {
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "objectId",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "x-api-secret",
+            "in": "header",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "200 response",
+            "schema": {
+              "$ref": "#/definitions/Empty"
+            }
+          },
+          "404": {
+            "description": "404 response"
+          }
+        },
+        "security": [
+          {
+            "api_key": []
+          }
+        ]
+      },
+      "put": {
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "objectId",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "x-api-secret",
+            "in": "header",
+            "required": false,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "200 response",
+            "schema": {
+              "$ref": "#/definitions/Empty"
+            }
+          },
+          "404": {
+            "description": "404 response"
+          },
+          "500": {
+            "description": "500 response"
+          }
+        },
+        "security": [
+          {
+            "api_key": []
+          }
+        ]
+      },
+      "delete": {
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "objectId",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "x-api-secret",
+            "in": "header",
+            "required": false,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "200 response",
+            "schema": {
+              "$ref": "#/definitions/Empty"
+            }
+          },
+          "404": {
+            "description": "404 response"
+          }
+        },
+        "security": [
+          {
+            "api_key": []
+          }
+        ]
+      }
+    }
+  },
+  "securityDefinitions": {
+    "api_key": {
+      "type": "apiKey",
+      "name": "x-api-key",
+      "in": "header"
+    }
+  },
+  "definitions": {
+    "Variant": {
+      "type": "object",
+      "required": [
+        "price",
+        "quantity"
+      ],
+      "properties": {
+        "weight": {
+          "type": "number",
+          "description": "The weight of the variant in grams",
+          "minimum": 0
+        },
+        "length": {
+          "type": "number",
+          "description": "The length of the variant in centimeters",
+          "minimum": 0
+        },
+        "height": {
+          "type": "number",
+          "description": "The height of the variant in centimeters",
+          "minimum": 0
+        },
+        "width": {
+          "type": "number",
+          "description": "The width of thevariant in centimeters",
+          "minimum": 0
+        },
+        "price": {
+          "type": "number",
+          "description": "The price of the variant in the local currency",
+          "minimum": 0
+        },
+        "salePrice": {
+          "type": "number",
+          "description": "The price of the variant in the local currency",
+          "minimum": 0
+        },
+        "quantity": {
+          "type": "integer",
+          "description": "The variant stock, only applies when product.trackInventory is set to true",
+          "minimum": 0
+        },
+        "erpId": {
+          "type": "string",
+          "description": "The ERP's code related to the variant"
+        },
+        "definition1Value": {
+          "type": "string",
+          "description": "The value of the first definition for the variant. Example: Blue"
+        },
+        "definition2Value": {
+          "type": "string",
+          "description": "The value of the second definition for the variant. Example: P"
+        },
+        "externalImageURL": {
+          "type": "string",
+          "format": "url",
+          "description": "The url for this variant image"
+        },
+        "visible": {
+          "type": "boolean",
+          "description": "If set to false the variant will not be listed as available to be added to an order",
+          "default": true
+        }
+      }
+    },
+    "Empty": {
+      "type": "object",
+      "title": "Empty Schema"
+    },
+    "Product": {
+      "type": "object",
+      "required": [
+        "mainVariant",
+        "name",
+        "variants"
+      ],
+      "properties": {
+        "objectId": {
+          "type": "string",
+          "format": "uuid10",
+          "description": "The unique identifier for the product. Product objectIds are unique across the entire OmniChat platform; no two products will have the same objectIds, even if they are from different shops"
+        },
+        "createdAt": {
+          "type": "string",
+          "format": "date-time",
+          "description": "The date and time when the product was created. The API returns this value in ISO 8601 format UTC time. Example: 2017-08-04T16:27:55.397Z"
+        },
+        "updatedAt": {
+          "type": "string",
+          "format": "date-time",
+          "description": "The date and time when the product was last modified. The API returns this value in ISO 8601 format UTC time. Example: 2017-08-04T16:27:55.397Z"
+        },
+        "name": {
+          "type": "string",
+          "description": "The name of the product"
+        },
+        "definition1": {
+          "type": "string",
+          "description": "The name of the first definition for the product. Example: Color"
+        },
+        "definition1Values": {
+          "type": "array",
+          "description": "The possible values of the first definition for the product. Example: Blue, Green, Black",
+          "items": {
+            "type": "string"
+          }
+        },
+        "definition2": {
+          "type": "string",
+          "description": "The name of the second definition for the product. Example: Size"
+        },
+        "definition2Values": {
+          "type": "array",
+          "description": "The possible values of the second definition for the product. Example: P, M, G",
+          "items": {
+            "type": "string"
+          }
+        },
+        "erpId": {
+          "type": "string",
+          "description": "The ERP's code related to the product"
+        },
+        "blocked": {
+          "type": "boolean",
+          "description": "Indicated wheater the product is blocked for sale. Blocked products will be listed in the products tab however they cannot be added to orders",
+          "default": false
+        },
+        "service": {
+          "type": "boolean",
+          "description": "If true the product represents a service",
+          "default": false
+        },
+        "trackInventory": {
+          "type": "boolean",
+          "description": "If true the OmniChat will track inventory. When a new order is created the product quantity will be decremented. If an order gets cancelled the quantity will be restored",
+          "default": false
+        },
+        "sellOutOfStock": {
+          "type": "boolean",
+          "description": "Whether the product can be added to an order when the quantity is equal or less than zero",
+          "default": false
+        },
+        "mainVariant": {
+          "$ref": "#/definitions/Variant"
+        },
+        "variants": {
+          "type": "array",
+          "description": "The product's variants. Including the mainVariant",
+          "items": {
+            "$ref": "#/definitions/Variant"
+          }
+        }
+      }
+    }
+  }
+}
