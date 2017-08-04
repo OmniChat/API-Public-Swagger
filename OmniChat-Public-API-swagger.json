@@ -9,10 +9,22 @@
   "schemes": [
     "https"
   ],
+  "securityDefinitions": {
+    "apiKey": {
+      "type": "apiKey",
+      "name": "x-api-key",
+      "in": "header"
+    },
+    "apiSecret": {
+      "type": "apiKey",
+      "name": "x-api-secret",
+      "in": "header"
+    }
+  },
   "security": [
     {
-      "api_key": [],
-      "api_secret": []
+      "apiKey": [],
+      "apiSecret": []
     }
   ],
   "paths": {
@@ -221,18 +233,6 @@
           }
         }
       }
-    }
-  },
-  "securityDefinitions": {
-    "api_key": {
-      "type": "apiKey",
-      "name": "x-api-key",
-      "in": "header"
-    },
-    "api_secret": {
-      "type": "apiKey",
-      "name": "x-api-secret",
-      "in": "header"
     }
   },
   "definitions": {
