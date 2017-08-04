@@ -265,6 +265,11 @@
       "type": "apiKey",
       "name": "x-api-key",
       "in": "header"
+    },
+    "api_secret": {
+      "type": "basic",
+      "name": "x-api-secret",
+      "in": "header"
     }
   },
   "definitions": {
