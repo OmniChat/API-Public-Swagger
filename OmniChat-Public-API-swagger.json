@@ -23,8 +23,8 @@
   },
   "security": [
     {
-      "apiKey": [],
-      "apiSecret": []
+      "apiSecret": [],
+      "apiKey": []
     }
   ],
   "paths": {
