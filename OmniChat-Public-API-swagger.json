@@ -2,7 +2,7 @@
   "swagger": "2.0",
   "info": {
     "version": "2017-08-04T18:44:54Z",
-    "title": "OmniChat - 2"
+    "title": "OmniChat"
   },
   "host": "7k3we833c9.execute-api.us-east-1.amazonaws.com",
   "basePath": "/v1",
