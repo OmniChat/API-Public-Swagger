@@ -1,7 +1,7 @@
 {
   "swagger": "2.0",
   "info": {
-    "version": "2017-08-04T18:44:54Z",
+    "version": "2017-08-04T18:44:55Z",
     "title": "OmniChat"
   },
   "host": "qr271uyvec.execute-api.us-east-1.amazonaws.com",
