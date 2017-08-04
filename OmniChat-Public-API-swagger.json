@@ -4,7 +4,7 @@
     "version": "2017-08-04T18:44:54Z",
     "title": "OmniChat"
   },
-  "host": "7k3we833c9.execute-api.us-east-1.amazonaws.com",
+  "host": "qr271uyvec.execute-api.us-east-1.amazonaws.com",
   "basePath": "/v1",
   "schemes": [
     "https"
@@ -21,6 +21,12 @@
           },
           {
             "name": "x-api-secret",
+            "in": "header",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "x-api-key",
             "in": "header",
             "required": true,
             "type": "string"
@@ -55,9 +61,15 @@
         ],
         "parameters": [
           {
+            "name": "x-api-key",
+            "in": "header",
+            "required": true,
+            "type": "string"
+          },
+          {
             "name": "x-api-secret",
             "in": "header",
-            "required": false,
+            "required": true,
             "type": "string"
           },
           {
@@ -91,6 +103,12 @@
         ],
         "parameters": [
           {
+            "name": "x-api-key",
+            "in": "header",
+            "required": true,
+            "type": "string"
+          },
+          {
             "name": "x-api-secret",
             "in": "header",
             "required": true,
@@ -118,6 +136,12 @@
           "application/json"
         ],
         "parameters": [
+          {
+            "name": "x-api-key",
+            "in": "header",
+            "required": true,
+            "type": "string"
+          },
           {
             "name": "objectId",
             "in": "path",
@@ -154,6 +178,12 @@
         ],
         "parameters": [
           {
+            "name": "x-api-key",
+            "in": "header",
+            "required": true,
+            "type": "string"
+          },
+          {
             "name": "objectId",
             "in": "path",
             "required": true,
@@ -162,7 +192,7 @@
           {
             "name": "x-api-secret",
             "in": "header",
-            "required": false,
+            "required": true,
             "type": "string"
           }
         ],
@@ -192,6 +222,12 @@
         ],
         "parameters": [
           {
+            "name": "x-api-key",
+            "in": "header",
+            "required": true,
+            "type": "string"
+          },
+          {
             "name": "objectId",
             "in": "path",
             "required": true,
@@ -200,7 +236,7 @@
           {
             "name": "x-api-secret",
             "in": "header",
-            "required": false,
+            "required": true,
             "type": "string"
           }
         ],
