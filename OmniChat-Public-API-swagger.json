@@ -2,7 +2,7 @@
   "swagger": "2.0",
   "info": {
     "version": "2017-08-04T18:44:54Z",
-    "title": "OmniChat-API-dev"
+    "title": "OmniChat API"
   },
   "host": "dev-api.omni.chat",
   "basePath": "/v1",
