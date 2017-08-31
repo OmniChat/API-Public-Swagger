@@ -12,6 +12,7 @@
   "paths": {
     "/customers": {
       "get": {
+        "description": "Listar clientes",
         "produces": [
           "application/json"
         ],
@@ -19,36 +20,45 @@
           {
             "name": "limit",
             "in": "query",
+            "description": "Limitar o número de objetos retornados",
             "required": false,
             "type": "string"
           },
           {
             "name": "x-api-secret",
             "in": "header",
+            "description": "Chave de autorização obtida da OmniChat que autoriza o uso da API. Deve ser utilizado em conjunto com a api-key",
             "required": true,
             "type": "string"
           },
           {
             "name": "order",
             "in": "query",
+            "description": "Ordenar a resposta usando qual propriedade",
             "required": false,
             "type": "string"
           },
           {
             "name": "offset",
             "in": "query",
+            "description": "Quantos objetos deverão ser pulados. Pode ser usado em conjunto com offset para paginação ",
             "required": false,
             "type": "string"
           }
         ],
         "responses": {
           "200": {
-            "description": "200 response",
+            "description": "Lista de clientes",
             "schema": {
               "$ref": "#/definitions/Customers"
             }
           }
-        }
+        },
+        "security": [
+          {
+            "api_key": []
+          }
+        ]
       },
       "post": {
         "consumes": [
@@ -100,6 +110,7 @@
           {
             "name": "x-api-secret",
             "in": "header",
+            "description": "chave de autorização obtida da OmniChat que autoriza o uso da API. Deve ser utilizado em conjunto com a api-key",
             "required": true,
             "type": "string"
           }
@@ -134,6 +145,7 @@
           {
             "name": "x-api-secret",
             "in": "header",
+            "description": "chave de autorização obtida da OmniChat que autoriza o uso da API. Deve ser utilizado em conjunto com a api-key",
             "required": true,
             "type": "string"
           }
@@ -276,7 +288,12 @@
               "$ref": "#/definitions/Orders"
             }
           }
-        }
+        },
+        "security": [
+          {
+            "api_key": []
+          }
+        ]
       }
     },
     "/orders/count": {
@@ -1488,7 +1505,8 @@
             "$ref": "#/definitions/Customer"
           }
         }
-      }
+      },
+      "description": "O cliente (customers) é o comprador cadastrado na loja e que pode efetuar pedidos. Pode ser do tipo pessoa física ou jurídica."
     },
     "Note": {
       "type": "object",
