@@ -81,6 +81,7 @@
         }
       },
       "post": {
+        "description": "Criar cliente",
         "consumes": [
           "application/json"
         ],
@@ -385,6 +386,7 @@
       }
     },
     "/orders": {
+      "description": "Entidade pedido da OmniChat",
       "get": {
         "description": "Listar pedidos",
         "produces": [
@@ -454,6 +456,7 @@
     },
     "/orders/count": {
       "get": {
+        "description": "Contar pedidos",
         "produces": [
           "application/json"
         ],
