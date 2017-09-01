@@ -1505,7 +1505,8 @@
     "NewCustomer": {
       "type": "object",
       "required": [
-        "name"
+        "name",
+        "lastName"
       ],
       "properties": {
         "name": {
@@ -1518,7 +1519,8 @@
         },
         "acceptsMarketing": {
           "type": "string",
-          "description": "Se o cliente aceita receber material de marketing"
+          "description": "Se o cliente aceita receber material de marketing",
+          "default": false
         },
         "email": {
           "type": "string",
@@ -1530,15 +1532,12 @@
         },
         "phoneCountryCode": {
           "type": "string",
-          "description": "Código do país"
+          "description": "Código do país",
+          "default": "55"
         },
         "phoneNumber": {
           "type": "string",
           "description": "Número do telefone"
-        },
-        "businessName": {
-          "type": "string",
-          "description": "Se o cliente representa uma empresa. Este é o nome da empresa."
         },
         "birthDate": {
           "type": "string",
@@ -1546,7 +1545,12 @@
         },
         "businessAccount": {
           "type": "boolean",
-          "description": "Se este cliente representa uma empresa"
+          "description": "Se este cliente representa uma empresa",
+          "default": false
+        },
+        "businessName": {
+          "type": "string",
+          "description": "Se o cliente representa uma empresa. Este é o nome da empresa."
         },
         "taxDocumentNumber": {
           "type": "string",
