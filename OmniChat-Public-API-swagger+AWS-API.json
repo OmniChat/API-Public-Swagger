@@ -386,7 +386,6 @@
       }
     },
     "/orders": {
-      "description": "Entidade pedido da OmniChat",
       "get": {
         "description": "Listar pedidos",
         "produces": [
