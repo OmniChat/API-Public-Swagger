@@ -2,7 +2,7 @@
   "swagger": "2.0",
   "info": {
     "version": "2017-08-04T18:44:54Z",
-    "title": "OmniChat-dev"
+    "title": "OmniChat-Dev"
   },
   "host": "dev-api.omni.chat",
   "basePath": "/v1",
@@ -39,6 +39,13 @@
             "type": "string"
           },
           {
+            "name": "where",
+            "in": "query",
+            "description": "Filtrar os objetos que serão resultados através de queries",
+            "required": false,
+            "type": "string"
+          },
+          {
             "name": "offset",
             "in": "query",
             "description": "Quantos objetos deverão ser pulados. Pode ser usado em conjunto com offset para paginação ",
@@ -70,9 +77,10 @@
             "integration.request.header.X-Parse-REST-API-Key": "'RFxCx77Nf9VEFNnFIUxSXTrLrdfb4ntZRHG7NBIO'",
             "integration.request.querystring.limit": "method.request.querystring.limit",
             "integration.request.header.X-Parse-Application-Id": "'lHC0oT3G1oZRPB2otwYngjMjKnsOVFGfxWw5PrTM'",
-            "integration.request.header.X-Parse-Session-Token": "method.request.header.x-api-secret",
+            "integration.request.header.x-api-secret": "method.request.header.x-api-secret",
             "integration.request.querystring.order": "method.request.querystring.order",
-            "integration.request.querystring.offset": "method.request.querystring.offset"
+            "integration.request.querystring.offset": "method.request.querystring.offset",
+            "integration.request.querystring.where": "method.request.querystring.where"
           },
           "uri": "https://dev-api-adapter.omni.chat/customers",
           "passthroughBehavior": "when_no_match",
@@ -136,7 +144,7 @@
           "requestParameters": {
             "integration.request.header.X-Parse-REST-API-Key": "'RFxCx77Nf9VEFNnFIUxSXTrLrdfb4ntZRHG7NBIO'",
             "integration.request.header.X-Parse-Application-Id": "'lHC0oT3G1oZRPB2otwYngjMjKnsOVFGfxWw5PrTM'",
-            "integration.request.header.X-Parse-Session-Token": "method.request.header.x-api-secret"
+            "integration.request.header.x-api-secret": "method.request.header.x-api-secret"
           },
           "uri": "https://dev-api-adapter.omni.chat/customers",
           "passthroughBehavior": "when_no_match",
@@ -157,6 +165,13 @@
             "in": "header",
             "description": "Chave de autorização obtida da OmniChat que autoriza o uso da API. Deve ser utilizado em conjunto com a api-key",
             "required": true,
+            "type": "string"
+          },
+          {
+            "name": "where",
+            "in": "query",
+            "description": "Filtrar os objetos que serão resultados através de queries",
+            "required": false,
             "type": "string"
           }
         ],
@@ -183,7 +198,8 @@
           "requestParameters": {
             "integration.request.header.X-Parse-REST-API-Key": "'RFxCx77Nf9VEFNnFIUxSXTrLrdfb4ntZRHG7NBIO'",
             "integration.request.header.X-Parse-Application-Id": "'lHC0oT3G1oZRPB2otwYngjMjKnsOVFGfxWw5PrTM'",
-            "integration.request.header.X-Parse-Session-Token": "method.request.header.x-api-secret"
+            "integration.request.header.x-api-secret": "method.request.header.x-api-secret",
+            "integration.request.querystring.where": "method.request.querystring.where"
           },
           "uri": "https://dev-api-adapter.omni.chat/customers/count",
           "passthroughBehavior": "when_no_match",
@@ -247,7 +263,7 @@
             "integration.request.querystring.include": "'address'",
             "integration.request.header.X-Parse-REST-API-Key": "'RFxCx77Nf9VEFNnFIUxSXTrLrdfb4ntZRHG7NBIO'",
             "integration.request.header.X-Parse-Application-Id": "'lHC0oT3G1oZRPB2otwYngjMjKnsOVFGfxWw5PrTM'",
-            "integration.request.header.X-Parse-Session-Token": "method.request.header.x-api-secret",
+            "integration.request.header.x-api-secret": "method.request.header.x-api-secret",
             "integration.request.querystring.keys": "'lastName,fullName,acceptsMarketing,email,phoneAreaCode,phoneCountryCode,phoneNumber,businessAccount,businessName,businessTaxId,stateTaxId,name,birthDate,address,externalImageUrl,gender'",
             "integration.request.path.objectId": "method.request.path.objectId"
           },
@@ -315,7 +331,7 @@
           "requestParameters": {
             "integration.request.header.X-Parse-REST-API-Key": "'RFxCx77Nf9VEFNnFIUxSXTrLrdfb4ntZRHG7NBIO'",
             "integration.request.header.X-Parse-Application-Id": "'lHC0oT3G1oZRPB2otwYngjMjKnsOVFGfxWw5PrTM'",
-            "integration.request.header.X-Parse-Session-Token": "method.request.header.x-api-secret",
+            "integration.request.header.x-api-secret": "method.request.header.x-api-secret",
             "integration.request.path.objectId": "method.request.path.objectId"
           },
           "uri": "https://dev-api-adapter.omni.chat/customers/{objectId}",
@@ -375,7 +391,7 @@
           "requestParameters": {
             "integration.request.header.X-Parse-REST-API-Key": "'RFxCx77Nf9VEFNnFIUxSXTrLrdfb4ntZRHG7NBIO'",
             "integration.request.header.X-Parse-Application-Id": "'lHC0oT3G1oZRPB2otwYngjMjKnsOVFGfxWw5PrTM'",
-            "integration.request.header.X-Parse-Session-Token": "method.request.header.x-api-secret",
+            "integration.request.header.x-api-secret": "method.request.header.x-api-secret",
             "integration.request.path.objectId": "method.request.path.objectId"
           },
           "uri": "https://dev-api-adapter.omni.chat/customers/{objectId}",
@@ -417,6 +433,13 @@
             "in": "query",
             "required": false,
             "type": "string"
+          },
+          {
+            "name": "where",
+            "in": "query",
+            "description": "Filtrar os objetos que serão resultados através de queries",
+            "required": false,
+            "type": "string"
           }
         ],
         "responses": {
@@ -442,9 +465,10 @@
             "integration.request.header.X-Parse-REST-API-Key": "'RFxCx77Nf9VEFNnFIUxSXTrLrdfb4ntZRHG7NBIO'",
             "integration.request.querystring.limit": "method.request.querystring.limit",
             "integration.request.header.X-Parse-Application-Id": "'lHC0oT3G1oZRPB2otwYngjMjKnsOVFGfxWw5PrTM'",
-            "integration.request.header.X-Parse-Session-Token": "method.request.header.x-api-secret",
+            "integration.request.header.x-api-secret": "method.request.header.x-api-secret",
             "integration.request.querystring.order": "method.request.querystring.order",
-            "integration.request.querystring.offset": "method.request.querystring.offset"
+            "integration.request.querystring.offset": "method.request.querystring.offset",
+            "integration.request.querystring.where": "method.request.querystring.where"
           },
           "uri": "https://dev-api-adapter.omni.chat/orders",
           "passthroughBehavior": "when_no_match",
@@ -464,6 +488,13 @@
             "name": "x-api-secret",
             "in": "header",
             "required": true,
+            "type": "string"
+          },
+          {
+            "name": "where",
+            "in": "query",
+            "description": "Filtrar os objetos que serão resultados através de queries",
+            "required": false,
             "type": "string"
           }
         ],
@@ -490,7 +521,8 @@
           "requestParameters": {
             "integration.request.header.X-Parse-REST-API-Key": "'RFxCx77Nf9VEFNnFIUxSXTrLrdfb4ntZRHG7NBIO'",
             "integration.request.header.X-Parse-Application-Id": "'lHC0oT3G1oZRPB2otwYngjMjKnsOVFGfxWw5PrTM'",
-            "integration.request.header.X-Parse-Session-Token": "method.request.header.x-api-secret"
+            "integration.request.header.x-api-secret": "method.request.header.x-api-secret",
+            "integration.request.querystring.where": "method.request.querystring.where"
           },
           "uri": "https://dev-api-adapter.omni.chat/orders/count",
           "passthroughBehavior": "when_no_match",
@@ -552,7 +584,7 @@
             "integration.request.querystring.include": "'customer,items,notes,user,shippingAddress,salesPerson,statusTracking'",
             "integration.request.header.X-Parse-REST-API-Key": "'RFxCx77Nf9VEFNnFIUxSXTrLrdfb4ntZRHG7NBIO'",
             "integration.request.header.X-Parse-Application-Id": "'lHC0oT3G1oZRPB2otwYngjMjKnsOVFGfxWw5PrTM'",
-            "integration.request.header.X-Parse-Session-Token": "method.request.header.x-api-secret",
+            "integration.request.header.x-api-secret": "method.request.header.x-api-secret",
             "integration.request.path.objectId": "method.request.path.objectId"
           },
           "uri": "https://dev-api-adapter.omni.chat/orders/{objectId}",
@@ -594,6 +626,13 @@
             "description": "Qual a propriedade deve ser usada para ordenar resultado desta requição",
             "required": false,
             "type": "string"
+          },
+          {
+            "name": "where",
+            "in": "query",
+            "description": "Filtrar os objetos que serão resultados através de queries",
+            "required": false,
+            "type": "string"
           }
         ],
         "responses": {
@@ -619,10 +658,11 @@
           "requestParameters": {
             "integration.request.header.X-Parse-REST-API-Key": "'RFxCx77Nf9VEFNnFIUxSXTrLrdfb4ntZRHG7NBIO'",
             "integration.request.header.X-Parse-Application-Id": "'lHC0oT3G1oZRPB2otwYngjMjKnsOVFGfxWw5PrTM'",
+            "integration.request.header.x-api-secret": "method.request.header.x-api-secret",
             "integration.request.querystring.limit": "method.request.querystring.limit",
-            "integration.request.header.X-Parse-Session-Token": "method.request.header.x-api-secret",
             "integration.request.querystring.order": "method.request.querystring.order",
-            "integration.request.querystring.offset": "method.request.querystring.offset"
+            "integration.request.querystring.offset": "method.request.querystring.offset",
+            "integration.request.querystring.where": "method.request.querystring.where"
           },
           "uri": "https://dev-api-adapter.omni.chat/products",
           "passthroughBehavior": "when_no_match",
@@ -704,7 +744,7 @@
           "requestParameters": {
             "integration.request.header.X-Parse-REST-API-Key": "'RFxCx77Nf9VEFNnFIUxSXTrLrdfb4ntZRHG7NBIO'",
             "integration.request.header.X-Parse-Application-Id": "'lHC0oT3G1oZRPB2otwYngjMjKnsOVFGfxWw5PrTM'",
-            "integration.request.header.X-Parse-Session-Token": "method.request.header.x-api-secret"
+            "integration.request.header.x-api-secret": "method.request.header.x-api-secret"
           },
           "uri": "https://dev-api-adapter.omni.chat/products",
           "passthroughBehavior": "when_no_match",
@@ -724,6 +764,13 @@
             "name": "x-api-secret",
             "in": "header",
             "required": true,
+            "type": "string"
+          },
+          {
+            "name": "where",
+            "in": "query",
+            "description": "Filtrar os objetos que serão resultados através de queries",
+            "required": false,
             "type": "string"
           }
         ],
@@ -750,7 +797,8 @@
           "requestParameters": {
             "integration.request.header.X-Parse-REST-API-Key": "'RFxCx77Nf9VEFNnFIUxSXTrLrdfb4ntZRHG7NBIO'",
             "integration.request.header.X-Parse-Application-Id": "'lHC0oT3G1oZRPB2otwYngjMjKnsOVFGfxWw5PrTM'",
-            "integration.request.header.X-Parse-Session-Token": "method.request.header.x-api-secret"
+            "integration.request.header.x-api-secret": "method.request.header.x-api-secret",
+            "integration.request.querystring.where": "method.request.querystring.where"
           },
           "uri": "https://dev-api-adapter.omni.chat/products/count",
           "passthroughBehavior": "when_no_match",
@@ -814,7 +862,7 @@
             "integration.request.querystring.include": "'variants,mainVariant'",
             "integration.request.header.X-Parse-REST-API-Key": "'RFxCx77Nf9VEFNnFIUxSXTrLrdfb4ntZRHG7NBIO'",
             "integration.request.header.X-Parse-Application-Id": "'lHC0oT3G1oZRPB2otwYngjMjKnsOVFGfxWw5PrTM'",
-            "integration.request.header.X-Parse-Session-Token": "method.request.header.x-api-secret",
+            "integration.request.header.x-api-secret": "method.request.header.x-api-secret",
             "integration.request.path.objectId": "method.request.path.objectId"
           },
           "uri": "https://dev-api-adapter.omni.chat/products/{objectId}",
@@ -881,7 +929,7 @@
           "requestParameters": {
             "integration.request.header.X-Parse-REST-API-Key": "'RFxCx77Nf9VEFNnFIUxSXTrLrdfb4ntZRHG7NBIO'",
             "integration.request.header.X-Parse-Application-Id": "'lHC0oT3G1oZRPB2otwYngjMjKnsOVFGfxWw5PrTM'",
-            "integration.request.header.X-Parse-Session-Token": "method.request.header.x-api-secret",
+            "integration.request.header.x-api-secret": "method.request.header.x-api-secret",
             "integration.request.path.objectId": "method.request.path.objectId"
           },
           "uri": "https://dev-api-adapter.omni.chat/products/{objectId}",
@@ -941,7 +989,7 @@
           "requestParameters": {
             "integration.request.header.X-Parse-REST-API-Key": "'RFxCx77Nf9VEFNnFIUxSXTrLrdfb4ntZRHG7NBIO'",
             "integration.request.header.X-Parse-Application-Id": "'lHC0oT3G1oZRPB2otwYngjMjKnsOVFGfxWw5PrTM'",
-            "integration.request.header.X-Parse-Session-Token": "method.request.header.x-api-secret",
+            "integration.request.header.x-api-secret": "method.request.header.x-api-secret",
             "integration.request.path.objectId": "method.request.path.objectId"
           },
           "uri": "https://dev-api-adapter.omni.chat/products/{objectId}",
@@ -994,7 +1042,6 @@
           "requestParameters": {
             "integration.request.header.X-Parse-REST-API-Key": "'RFxCx77Nf9VEFNnFIUxSXTrLrdfb4ntZRHG7NBIO'",
             "integration.request.header.X-Parse-Application-Id": "'lHC0oT3G1oZRPB2otwYngjMjKnsOVFGfxWw5PrTM'",
-            "integration.request.header.X-Parse-Session-Token": "method.request.header.x-api-secret",
             "integration.request.header.x-api-secret": "method.request.header.x-api-secret",
             "integration.request.path.objectId": "method.request.path.objectId"
           },
@@ -1045,7 +1092,6 @@
           "requestParameters": {
             "integration.request.header.X-Parse-REST-API-Key": "'RFxCx77Nf9VEFNnFIUxSXTrLrdfb4ntZRHG7NBIO'",
             "integration.request.header.X-Parse-Application-Id": "'lHC0oT3G1oZRPB2otwYngjMjKnsOVFGfxWw5PrTM'",
-            "integration.request.header.X-Parse-Session-Token": "method.request.header.x-api-secret",
             "integration.request.header.x-api-secret": "method.request.header.x-api-secret",
             "integration.request.path.objectId": "method.request.path.objectId"
           },
@@ -1101,7 +1147,7 @@
           "requestParameters": {
             "integration.request.header.X-Parse-REST-API-Key": "'RFxCx77Nf9VEFNnFIUxSXTrLrdfb4ntZRHG7NBIO'",
             "integration.request.header.X-Parse-Application-Id": "'lHC0oT3G1oZRPB2otwYngjMjKnsOVFGfxWw5PrTM'",
-            "integration.request.header.X-Parse-Session-Token": "method.request.header.x-api-secret",
+            "integration.request.header.x-api-secret": "method.request.header.x-api-secret",
             "integration.request.path.objectId": "method.request.path.objectId"
           },
           "uri": "https://dev-api-adapter.omni.chat/products/{objectId}/variants/count",
@@ -1161,7 +1207,6 @@
           "requestParameters": {
             "integration.request.header.X-Parse-REST-API-Key": "'RFxCx77Nf9VEFNnFIUxSXTrLrdfb4ntZRHG7NBIO'",
             "integration.request.header.X-Parse-Application-Id": "'lHC0oT3G1oZRPB2otwYngjMjKnsOVFGfxWw5PrTM'",
-            "integration.request.header.X-Parse-Session-Token": "method.request.header.x-api-secret",
             "integration.request.header.x-api-secret": "method.request.header.x-api-secret",
             "integration.request.path.variantId": "method.request.path.variantId",
             "integration.request.path.objectId": "method.request.path.objectId"
@@ -1221,7 +1266,6 @@
           "requestParameters": {
             "integration.request.header.X-Parse-REST-API-Key": "'RFxCx77Nf9VEFNnFIUxSXTrLrdfb4ntZRHG7NBIO'",
             "integration.request.header.X-Parse-Application-Id": "'lHC0oT3G1oZRPB2otwYngjMjKnsOVFGfxWw5PrTM'",
-            "integration.request.header.X-Parse-Session-Token": "method.request.header.x-api-secret",
             "integration.request.header.x-api-secret": "method.request.header.x-api-secret",
             "integration.request.path.variantId": "method.request.path.variantId",
             "integration.request.path.objectId": "method.request.path.objectId"
@@ -1891,6 +1935,10 @@
           "type": "boolean",
           "description": "Se falso então esta variante não poderá ser incluida em um pedido",
           "default": true
+        },
+        "isMainVariant": {
+          "type": "boolean",
+          "description": "Esta variante é a variação principal deste produto"
         }
       }
     },
