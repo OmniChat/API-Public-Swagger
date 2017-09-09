@@ -79,7 +79,7 @@
             "integration.request.header.X-Parse-Application-Id": "'lHC0oT3G1oZRPB2otwYngjMjKnsOVFGfxWw5PrTM'",
             "integration.request.header.x-api-secret": "method.request.header.x-api-secret",
             "integration.request.querystring.order": "method.request.querystring.order",
-            "integration.request.querystring.offset": "method.request.querystring.offset",
+            "integration.request.querystring.offset": "method.request.querystring.skip",
             "integration.request.querystring.where": "method.request.querystring.where"
           },
           "uri": "https://dev-api-adapter.omni.chat/customers",
@@ -467,7 +467,7 @@
             "integration.request.header.X-Parse-Application-Id": "'lHC0oT3G1oZRPB2otwYngjMjKnsOVFGfxWw5PrTM'",
             "integration.request.header.x-api-secret": "method.request.header.x-api-secret",
             "integration.request.querystring.order": "method.request.querystring.order",
-            "integration.request.querystring.offset": "method.request.querystring.offset",
+            "integration.request.querystring.offset": "method.request.querystring.skip",
             "integration.request.querystring.where": "method.request.querystring.where"
           },
           "uri": "https://dev-api-adapter.omni.chat/orders",
@@ -661,7 +661,7 @@
             "integration.request.header.x-api-secret": "method.request.header.x-api-secret",
             "integration.request.querystring.limit": "method.request.querystring.limit",
             "integration.request.querystring.order": "method.request.querystring.order",
-            "integration.request.querystring.offset": "method.request.querystring.offset",
+            "integration.request.querystring.offset": "method.request.querystring.skip",
             "integration.request.querystring.where": "method.request.querystring.where"
           },
           "uri": "https://dev-api-adapter.omni.chat/products",
