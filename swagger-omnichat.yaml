@@ -71,6 +71,7 @@ info:
     Os valores do parâmetro *where* também suportam comparações além da correspondência exata. 
     Em vez de um valor exato, forneça um JSON com as chaves correspondentes às comparações a serem feitas. 
     O parâmetro *where* aceita estas opções:
+      
     | Key     | Operação                   |
     |---------|----------------------------|
     | $lt     | Less Than                  |
