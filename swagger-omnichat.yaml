@@ -4,7 +4,7 @@ info:
   version: "v1.0"
   title: "OmniChat"
   x-logo:
-    url: 'https://docs.omni.chat/assets/omnichat_logo.png'
+    url: '/assets/omnichat_logo.png'
   description: |
 
     # Introdução
