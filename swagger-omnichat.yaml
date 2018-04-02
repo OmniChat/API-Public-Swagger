@@ -14,9 +14,13 @@ info:
     As respostas podem ser interpretadas através do código de status HTTP. 
     Isso permite que quaisquer aplicações consumam a API de forma simples e clara, independente da linguagem utilizada.
 
+    ## Endpoint
+    As chamadas para a API devem ser feitas para o mesmo endpoint `https://api.omni.chat/v1`
+
     ## Paginação
     Nossa API tem suporte a buscas em massa através dos métodos "GET". Deste modo, vocês podem paginar pela listagem de objetos usando ```limit``` e ```offset```. 
     Todos esses métodos de listagem possuem uma estrutura em comum, que é a de paginação.
+
     ```curl
     ## List 0 - 99 customers
     curl "https://api.omni.chat/v1/customers?limit=100" \
@@ -40,6 +44,7 @@ info:
     Além disso, devem ainda ser adicionados os headers Content-Type e Accept, com o valor application/json
 
     Exemplo de uma requisição contendo dos os campo obrigatórios:
+
     ```curl
     ## Count customers
     curl "https://api.omni.chat/v1/customers/count"
@@ -47,9 +52,6 @@ info:
     -H "x-api-secret: r:0dfa3a7d4ffd4010c055d8f745bf8164"
     -H "Content-Type: application/json"
     ```
-
-    ## Endpoint
-    As chamadas para a API devem ser feitas para o mesmo endpoint `https://api.omni.chat/v1`
 
     ## Filtros
     Existem várias maneiras de colocar filtros nos objetos encontrados, usando o parâmetro *where* na URL da chamada REST. 
@@ -71,7 +73,7 @@ info:
     Os valores do parâmetro *where* também suportam comparações além da correspondência exata. 
     Em vez de um valor exato, forneça um JSON com as chaves correspondentes às comparações a serem feitas. 
     O parâmetro *where* aceita estas opções:
-      
+
     | Key     | Operação                   |
     |---------|----------------------------|
     | $lt     | Less Than                  |
@@ -85,6 +87,7 @@ info:
 
     ### Exemplos
     Listar todos os pedidos com desconto maior que 10%
+
     ```curl
       curl "https://api.omni.chat/v1/orders \
       -H 'x-api-key: <YOUR_API_KEY>' \
@@ -95,14 +98,14 @@ info:
     ```
 
     Para lista todos os pedidos com status *PAID* ou *SHIPPED*:
-      ```curl
-      curl "https://api.omni.chat/v1/orders \
-      -H 'x-api-key: <YOUR_API_KEY>' \
-      -H 'x-api-secret: <YOUR_API_SECRET>' \
-      -H 'Content-Type: application/json' \
-      -H "Accept: application/json" \
-      --data-urlencode 'where={"status":{"$in": ["PAID","SHIPPED"] }}'
-      ```
+    ```curl
+    curl "https://api.omni.chat/v1/orders \
+    -H 'x-api-key: <YOUR_API_KEY>' \
+    -H 'x-api-secret: <YOUR_API_SECRET>' \
+    -H 'Content-Type: application/json' \
+    -H "Accept: application/json" \
+    --data-urlencode 'where={"status":{"$in": ["PAID","SHIPPED"] }}'
+    ```
     
     Todos os produtos que tenham algum valor em *definition1*:
     ```curl
@@ -125,12 +128,12 @@ info:
     ```
     Uma observação importante no exemplo anterior. 
     Como JSON não possui um mecanismo formal para inclusão de propriedades do tipo Date, nossa API padronizou o seguinte formato:
-      ```json
-      {
-        "__type": "Date",
-        "iso": "2011-08-21T18:02:52.249Z"
-      }
-      ```
+    ```json
+    {
+      "__type": "Date",
+      "iso": "2011-08-21T18:02:52.249Z"
+    }
+    ```
     A propriedade iso contem um UTC timestamp no formato ISO 8601 com precisão de milisegundos: `YYYY-MM-DDTHH:MM:SS.MMMZ`
     
     ## Modelo
