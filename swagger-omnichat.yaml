@@ -49,8 +49,7 @@ info:
     ```
 
     ## Endpoint
-    As chamadas para a API devem ser feitas para o mesmo endpoint:
-    `https://api.omni.chat/v1`
+    As chamadas para a API devem ser feitas para o mesmo endpoint `https://api.omni.chat/v1`
 
     ## Filtros
     Existem várias maneiras de colocar filtros nos objetos encontrados, usando o parâmetro *where* na URL da chamada REST. 
