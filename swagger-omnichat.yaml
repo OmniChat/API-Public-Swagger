@@ -158,13 +158,228 @@ schemes:
 tags:
   - name: chats
     description: Representa uma conversa entre um cliente e a loja. Possui uma ou mais mensagens relacionadas.
+  - name: messages
+    description: Mensagens enviadas ou recebidas
+  - name: message-templates
+    description: Mensagens enviadas ou recebidas 
   - name: customers
     description: O cliente (customers) é o comprador cadastrado na loja e que pode efetuar pedidos. Pode ser do tipo pessoa física ou jurídica. Deve ter um endereço de entrega associados a ele. 
   - name: products
     description: Produtos são itens vendidos por uma loja na OmniChat. Na criação de um pedido (order) ele será convertido em um item. Um produto pode ter variantes, que são diferentes opções do produto, como por exemplo, cor e tamanho.
   - name: orders
     description: Um Pedido é a conclusão da compra de um ou mais produtos da loja.
+  - name: teams
+    description: Times da sua loja.
+  - name: interactions
+    description: Interações com clientes da sua loja e seus indicadores 
 paths:
+  /message-templates:
+    get:
+      tags:
+        - message-templates
+      parameters:
+      - name: "where"
+        in: "query"
+        required: false
+        type: "string"
+      - name: "limit"
+        in: "query"
+        required: false
+        type: "string"
+      - name: "x-api-secret"
+        in: "header"
+        required: true
+        type: "string"
+      - name: "order"
+        in: "query"
+        required: false
+        type: "string"
+      - name: "offset"
+        in: "query"
+        required: false
+        type: "string"
+      responses:
+        200:
+          description: "200 response"
+      security:
+      - api_key: []
+  /message-templates/count:
+    get:
+      tags:
+      - message-templates
+      parameters:
+      - name: "where"
+        in: "query"
+        required: false
+        type: "string"
+      - name: "x-api-secret"
+        in: "header"
+        required: false
+        type: "string"
+      responses:
+        200:
+          description: "200 response"
+      security:
+      - api_key: []
+  /messages:
+    get:
+      tags:
+        - messages
+      produces:
+      - "application/json"
+      parameters:
+      - name: "where"
+        in: "query"
+        required: false
+        type: "string"
+      - name: "limit"
+        in: "query"
+        required: false
+        type: "string"
+      - name: "x-api-secret"
+        in: "header"
+        required: true
+        type: "string"
+      - name: "order"
+        in: "query"
+        required: false
+        type: "string"
+      - name: "offset"
+        in: "query"
+        required: false
+        type: "string"
+      responses:
+        200:
+          description: "200 response"
+          schema:
+            $ref: "#/definitions/Messages"
+      security:
+      - api_key: []
+    post:
+      tags:
+        - messages
+      produces:
+      - "application/json"
+      parameters:
+      - name: "x-api-secret"
+        in: "header"
+        required: false
+        type: "string"
+      responses:
+        201:
+          description: "201 response"
+          schema:
+            $ref: "#/definitions/ResponseObjectCreate"
+        400:
+          description: "400 response"
+          schema:
+            $ref: "#/definitions/ResponseError"
+      security:
+      - api_key: []
+  /messages/{objectId}:
+    get:
+      tags:
+        - messages
+      produces:
+      - "application/json"
+      parameters:
+      - name: "objectId"
+        in: "path"
+        required: true
+        type: "string"
+      - name: "x-api-secret"
+        in: "header"
+        required: true
+        type: "string"
+      responses:
+        200:
+          description: "200 response"
+          schema:
+            $ref: "#/definitions/Message"
+      security:
+      - api_key: []
+  /interactions:
+    get:
+      tags:
+        - interactions
+      produces:
+      - "application/json"
+      parameters:
+      - name: "where"
+        in: "query"
+        required: false
+        type: "string"
+      - name: "limit"
+        in: "query"
+        required: false
+        type: "string"
+      - name: "x-api-secret"
+        in: "header"
+        required: true
+        type: "string"
+      - name: "order"
+        in: "query"
+        required: false
+        type: "string"
+      - name: "offset"
+        in: "query"
+        required: false
+        type: "string"
+      responses:
+        200:
+          description: "200 response"
+          schema:
+            $ref: "#/definitions/Interactions"
+      security:
+      - api_key: []
+  /interactions/count:
+    get:
+      tags:
+        - interactions
+      produces:
+      - "application/json"
+      parameters:
+      - name: "where"
+        in: "query"
+        required: false
+        type: "string"
+      - name: "x-api-secret"
+        in: "header"
+        required: true
+        type: "string"
+      responses:
+        200:
+          description: "200 response"
+          schema:
+            $ref: "#/definitions/ResponseCount"
+      security:
+      - api_key: []
+  /interactions/{objectId}:
+    get:
+      tags:
+        - interactions
+      produces:
+      - "application/json"
+      parameters:
+      - name: "objectId"
+        in: "path"
+        required: true
+        type: "string"
+      - name: "x-api-secret"
+        in: "header"
+        required: true
+        type: "string"
+      responses:
+        200:
+          description: "200 response"
+          schema:
+            $ref: "#/definitions/Interaction"
+        404:
+          description: "404 response"
+          schema:
+            $ref: "#/definitions/ResponseError"
+      security:
+      - api_key: []
   /chats:
     get:
       tags:
@@ -792,6 +1007,31 @@ securityDefinitions:
     description: |
       A chave criada dentro da OmniChat para a aplicação que você esta integrando. Cada aplicativo integrado deverá ter uma api_secret diferente.
 definitions:
+  Interactions:
+    type: "object"
+    properties:
+      results:
+        type: "array"
+        items:
+          $ref: "#/definitions/Interaction"
+    description: "Lista de mensagens"
+  Interaction:
+    type: "object"
+    properties:
+      objectId:
+        type: "string"
+        format: "uuid10"
+        description: "Identificador único deste objeto na base de dados da OmniChat"
+      createdAt:
+        type: "string"
+        format: "date-time"
+        description: "A data e a hora que este objeto foi criado. API retorna o valor\
+          \ no formato ISO 8601 em UTC. Exemplo: 2017-08-04T16:27:55.397Z"
+      updatedAt:
+        type: "string"
+        format: "date-time"
+        description: "A data e a hora que este objeto foi modificado pela última vez.\
+          \ API retorna o valor no formato ISO 8601 em UTC. Exemplo: 2017-08-04T16:27:55.397Z"
   Orders:
     type: "object"
     properties:
@@ -1548,3 +1788,4 @@ definitions:
     enum:
     - "CREDITCARD"
     - "BOLETO"
+
