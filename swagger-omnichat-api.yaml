@@ -159,7 +159,14 @@ tags:
   - name: messages
     description: Mensagens enviadas ou recebidas
   - name: message-templates
-    description: Mensagens enviadas ou recebidas 
+    description: Templates pré cadatradas para criação de mensagens 
+  - name: interactions
+    description: |
+      Interações com clientes da sua loja e seus indicadores
+      A conversa entre um cliente e a empresa em um determinado canal (ex WhatsApp) é 
+      representada por um único object `Chat`, mesmo que esta conversa seja finalizada e aberta inumeras vezes.
+      Para que seja possível medir e gerenciar quantas vezes o cliente chamou, tempo que um atendete demorou para
+      pegar o atendimento e o tempo + motivo de fechamento, precisamos usar um objeto auxiliar chamado ```Interaction```
   - name: customers
     description: O cliente (customers) é o comprador cadastrado na loja e que pode efetuar pedidos. Pode ser do tipo pessoa física ou jurídica. Deve ter um endereço de entrega associados a ele. 
   - name: products
@@ -168,8 +175,6 @@ tags:
     description: Um Pedido é a conclusão da compra de um ou mais produtos da loja.
   - name: teams
     description: Times da sua loja.
-  - name: interactions
-    description: Interações com clientes da sua loja e seus indicadores 
 paths:
   /chats:
     get:
@@ -750,7 +755,7 @@ paths:
     get:
       description: "Listar interações"
       tags:
-        - interactions
+      - interactions
       produces:
       - "application/json"
       parameters:
@@ -912,6 +917,8 @@ paths:
       responses:
         200:
           description: "200 response"
+          schema:
+            $ref: "#/definitions/MessageTemplate"
       security:
       - api_key: []
       x-amazon-apigateway-request-validator: "Validate query string parameters and\
@@ -949,6 +956,8 @@ paths:
       responses:
         200:
           description: "200 response"
+          schema:
+            $ref: "#/definitions/ResponseCount"
       security:
       - api_key: []
       x-amazon-apigateway-request-validator: "Validate query string parameters and\
@@ -1030,6 +1039,11 @@ paths:
         in: "header"
         required: false
         type: "string"
+      - in: "body"
+        name: "NewMessage"
+        required: true
+        schema:
+          $ref: "#/definitions/NewMessage"
       responses:
         201:
           description: "201 response"
@@ -1563,6 +1577,11 @@ paths:
         in: "header"
         required: true
         type: "string"
+      - in: "body"
+        name: "NewVariant"
+        required: true
+        schema:
+          $ref: "#/definitions/NewVariant"
       responses:
         200:
           description: "200 response"
@@ -1731,6 +1750,8 @@ paths:
       responses:
         200:
           description: "200 response"
+          schema:
+            $ref: "#/definitions/Teams"
       security:
       - api_key: []
       x-amazon-apigateway-request-validator: "Validate query string parameters and\
@@ -2376,11 +2397,36 @@ definitions:
       zip:
         type: "string"
         description: "CEP"
+  NewMessage:
+    type: "object"
+    required:
+    - templateId
+    - platformId
+    - templateTokens
+    properties:
+      templateId:
+        type: "string"
+        format: "uuid10"
+        example: gaW16ESxZF
+        description: "ObjectId da template a ser usada para esta mensagem"
+      platformId:
+        type: string
+        example: 5541998765434
+        description: Identificador do destinatário desta mensagem no formato da plataforma associada a esta mensagem
+      templateTokens:
+        type: array
+        example: [Pedro, 1234, Bom dia, Verde]
+        items:
+          type: string
+        description: Substituições a serem usadas na mensagem disponíveis da template utilizada
+
+
   Message:
     type: "object"
     properties:
       objectId:
         type: "string"
+        example: gaW16ESxZ2
         format: "uuid10"
         description: "Identificador único deste objeto na base de dados da OmniChat"
       createdAt:
@@ -2393,6 +2439,147 @@ definitions:
         format: "date-time"
         description: "A data e a hora que este objeto foi modificado pela última vez.\
           \ API retorna o valor no formato ISO 8601 em UTC. Exemplo: 2017-08-04T16:27:55.397Z"
+      type:
+        $ref: "#/definitions/MessageTypeEnum"
+        description: "Estado"
+      status:
+        $ref: "#/definitions/MessageStatus"
+        description: "Estado"
+      timestamp:
+        type: number
+        example: "1529686974000"
+        description: "Timestamp da criação da mensagem informado pelo plataforma"
+      text:
+        type: "string"
+        description: "Texto da mensagem"
+      chat:
+        $ref: "#/definitions/Chat"
+        description: "Conversa que esta mensagem pertence"
+      system:
+        type: boolean
+        description: "Se esta mensagem automatizada ou se foi um atendente humano"
+      error:
+        type: string
+        description: Mensagem teve algum erro no seu processamento
+      isCreatingNewChat:
+        type: boolean
+        description: Caso a conversa seja iniciada pela empresa
+      note:
+        type: boolean
+        description: "Se esta mensagem é uma nota interna"
+      user:
+        $ref: "#/definitions/User"
+        description: "Usuário que envio esta mensagem"
+      routedToUser:
+        $ref: "#/definitions/User"
+        description: "Caso seja uma mensagem de roteamento para usuário, este é o usuário destino"
+      readBy:
+        $ref: "#/definitions/User"
+        description: "Quem leu esta mensagem pela primeira vez"
+      routedToTeam:
+        $ref: "#/definitions/Team"
+        description: "Caso seja uma mensagem de roteamento para time, este é o time destino"
+      snoozedUntil:
+        type: "string"
+        format: "date-time"
+        description: "Caso seja uma mensagem de adiamento, este é o dia e horário que a mensagem voltara para o atendimento"
+      attachmentUrl:
+        type: string
+        example: https://api-private.omni.chat/parse/files/UCeS99itvZg1tsea2OSoyKvpLbKddhoVAPotIQOy/3160bedc9649094822e493f90380a7a_file.ogg"
+        description: URL do anexo desta mensagem
+      quotedMessage:
+        $ref: "#/definitions/QuotedMessage"
+        description: "Esta mensagem faz referência a outra mensagem desta conversa"
+      order:
+        $ref: "#/definitions/Order"
+        description: "Caso o type seja ```Order``` esta propriedade estará presente"
+      product:
+        $ref: "#/definitions/Product"
+        description: "Caso o type seja ```Product``` esta propriedade estará presente"
+      variant:
+        $ref: "#/definitions/Variant"
+        description: "Caso o type seja ```Variant``` esta propriedade estará presente"
+  QuotedMessage:
+    type: "object"
+    properties:
+      text:
+        type: "string"
+        description: "Texto da mensagem"
+      type:
+        $ref: "#/definitions/MessageTypeEnum"
+      quotedMessageObjectId:
+        type: "string"
+        format: "uuid10"
+        description: "ObjectId na mensagem que esta mensagem faz referência"
+
+  MessageTemplate:
+    type: "object"
+    properties:
+      objectId:
+        type: "string"
+        example: gaW16ESxZ2
+        format: "uuid10"
+        description: "Identificador único deste objeto na base de dados da OmniChat"
+      createdAt:
+        type: "string"
+        format: "date-time"
+        description: "A data e a hora que este objeto foi criado. API retorna o valor\
+          \ no formato ISO 8601 em UTC. Exemplo: 2017-08-04T16:27:55.397Z"
+      updatedAt:
+        type: "string"
+        format: "date-time"
+        description: "A data e a hora que este objeto foi modificado pela última vez.\
+          \ API retorna o valor no formato ISO 8601 em UTC. Exemplo: 2017-08-04T16:27:55.397Z"
+      text:
+        type: "string"
+        description: "Texto da mensagem"
+      platform:
+        type: "string"
+        example: WHATSAPP
+        description: "Plataforma que esta sendo utilizada nesta conversa"
+      status:
+        $ref: "#/definitions/MessageTemplateStatusEnum"
+        description: "Status de aprovação desta mensagem"
+
+  MessageTemplateStatusEnum:
+    type: "string"
+    enum:
+    - "REQUESTED"
+    - "READY"
+
+  MessageStatus:
+    type: "string"
+    enum:
+    - "OUTGOING_CREATED"
+    - "OUTGOING_SENT"
+    - "OUTGOING_DELIVERED"
+    - "OUTGOING_READ"
+    - "OUTGOING_ERROR"
+    - "OUTGOING_SILENT"
+    - "EXTERNAL_OUTGOING_SILENT"
+    - "INCOMING_RECEIVED"
+    - "INCOMING_READ"
+  MessageTypeEnum:
+    type: "string"
+    enum:
+    - "TEXT"
+    - "IMAGE"
+    - "AUDIO"
+    - "VIDEO"
+    - "FILE"
+    - "LOCATION"
+    - "PRODUCT"
+    - "VARIANT"
+    - "PAYMENT_REQUEST"
+    - "ORDER_CONFIRMATION"
+    - "ORDER_STATUS"
+    - "COLLECTION"
+    - "VCARD"
+    - "MULTI_VCARD"
+    - "SNOOZE_START"
+    - "SNOOZE_END"
+    - "TEMPLATE"
+    - "ROUTING"
   Customer:
     type: "object"
     properties:
@@ -2487,12 +2674,31 @@ definitions:
       name:
         type: "string"
         description: "Nome do produto"
-  Product:
+      slaTiming:
+        type: number
+        description: Tempo em minutos da SLA
+      slaRule:
+        type: object
+        description: Configuração da SLA do time
+        properties:
+          ruleData:
+            type: object
+            properties:
+              teamId:
+                type: string
+                description: ObjectId do time que irá receber atendimentos com SLA expirado deste time
+  Teams:
+    type: "object"
+    properties:
+      results:
+        type: "array"
+        items:
+          $ref: "#/definitions/Team"
+    description: "Lista de Times"
+  Team:
     type: "object"
     required:
-    - "mainVariant"
     - "name"
-    - "variants"
     properties:
       objectId:
         type: "string"
@@ -2511,57 +2717,30 @@ definitions:
       name:
         type: "string"
         description: "Nome do produto"
-      definition1:
-        type: "string"
-        description: "O nome da primeira definição do produto. Por exemplo: Cor"
-      definition1Values:
+      users:
         type: "array"
-        description: "Todos os possíveis valores da primeira definição do produto.\
-          \ Exemplo: Azul, Verde e Preto"
         items:
-          type: "string"
-      definition2:
-        type: "string"
-        description: "O nome da segunda definição do produto. Por exemplo: Tamanho"
-      definition2Values:
+          $ref: "#/definitions/User"
+        description: "Usuários do time"
+      supervisors:
         type: "array"
-        description: "Todos os possíveis valores da primeira definição do produto.\
-          \ Exemplo: P, M e G"
         items:
-          type: "string"
-      erpId:
-        type: "string"
-        description: "Código utilizado no sistema de ERP para identificar este cliente.\
-          \ Normalmente é o código de barras"
-      blocked:
-        type: "boolean"
-        description: "Indica se este produto esta bloqueado para vendas. Este produto\
-          \ será listado na aba de produtos da OmniChat, mas não será mostrado como\
-          \ disponível para inclusão em um pedido"
-        default: false
-      service:
-        type: "boolean"
-        description: "Indica se este produto é um serviço"
-        default: false
-      trackInventory:
-        type: "boolean"
-        description: "Se verdadeiro a OmniChat irá controla o estoque. Quando um novo\
-          \ pedido é criado o estoque da variante é decrementado, quando um pedido\
-          \ é cancelado ou não pago o estoque é restaurado"
-        default: false
-      sellOutOfStock:
-        type: "boolean"
-        description: "Se este produto pode ser vendido com estoque igual ou inferior\
-          \ a zero"
-        default: false
-      mainVariant:
-        description: "A variante principal deste produto"
-        $ref: "#/definitions/Variant"
-      variants:
-        type: "array"
-        description: "Todas as variantes deste produto, inclusive a variante principal"
-        items:
-          $ref: "#/definitions/Variant"
+          $ref: "#/definitions/User"
+        description: "Supervisores do time"
+      slaTiming:
+        type: number
+        description: Tempo em minutos da SLA
+      slaRule:
+        type: object
+        description: Configuração da SLA do time
+        properties:
+          ruleData:
+            type: object
+            properties:
+              teamId:
+                type: string
+                description: ObjectId do time que irá receber atendimentos com SLA expirado deste time
+
   Users:
     type: "object"
     properties:
@@ -2683,6 +2862,7 @@ definitions:
     properties:
       objectId:
         type: "string"
+        example: SEyr2VQCV6
         format: "uuid10"
         description: "Identificador único deste objeto na base de dados da OmniChat"
       createdAt:
@@ -2695,10 +2875,61 @@ definitions:
         format: "date-time"
         description: "A data e a hora que este objeto foi modificado pela última vez.\
           \ API retorna o valor no formato ISO 8601 em UTC. Exemplo: 2017-08-04T16:27:55.397Z"
-  Team:
+      platform:
+        type: "string"
+        example: WHATSAPP
+        description: "Plataforma que esta sendo utilizada nesta conversa"
+      platformId:
+        type: "string"
+        example: "5541991912345"
+        description: "Identificador único do usuário na plataforma para esta conversa"
+      retailerId:
+        type: "string"
+        example: "554133333333"
+        description: "Identificador único da loja na plataforma para esta conversa"
+      name:
+        type: "string"
+        example: Fulano da Silva
+        description: "Nome informado pela pessoa nesta conversa"
+      email:
+        type: "string"
+        example: teste@acme.com
+        description: "Email informado pela pessoa nesta conversa"
+      timezone:
+        type: integer
+        example: -3
+        description: "Fuso horário da pessoa nesta conversa"
+      gender:
+        $ref: "#/definitions/GenderEnum"
+        description: "Genero informado pela pessoa nesta conversa"
+      phone:
+        type: "string"
+        example: "5541909876765"
+        description: "Telefone informado pela pessoa nesta conversa"
+      imageUrl:
+        type: "string"
+        example: "https://api-private.omni.chat/parse/files/UCeS99itvZg1tsea2OSoyKvpLbKddhoVAPotIQOy/78267794f22d3226236afdd9f59f5261_image.jpg"
+        description: "Imagem da pessoa nesta conversa"
+      status:
+        type: "string"
+        example: FINISHED
+        description: "Status desta conversa"
+      user:
+        $ref: "#/definitions/User"
+        description: "Usuário atual na OmniChat dono desta conversa"
+      customer:
+        $ref: "#/definitions/Customer"
+        description: "Cliente cadastrado na loja associado a esta conversa"
+  Chats:
     type: "object"
-    required:
-    - "name"
+    properties:
+      results:
+        type: "array"
+        items:
+          $ref: "#/definitions/Chat"
+    description: "Lista de conversas"
+  Product:
+    type: object
     properties:
       objectId:
         type: "string"
@@ -2717,76 +2948,32 @@ definitions:
       name:
         type: "string"
         description: "Nome do produto"
-      users:
-        type: "array"
-        description: "Usuários participantes deste time"
-        items:
-          $ref: "#/definitions/User"
-      supervisors:
-        type: "array"
-        description: "Supervidores deste time"
-        items:
-          $ref: "#/definitions/User"
-  Chats:
-    type: "object"
-    properties:
-      results:
-        type: "array"
-        items:
-          $ref: "#/definitions/Chat"
-    description: "Lista de conversas"
-  NewProduct:
-    type: "object"
-    required:
-    - "email"
-    - "lastName"
-    - "name"
-    - "password"
-    properties:
-      name:
+      productDescription:
         type: "string"
-        description: "Nome do produto"
-      lastName:
-        type: "string"
-        description: "Sobrenome do usuário"
-      email:
-        type: "string"
-        description: "Email do usuário"
-      password:
-        type: "string"
-        description: "Password do usuário"
-  NewUser:
-    type: "object"
-    required:
-    - "mainVariant"
-    - "name"
-    - "variants"
-    properties:
-      name:
-        type: "string"
-        description: "Nome do produto"
-      definition1:
-        type: "string"
-        description: "O nome da primeira definição do produto. Por exemplo: Cor"
-      definition1Values:
-        type: "array"
-        description: "Todos os possíveis valores da primeira definição do produto.\
-          \ Exemplo: Azul, Verde e Preto"
-        items:
-          type: "string"
-      definition2:
-        type: "string"
-        description: "O nome da segunda definição do produto. Por exemplo: Tamanho"
-      definition2Values:
-        type: "array"
-        description: "Todos os possíveis valores da primeira definição do produto.\
-          \ Exemplo: P, M e G"
-        items:
-          type: "string"
+        description: "Descrição do produto"
       erpId:
         type: "string"
-        description: "Código utilizado no sistema de ERP para identificar este cliente.\
-          \ Normalmente é o código de barras"
+        description: "Código de referência do produto cadastrado no ERP."
+      externalId:
+        type: "string"
+        description: "Código de referência do produto em outra plataforma que esta sendo sincronizada com a OmniChat."
+      definition1:
+        type: "string"
+        description: "Nome da variação 1 do produto. Exemplo: Cor"
+      definition2:
+        type: "string"
+        description: "Nome da variação 2 do produto. Exemplo: Tamanho"
+      definition1Values:
+        type: "array"
+        items:
+          type: string
+          example: [Vermelho, Laranja, Amarelo, Verde]
+        description: "Valores da definição1. Esses valores são os valores da definição determinada no campo definition1. Por exemplo: Se a Definição for COR, os valores da definição poderão ser Vermelho, Laranja, Amarelo, Verde"
+      definition2Values:
+        type: "array"
+        items:
+          type: string
+        description: "Valores da definição2. Esses valores são os valores da definição determinada no campo definition2. Por exemplo: Se a Definição for TAMANHO, os valores da definição poderão ser P, M, G, XG"
       blocked:
         type: "boolean"
         description: "Indica se este produto esta bloqueado para vendas. Este produto\
@@ -2815,6 +3002,88 @@ definitions:
         description: "Todas as variantes deste produto, inclusive a variante principal"
         items:
           $ref: "#/definitions/Variant"
+  NewProduct:
+    type: object
+    required:
+    - name
+    - productDescription
+    - mainVariant
+    - variants
+    properties:
+      name:
+        type: "string"
+        description: "Nome do produto"
+      productDescription:
+        type: "string"
+        description: "Descrição do produto"
+      erpId:
+        type: "string"
+        description: "Código de referência do produto cadastrado no ERP."
+      externalId:
+        type: "string"
+        description: "Código de referência do produto em outra plataforma que esta sendo sincronizada com a OmniChat."
+      definition1:
+        type: "string"
+        description: "Nome da variação 1 do produto. Exemplo: Cor"
+      definition2:
+        type: "string"
+        description: "Nome da variação 2 do produto. Exemplo: Tamanho"
+      definition1Values:
+        type: "array"
+        items:
+          type: string
+          example: [Vermelho, Laranja, Amarelo, Verde]
+        description: "Valores da definição1. Esses valores são os valores da definição determinada no campo definition1. Por exemplo: Se a Definição for COR, os valores da definição poderão ser Vermelho, Laranja, Amarelo, Verde"
+      definition2Values:
+        type: "array"
+        items:
+          type: string
+        description: "Valores da definição2. Esses valores são os valores da definição determinada no campo definition2. Por exemplo: Se a Definição for TAMANHO, os valores da definição poderão ser P, M, G, XG"
+      blocked:
+        type: "boolean"
+        description: "Indica se este produto esta bloqueado para vendas. Este produto\
+          \ será listado na aba de produtos da OmniChat, mas não será mostrado como\
+          \ disponível para inclusão em um pedido"
+        default: false
+      service:
+        type: "boolean"
+        description: "Indica se este produto é um serviço"
+        default: false
+      trackInventory:
+        type: "boolean"
+        description: "Se verdadeiro a OmniChat irá controla o estoque. Quando um novo\
+          \ pedido é criado o estoque da variante é decrementado, quando um pedido\
+          \ é cancelado ou não pago o estoque é restaurado"
+        default: false
+      sellOutOfStock:
+        type: "boolean"
+        description: "Se este produto pode ser vendido com estoque igual ou inferior\
+          \ a zero"
+        default: false
+      mainVariant:
+        $ref: "#/definitions/NewVariant"
+      variants:
+        type: "array"
+        description: "Todas as variantes deste produto, inclusive a variante principal"
+        items:
+          $ref: "#/definitions/NewVariant"
+  NewUser:
+    type: "object"
+    required:
+    - "mainVariant"
+    - "name"
+    - "variants"
+    properties:
+      name:
+        type: "string"
+        description: "Nome do produto"
+      password:
+        type: "string"
+        description: "Senha do usuário"
+      email:
+        type: "string"
+        description: "Email do usuário"
+      
   Order:
     type: "object"
     properties:
@@ -2940,6 +3209,49 @@ definitions:
         format: "date-time"
         description: "A data e a hora que este objeto foi modificado pela última vez.\
           \ API retorna o valor no formato ISO 8601 em UTC. Exemplo: 2017-08-04T16:27:55.397Z"
+      status:
+        type: enum
+        $ref: "#/definitions/InteractionStatusEnum"
+      chat:
+        $ref: "#/definitions/Chat"
+        description: "Conversa que esssa interação pertence"
+      contactedAt:
+        type: "string"
+        format: "date-time"
+        description: "A data e a hora que o cliente foi atendido. API retorna o valor\
+          \ no formato ISO 8601 em UTC. Exemplo: 2017-08-04T16:27:55.397Z"
+      finishedAt:
+        type: "string"
+        format: "date-time"
+        description: "A data e a hora que esta interação foi concluida. API retorna o valor\
+          \ no formato ISO 8601 em UTC. Exemplo: 2017-08-04T16:27:55.397Z"
+      finishedBy:
+        $ref: "#/definitions/User"
+        description: "Usuário que finalizou esta interação"
+      contactedBy:
+        $ref: "#/definitions/User"
+        description: "Usuário que iniciou esta interação"
+      retailerCreated:
+        type: "boolean"
+        description: "Interação foi criada pela loja e não pelo usuário (ativo)"
+      participatingUsers:
+        type: array
+        description: "Todos os usuários que participaram desta interação"
+        items:
+          $ref: "#/definitions/User"
+      closingReason:
+        type: "string"
+        description: "Motivo do atendimento escolhido pelo usuário no fechamento desta interação"
+      supportRate:
+        type: number
+        description: "Nota do atendimento assinalada pelo cliente. Só diponível quando esta funcionalidade estiver disponível "
+
+  InteractionStatusEnum:
+    type: "string"
+    enum:
+    - "WAITING"
+    - "CONTACTED"
+    - "FINISHED"
   ResponseObjectCreate:
     type: "object"
     properties:
@@ -2976,6 +3288,59 @@ definitions:
         format: "date-time"
         description: "A data e a hora que este objeto foi modificado pela última vez.\
           \ API retorna o valor no formato ISO 8601 em UTC. Exemplo: 2017-08-04T16:27:55.397Z"
+      weight:
+        type: "number"
+        description: "Peso desta variante em gramas"
+        minimum: 0.0
+      length:
+        type: "number"
+        description: "Comprimento desta variante em centimetros"
+        minimum: 0.0
+      height:
+        type: "number"
+        description: "Altura desta variante em centimetros"
+        minimum: 0.0
+      width:
+        type: "number"
+        description: "Largura desta variante em centimetros"
+        minimum: 0.0
+      price:
+        type: "number"
+        description: "Preço desta variante"
+        minimum: 0.0
+      salePrice:
+        type: "number"
+        description: "Promoção desta variante"
+        minimum: 0.0
+      quantity:
+        type: "integer"
+        format: "int32"
+        description: "Quantidade desta variante em estoque, se aplica quando product.trackInventory\
+          \ estiver marcado como verdadeiro"
+        minimum: 0.0
+      erpId:
+        type: "string"
+        description: "O código do sistema de ERP associado a esta variante, normalmente\
+          \ é o código de barras"
+      definition1Value:
+        type: "string"
+        description: "O valor da primeira definição desta variante. Exmplo: Azul"
+      definition2Value:
+        type: "string"
+        description: "O valor da segunda definição desta variante. Exmplo: P"
+      imageUrl:
+        type: "string"
+        format: "url"
+        description: "A url da imagem desta variante"
+      visible:
+        type: "boolean"
+        description: "Se falso então esta variante não poderá ser incluida em um pedido"
+        default: true
+  NewVariant:
+    type: "object"
+    required:
+    - "price"
+    properties:
       weight:
         type: "number"
         description: "Peso desta variante em gramas"
