@@ -3389,7 +3389,7 @@ definitions:
         default: true
       isMainVariant:
         type: "boolean"
-        description: "Essa deve ser a variante principal deste produto"
+        description: "Essa deve ser a variante principal deste produto. Apenas uma ```variant``` deve ser marcada como true"
         default: true
   Variants:
     type: "object"
