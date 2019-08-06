@@ -1288,11 +1288,11 @@ paths:
           default:
             statusCode: "200"
         requestParameters:
-          integration.request.querystring.where: "method.request.querystring.where"
           integration.request.header.X-Parse-REST-API-Key: "'RFxCx77Nf9VEFNnFIUxSXTrLrdfb4ntZRHG7NBIO'"
-          integration.request.querystring.limit: "method.request.querystring.limit"
           integration.request.header.X-Parse-Application-Id: "'lHC0oT3G1oZRPB2otwYngjMjKnsOVFGfxWw5PrTM'"
+          integration.request.querystring.limit: "method.request.querystring.limit"
           integration.request.header.x-api-secret: "method.request.header.x-api-secret"
+          integration.request.querystring.where: "method.request.querystring.where"
           integration.request.querystring.order: "method.request.querystring.order"
           integration.request.querystring.skip: "method.request.querystring.offset"
         passthroughBehavior: "when_no_match"
@@ -3060,8 +3060,6 @@ definitions:
         description: "Se este produto pode ser vendido com estoque igual ou inferior\
           \ a zero"
         default: false
-      mainVariant:
-        $ref: "#/definitions/NewVariant"
       variants:
         type: "array"
         description: "Todas as variantes deste produto, inclusive a variante principal"
@@ -3388,6 +3386,10 @@ definitions:
       visible:
         type: "boolean"
         description: "Se falso então esta variante não poderá ser incluida em um pedido"
+        default: true
+      isMainVariant:
+        type: "boolean"
+        description: "Essa deve ser a variante principal deste produto"
         default: true
   Variants:
     type: "object"
