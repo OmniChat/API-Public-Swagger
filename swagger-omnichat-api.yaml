@@ -22,14 +22,14 @@ info:
     Todos esses métodos de listagem possuem uma estrutura em comum, que é a de paginação.
 
     ```curl
-    ## List 0 - 99 customers
+     // List 100 customers
     curl "https://api.omni.chat/v1/customers?limit=100" \
     -H 'x-api-key: <YOUR_API_KEY>' \
     -H 'x-api-secret: <YOUR_API_SECRET>' \
     -H 'Content-Type: application/json' \
     -H 'Accept: application/json'
 
-    ## List 100 - 199 customers
+    // List 100 - 199 customers
     curl"https://api.omni.chat/v1/customers?limit=100&offset=100" \
     -H 'x-api-key: <YOUR_API_KEY>' \
     -H 'x-api-secret: <YOUR_API_SECRET>' \
@@ -46,7 +46,7 @@ info:
     Exemplo de uma requisição contendo dos os campo obrigatórios:
 
     ```curl
-    ## Count customers
+    // Count customers
     curl "https://api.omni.chat/v1/customers/count"
     -H "x-api-key: xR2DkhOEDsazac7iiaV6U9kwYJ3l26SIaE6UGVg2"
     -H "x-api-secret: r:0dfa3a7d4ffd4010c055d8f745bf8164"
