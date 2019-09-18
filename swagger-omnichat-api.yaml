@@ -2914,12 +2914,27 @@ definitions:
         type: "string"
         example: FINISHED
         description: "Status desta conversa"
+      labels:
+        type: "array"
+        description: "Labels do chat"
+        items:
+          $ref: "#/definitions/Labels"
       user:
         $ref: "#/definitions/User"
         description: "Usuário atual na OmniChat dono desta conversa"
       customer:
         $ref: "#/definitions/Customer"
         description: "Cliente cadastrado na loja associado a esta conversa"
+  Labels:
+    type: "object"
+    properties:
+      objectId:
+        type: "string"
+        format: "uuid10"
+        description: "Identificador único deste objeto na base de dados da OmniChat"
+      title:
+        type: "string"
+        description: "Titulo do label na base da OmniChat"
   Chats:
     type: "object"
     properties:
