@@ -3078,8 +3078,6 @@ definitions:
       items:
         type: string
         example: [Vermelho, Laranja, Amarelo, Verde]
-      description: "Valores da definição1. Esses valores são os valores da definição determinada no campo definition1. Por exemplo: Se a Definição for COR, os valores da definição poderão ser Vermelho, Laranja, Amarelo, Verde"
-        type: "string"
       definition2:
         type: "string"
         description: "O nome da segunda definição do produto. Por exemplo: Tamanho"
