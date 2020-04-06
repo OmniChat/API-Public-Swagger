@@ -1,4 +1,3 @@
----
 swagger: "2.0"
 info:
   version: "v1.0"
@@ -3445,60 +3444,6 @@ definitions:
     enum:
     - "CREDITCARD"
     - "BOLETO"
-  Interaction:
-    type: "object"
-    properties:
-      objectId:
-        type: "string"
-        format: "uuid10"
-        description: "Identificador único deste objeto na base de dados da OmniChat"
-      createdAt:
-        type: "string"
-        format: "date-time"
-        description: "A data e a hora que este objeto foi criado. API retorna o valor\
-          \ no formato ISO 8601 em UTC. Exemplo: 2017-08-04T16:27:55.397Z"
-      updatedAt:
-        type: "string"
-        format: "date-time"
-        description: "A data e a hora que este objeto foi modificado pela última vez.\
-          \ API retorna o valor no formato ISO 8601 em UTC. Exemplo: 2017-08-04T16:27:55.397Z"
-      status:
-        type: enum
-        $ref: "#/definitions/InteractionStatusEnum"
-      chat:
-        $ref: "#/definitions/Chat"
-        description: "Conversa que esssa interação pertence"
-      contactedAt:
-        type: "string"
-        format: "date-time"
-        description: "A data e a hora que o cliente foi atendido. API retorna o valor\
-          \ no formato ISO 8601 em UTC. Exemplo: 2017-08-04T16:27:55.397Z"
-      finishedAt:
-        type: "string"
-        format: "date-time"
-        description: "A data e a hora que esta interação foi concluida. API retorna o valor\
-          \ no formato ISO 8601 em UTC. Exemplo: 2017-08-04T16:27:55.397Z"
-      finishedBy:
-        $ref: "#/definitions/User"
-        description: "Usuário que finalizou esta interação"
-      contactedBy:
-        $ref: "#/definitions/User"
-        description: "Usuário que iniciou esta interação"
-      retailerCreated:
-        type: "boolean"
-        description: "Interação foi criada pela loja e não pelo usuário (ativo)"
-      participatingUsers:
-        type: array
-        description: "Todos os usuários que participaram desta interação"
-        items:
-          $ref: "#/definitions/User"
-      closingReason:
-        type: "string"
-        description: "Motivo do atendimento escolhido pelo usuário no fechamento desta interação"
-      supportRate:
-        type: number
-        description: "Nota do atendimento assinalada pelo cliente. Só diponível quando esta funcionalidade estiver disponível "
-
   InteractionStatusEnum:
     type: "string"
     enum:
