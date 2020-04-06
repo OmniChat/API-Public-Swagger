@@ -3450,7 +3450,14 @@ definitions:
     - "WAITING"
     - "CONTACTED"
     - "FINISHED"
-
+  Interactions:
+    type: "object"
+    properties:
+      results:
+        type: "array"
+        items:
+          $ref: "#/definitions/Interaction"
+    description: "Lista de mensagens"
 x-amazon-apigateway-documentation:
   version: "1.0"
   createdDate: "2018-03-21T01:13:32Z"
