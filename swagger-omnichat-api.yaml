@@ -3083,8 +3083,6 @@ definitions:
         type: "array"
         description: "Todos os possíveis valores da primeira definição do produto.\
           \ Exemplo: P, M e G"
-      items:
-        type: string
       blocked:
         type: "boolean"
         description: "Indica se este produto esta bloqueado para vendas. Este produto\
