@@ -3069,8 +3069,6 @@ definitions:
         description: "Código de referência do produto em outra plataforma que esta sendo sincronizada com a OmniChat."
       definition1:
         description: "Nome da variação 1 do produto. Exemplo: Cor"
-      definition2:
-        description: "Nome da variação 2 do produto. Exemplo: Tamanho"
       definition1Values:
         type: "array"
         description: "Todos os possíveis valores da primeira definição do produto.\
@@ -3131,63 +3129,24 @@ definitions:
   NewUser:
     type: "object"
     required:
-    - "mainVariant"
+    - "email"
     - "name"
-    - "variants"
+    - "lastName"
+    - "password"
     properties:
+      email:
+        type: "string"
+        description: "Email do usuário"
       name:
         type: "string"
-        description: "Nome do produto"
-      definition1:
+        description: "Nome do usuário"
+      lastName:
         type: "string"
-        description: "O nome da primeira definição do produto. Por exemplo: Cor"
-      definition1Values:
-        type: "array"
-        description: "Todos os possíveis valores da primeira definição do produto.\
-          \ Exemplo: Azul, Verde e Preto"
-        items:
-          type: "string"
-      definition2:
+        description: "Último nome do usuário"
+      password:
         type: "string"
-        description: "O nome da segunda definição do produto. Por exemplo: Tamanho"
-      definition2Values:
-        type: "array"
-        description: "Todos os possíveis valores da primeira definição do produto.\
-          \ Exemplo: P, M e G"
-        items:
-          type: "string"
-      erpId:
-        type: "string"
-        description: "Código utilizado no sistema de ERP para identificar este cliente.\
-          \ Normalmente é o código de barras"
-      blocked:
-        type: "boolean"
-        description: "Indica se este produto esta bloqueado para vendas. Este produto\
-          \ será listado na aba de produtos da OmniChat, mas não será mostrado como\
-          \ disponível para inclusão em um pedido"
-        default: false
-      service:
-        type: "boolean"
-        description: "Indica se este produto é um serviço"
-        default: false
-      trackInventory:
-        type: "boolean"
-        description: "Se verdadeiro a OmniChat irá controla o estoque. Quando um novo\
-          \ pedido é criado o estoque da variante é decrementado, quando um pedido\
-          \ é cancelado ou não pago o estoque é restaurado"
-        default: false
-      sellOutOfStock:
-        type: "boolean"
-        description: "Se este produto pode ser vendido com estoque igual ou inferior\
-          \ a zero"
-        default: false
-      mainVariant:
-        $ref: "#/definitions/Variant"
-      variants:
-        type: "array"
-        description: "Todas as variantes deste produto, inclusive a variante principal"
-        items:
-          $ref: "#/definitions/Variant"
+        description: "Senha do usuário que está sendo criado"
+      
   Order:
     type: "object"
     properties:
