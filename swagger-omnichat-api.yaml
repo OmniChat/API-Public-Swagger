@@ -2922,15 +2922,6 @@ paths:
         - pricingtables
       produces:
       - "application/json"
-      requestBody:
-        required: true
-        content:
-          application/json
-            schema:
-              type: object
-              properties:
-                objectId:
-                  type: string
       parameters:
       - name: "objectId"
         in: "path"
@@ -2940,6 +2931,11 @@ paths:
         in: "header"
         required: true
         type: "string"
+      - in: "body"
+        name: "OnlyObjectId"
+        required: true
+        schema:
+          $ref: "#/definitions/OnlyObjectId"
       responses:
         200:
           description: "200 response"
@@ -4104,6 +4100,14 @@ definitions:
       responsible:
         type: "string"
         description: "Responsável pela troca do status"
+  OnlyObjectId:
+    type: "object"
+    required:
+      - "objectId"
+    properties:
+      objectId:
+        type: "string"
+        description: "Object Id"
   NewUser:
     type: "object"
     required:
