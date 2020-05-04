@@ -2922,6 +2922,15 @@ paths:
         - pricingtables
       produces:
       - "application/json"
+      requestBody:
+        required: true
+        content:
+          application/json
+            schema:
+              type: object
+              properties:
+                objectId:
+                  type: string
       parameters:
       - name: "objectId"
         in: "path"
