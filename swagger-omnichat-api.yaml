@@ -483,6 +483,54 @@ paths:
         passthroughBehavior: "when_no_match"
         httpMethod: "GET"
         type: "http"
+  /chats/{objectId}/route:
+    post:
+      description: "Rotear conversa"
+      tags:
+        - chats
+      consumes:
+      - "application/json"
+      produces:
+      - "application/json"
+      parameters:
+      - name: "objectId"
+        in: "path"
+        required: true
+        type: "string"
+      - name: "x-api-secret"
+        in: "header"
+        required: true
+        type: "string"
+      - in: "body"
+        name: "ChatRouting"
+        required: true
+        schema:
+          $ref: "#/definitions/ChatRouting"
+      responses:
+        200:
+          description: "200 response"
+        400:
+          description: "400 response"
+        500:
+          description: "500 response"
+      x-amazon-apigateway-integration:
+        uri: "https://api-adapter.omni.chat/chats/{objectId}/route"
+        responses:
+          200:
+            statusCode: "200"
+          400:
+            statusCode: "400"
+          500:
+            statusCode: "500"
+        requestParameters:
+          integration.request.header.X-Parse-REST-API-Key: "'RFxCx77Nf9VEFNnFIUxSXTrLrdfb4ntZRHG7NBIO'"
+          integration.request.header.X-Parse-Application-Id: "'lHC0oT3G1oZRPB2otwYngjMjKnsOVFGfxWw5PrTM'"
+          integration.request.header.x-api-secret: "method.request.header.x-api-secret"
+          integration.request.path.objectId: "method.request.path.objectId"
+        passthroughBehavior: "when_no_match"
+        httpMethod: "POST"
+        type: "http"
+
   /customers:
     get:
       description: "Listar clientes"
@@ -3231,6 +3279,19 @@ securityDefinitions:
     name: "x-api-key"
     in: "header"
 definitions:
+  ChatRouting:
+    type: "object"
+    properties:
+      teamId:
+        type: "string"
+        description: "Id do time para o qual o atendimento sera redirecionado"
+      userId:
+        type: "string"
+        description: "Id do usuario para o qual o atendimento sera redirecionado"
+      type:
+        type: "string"
+        description: "Comportamento esperado do redirecionamento, pode ser para TEAM ou USER"
+    description: "Contem as informacoes para redirecionamento dos atendimentos"
   Branches:
     type: "object"
     properties:
