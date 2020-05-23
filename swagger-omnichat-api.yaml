@@ -175,7 +175,7 @@ tags:
     description: Times da sua loja.
   - name: branches
     description: Filias da sua loja
-  - name: PricingTables
+  - name: pricingtables
     description: Variações de preço para um produto
 paths:
   /chats:
@@ -1964,10 +1964,22 @@ paths:
         schema:
           $ref: "#/definitions/NewPrice"
       responses:
-        200:
-          description: "200 response"
+        201:
+          description: "201 response"
           schema:
             $ref: "#/definitions/ResponseObjectCreate"
+        400:
+          description: "400 response"
+          schema:
+            $ref: "#/definitions/ResponseError"
+        500:
+          description: "500 response"
+          schema:
+            $ref: "#/definitions/ResponseError"
+        404:
+          description: "404 response"
+          schema:
+            $ref: "#/definitions/ResponseError"
       security:
       - api_key: []
       x-amazon-apigateway-request-validator: "Validate query string parameters and\
@@ -3871,6 +3883,10 @@ definitions:
         description: "Se este produto pode ser vendido com estoque igual ou inferior\
           \ a zero"
         default: false
+      enablePricingTable:
+        type: "boolean"
+        description: "Se este produto pode utilizar a configuração de tablea de preço"
+        default: false
       mainVariant:
         description: "A variante principal deste produto"
         $ref: "#/definitions/Variant"
@@ -4195,6 +4211,10 @@ definitions:
         description: "Se este produto pode ser vendido com estoque igual ou inferior\
           \ a zero"
         default: false
+      enablePricingTable:
+        type: "boolean"
+        description: "Se este produto pode utilizar a configuração de tablea de preço"
+        default: false
       mainVariant:
         $ref: "#/definitions/Variant"
       variants:
@@ -4493,6 +4513,10 @@ definitions:
         type: "number"
         description: "Promoção desta variante"
         minimum: 0.0
+      active:
+        type: "boolean"
+        description: "Se falso então este preço não poderá ser utilizado em um pedido"
+        default: true
       variant:
         type: "object"
         description: "variante deste preço" 
@@ -4585,6 +4609,10 @@ definitions:
         type: "number"
         description: "Valor de promoção deste preço" 
         minimum: 0.0
+      active:
+        type: "boolean"
+        description: "Se falso então este preço não poderá ser utilizado em um pedido"
+        default: true
       variant:
           type: "string"
           description: "ObjectId de uma variant"
