@@ -1905,15 +1905,18 @@ paths:
         passthroughBehavior: "when_no_match"
         httpMethod: "DELETE"
         type: "http"
-  /products/{objectId}/prices:
+  /products/{objectId}/variants/{variantId}/prices:
     get:
-      description: "Listar os preços de um produto"  
+      description: "Listar os preços de um produto por uma variante."  
       tags:
         - products
       produces:
       - "application/json"
       parameters:
       - name: "objectId"
+        in: "path"
+        required: true
+      - name: "variantId"
         in: "path"
         required: true
         type: "string"
@@ -1931,7 +1934,7 @@ paths:
       x-amazon-apigateway-request-validator: "Validate query string parameters and\
         \ headers"
       x-amazon-apigateway-integration:
-        uri: "https://api-adapter.omni.chat/products/{objectId}/prices"
+        uri: "https://api-adapter.omni.chat/products/{objectId}/variants/{variantId}/prices"
         responses:
           default:
             statusCode: "200"
