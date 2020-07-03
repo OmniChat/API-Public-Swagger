@@ -1916,6 +1916,7 @@ paths:
       - name: "objectId"
         in: "path"
         required: true
+        type: "string"
       - name: "variantId"
         in: "path"
         required: true
@@ -1929,6 +1930,10 @@ paths:
           description: "200 response"
           schema:
             $ref: "#/definitions/Price"
+        404:
+          description: "404 response"
+          schema:
+            $ref: "#/definitions/ResponseError"
       security:
       - api_key: []
       x-amazon-apigateway-request-validator: "Validate query string parameters and\
@@ -1938,14 +1943,18 @@ paths:
         responses:
           default:
             statusCode: "200"
+          404:
+            statusCode: "404"
         requestParameters:
           integration.request.header.X-Parse-REST-API-Key: "'RFxCx77Nf9VEFNnFIUxSXTrLrdfb4ntZRHG7NBIO'"
           integration.request.header.X-Parse-Application-Id: "'lHC0oT3G1oZRPB2otwYngjMjKnsOVFGfxWw5PrTM'"
           integration.request.header.x-api-secret: "method.request.header.x-api-secret"
           integration.request.path.objectId: "method.request.path.objectId"
+          integration.request.path.variantId: "method.request.path.variantId"
         passthroughBehavior: "when_no_match"
         httpMethod: "GET"
         type: "http"
+  /products/{objectId}/prices:
     post:
       description: "Criar um preço para o produto"   
       tags:
@@ -4414,6 +4423,9 @@ definitions:
         type: "string"
         description: "Identificador único deste pedido. Automaticamente incrementado\
           \ quando um novo pedido é criado"
+      teamId:
+        type: "string"
+        description: "Identificador único do time que gerou o pedido"
   OrderDiscountModeEnum:
     type: "string"
     enum:
@@ -4480,6 +4492,9 @@ definitions:
       supportRate:
         type: number
         description: "Nota do atendimento assinalada pelo cliente. Só diponível quando esta funcionalidade estiver disponível "
+      teamId:
+        type: "string"
+        description: "Identificador único do time que esta com a interação"
     
 
   ResponseObjectCreate:
