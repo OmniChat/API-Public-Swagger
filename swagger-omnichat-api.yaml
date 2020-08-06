@@ -4426,6 +4426,10 @@ definitions:
       teamId:
         type: "string"
         description: "Identificador único do time que gerou o pedido"
+      paymentInstallmentsCount:
+        type: "number"
+        description: "Número de parcelas selecionadas pelo cliente para pagamento deste\
+        \ pedido. Somente usado para pagamento no cartão de crédito"
   OrderDiscountModeEnum:
     type: "string"
     enum:
