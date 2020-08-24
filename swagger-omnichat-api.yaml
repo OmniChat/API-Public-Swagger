@@ -3972,6 +3972,48 @@ definitions:
       gender:
         description: "Sexo do cliente"
         $ref: "#/definitions/GenderEnum"
+  NewOrderItem:
+    type: "object"
+    properties:
+      name:
+        type: "string"
+        description: "Nome deste item. É copiado de product.name quando incluído no\
+          \ carrinho"
+      description:
+        type: "string"
+        description: "Detalhes deste item. É copiado de product.detail quando incluí\
+          do no carrinho"
+      price:
+        type: "number"
+        description: "Preço deste item"
+      productReference:
+        type: "string"
+        description: "Código de referência deste item. É copiado de variant.erpId"
+      quantity:
+        type: "number"
+        description: "A quantidade deste item"
+      variantObjectId:
+        type: "string"
+        description: "O objectId da variante que deu origem a este item."
+      weight:
+        type: "number"
+        description: "Peso desta item em gramas. É copiado de variant.weight"
+        minimum: 0.0
+      length:
+        type: "number"
+        description: "Comprimento desta item em centimetros. É copiado de variant.length"
+        minimum: 0.0
+      height:
+        type: "number"
+        description: "Altura desta item em centimetros. É copiado de variant.height"
+        minimum: 0.0
+      width:
+        type: "number"
+        description: "Largura desta item em centimetros. É copiado de variant.width"
+        minimum: 0.0
+      service:
+        type: "boolean"
+        description: "Se este item é um serviço"
   Item:
     type: "object"
     properties:
@@ -4426,6 +4468,21 @@ definitions:
       teamId:
         type: "string"
         description: "Identificador único do time que gerou o pedido"
+      paymentDetail:
+        description: "Detalhes do pagamento"
+        $ref: "#/definitions/PaymentDetail"
+  PaymentDetail:
+    type: "object"
+    properties:
+      TID:
+        type: "string"
+        description: "Identificador identificador da operação com cartão de crédito"
+      AuthorizationCode:
+        type: "string"
+        description: "Código de autorização da operação"
+      NSU:
+        type: "string"
+        description: "Número sequencial único"
   OrderDiscountModeEnum:
     type: "string"
     enum:
@@ -4755,9 +4812,9 @@ definitions:
     type: "object"
     properties:
       canAcceptBoleto:
-        type: "object"
-        description: "Se este pedido pode ser pelo cliente usando boleto"
-        properties: {}
+        type: "boolean"
+        description: "Se este pedido pode ser pago pelo cliente usando boleto"
+        default: false
       boletoInstructions:
         type: "object"
         description: "Instruções relativas ao pagamento por boleto deste pedido"
@@ -4769,6 +4826,92 @@ definitions:
           installments:
             type: "string"
             description: "O número de boletos que serão gerados"
+      canAcceptCreditCard:
+        type: "boolean"
+        description: "Se este pedido pode ser pago pelo cliente usando cartão de crédito"
+        default: false
+      creditCardInstructions:
+        type: "object"
+        description: "Instruções relativas ao pagamento por cartão de crédito deste pedido"
+        properties:
+          installments:
+            type: "string"
+            description: "O número de parcelas deste pedido"
+      customerId:
+        type: "string"
+        description: "Id do cliente (Customer)"
+      deliveryTime:
+        type: "string"
+        description: "Prazo de entrega do pedido"
+      shippingCost:
+        type: "number"
+        description: "Valor do frete do pedido"
+      discountMode:
+        type: "string"
+        description: "Tipo de desconto do pedido"
+        enum:
+          - "PERCENTAGE"
+          - "ABOSOLUTE"
+      discount:
+        type: "number"
+        description: "Valor do desconto do pedido"
+      items:
+        type: "array"
+        description: "Lista de itens deste pedido"
+        items:
+          $ref: "#/definitions/NewOrderItem"
+      notes:
+        type: "array"
+        description: "Notas sobre este pedido"
+        items:
+          $ref: "#/definitions/Note"
+      pickUpInStore:
+        type: "boolean"
+        description: "Se o pedido for retirado na loja"
+      orderId: 
+        type: "string"
+        description: "Id externo do pedido"
+      shippingAddress:
+        type: "object"
+        description: "O endereço de entrega do cliente"
+        items:
+          $ref: "#/definitions/Address"
+      shippingMethod:
+        type: "string"
+        description: "Método de envio do pedido"
+      paymentMethod: 
+        type: "string"
+        description: "Método de pagamento do pedido"
+        enum:
+          - "CREDITCARD"
+          - "BOLETO"
+      status:
+        type: "string"
+        description: "Status do pedido"
+        enum: 
+          - 'CREATING'
+          - 'CREATED'
+          - 'PROVISIONING'
+          - 'OPEN'
+          - 'WAITING'
+          - 'COLLECT_PAYMENT'
+          - 'PAID'
+          - 'PACKAGED'
+          - 'SHIPPED'
+          - 'PARTIALLY_SHIPPED'
+          - 'DELIVERED'
+          - 'NOT_PAID'
+          - 'PARTIAL_PAID'
+          - 'OVER_PAID'
+          - 'CANCELLED'
+          - 'REVERTED'
+          - 'ERROR';
+      teamId:
+        type: "string"
+        description: "ObjectId do time que gerou o pedido"
+      salesPersonId:
+        type: "string"
+        description: "ObjectId do usuário que criou o pedido"
 
 x-amazon-apigateway-documentation:
   version: "1.0"
