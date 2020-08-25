@@ -4874,7 +4874,7 @@ definitions:
       shippingAddress:
         type: "object"
         description: "O endereço de entrega do cliente"
-        items:
+        properties:
           $ref: "#/definitions/Address"
       shippingMethod:
         type: "string"
