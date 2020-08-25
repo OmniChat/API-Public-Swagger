@@ -4872,10 +4872,8 @@ definitions:
         type: "string"
         description: "Id externo do pedido"
       shippingAddress:
-        type: "object"
         description: "O endereço de entrega do cliente"
-        properties:
-          $ref: "#/definitions/Address"
+        $ref: "#/definitions/Address"
       shippingMethod:
         type: "string"
         description: "Método de envio do pedido"
