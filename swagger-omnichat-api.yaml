@@ -4905,7 +4905,7 @@ definitions:
           - 'OVER_PAID'
           - 'CANCELLED'
           - 'REVERTED'
-          - 'ERROR';
+          - 'ERROR'
       teamId:
         type: "string"
         description: "ObjectId do time que gerou o pedido"
