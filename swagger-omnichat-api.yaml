@@ -4607,6 +4607,12 @@ definitions:
       teamId:
         type: "string"
         description: "Identificador único do time que esta com a interação"
+      botFowardedToTeam:
+        type: "string"
+        description: "Identificador único do time no qual o bot encaminhou"
+      botFowardedAt:
+        type: "string"
+        description: "Data no qual o encaminhamento pelo bot foi feita"
     
 
   ResponseObjectCreate:
