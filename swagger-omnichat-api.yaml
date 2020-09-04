@@ -3344,12 +3344,67 @@ paths:
         passthroughBehavior: "when_no_match"
         httpMethod: "PUT"
         type: "http"
+  /users/setActivateAttendance:
+    post:
+      description: 'Atualiza acesso HSM de um range usuários'
+      tags:
+        - users
+      consumes:
+      - "application/json"
+      produces:
+      - "application/json"
+      parameters:
+      - name: "x-api-secret"
+        in: "header"
+        required: true
+        type: "string"
+      - in: "body"
+        name: "ActivateAttendanceModel"
+        required: true
+        schema:
+          $ref: "#/definitions/ActivateAttendanceModel"
+      responses:
+        200:
+          description: "200 response"
+        400:
+          description: "400 response"
+        500:
+          description: "500 response"
+      x-amazon-apigateway-integration:
+        uri: "https://api-adapter.omni.chat/users/setActivateAttendance"
+        responses:
+          200:
+            statusCode: "200"
+          400:
+            statusCode: "400"
+          500:
+            statusCode: "500"
+        requestParameters:
+          integration.request.header.X-Parse-REST-API-Key: "'RFxCx77Nf9VEFNnFIUxSXTrLrdfb4ntZRHG7NBIO'"
+          integration.request.header.X-Parse-Application-Id: "'lHC0oT3G1oZRPB2otwYngjMjKnsOVFGfxWw5PrTM'"
+          integration.request.header.x-api-secret: "method.request.header.x-api-secret"
+          integration.request.path.objectId: "method.request.path.objectId"
+        passthroughBehavior: "when_no_match"
+        httpMethod: "POST"
+        type: "http"
 securityDefinitions:
   api_key:
     type: "apiKey"
     name: "x-api-key"
     in: "header"
 definitions:
+  ActivateAttendanceModel:
+    type: "object"
+    properties:
+      enabled:
+        type: "boolean"
+        description: "habilita / desabilitar atendimento dos usuários"
+        default: false
+      userIds:
+        type: array
+        items:
+          type: string
+        description: "Lista de Ids dos usuários"
   ChatRouting:
     type: "object"
     properties:
@@ -4872,8 +4927,10 @@ definitions:
         type: "string"
         description: "Id externo do pedido"
       shippingAddress:
+        type: "object"
         description: "O endereço de entrega do cliente"
-        $ref: "#/definitions/Address"
+        items:
+          $ref: "#/definitions/Address"
       shippingMethod:
         type: "string"
         description: "Método de envio do pedido"
