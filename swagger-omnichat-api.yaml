@@ -3344,7 +3344,7 @@ paths:
         passthroughBehavior: "when_no_match"
         httpMethod: "PUT"
         type: "http"
-  /users/setActivateAttendance:
+  /users/settings:
     post:
       description: 'Atualiza acesso HSM de um range usuários'
       tags:
@@ -3359,10 +3359,10 @@ paths:
         required: true
         type: "string"
       - in: "body"
-        name: "ActivateAttendanceModel"
+        name: "UserSettingsModel"
         required: true
         schema:
-          $ref: "#/definitions/ActivateAttendanceModel"
+          $ref: "#/definitions/UserSettingsModel"
       responses:
         200:
           description: "200 response"
@@ -3371,7 +3371,7 @@ paths:
         500:
           description: "500 response"
       x-amazon-apigateway-integration:
-        uri: "https://api-adapter.omni.chat/users/setActivateAttendance"
+        uri: "https://api-adapter.omni.chat/users/settings"
         responses:
           200:
             statusCode: "200"
@@ -3393,14 +3393,14 @@ securityDefinitions:
     name: "x-api-key"
     in: "header"
 definitions:
-  ActivateAttendanceModel:
+  UserSettingsModel:
     type: "object"
     properties:
-      enabled:
+      attendanceEnabled:
         type: "boolean"
         description: "habilita / desabilitar atendimento dos usuários"
         default: false
-      userIds:
+      users:
         type: array
         items:
           type: string
@@ -4607,6 +4607,12 @@ definitions:
       teamId:
         type: "string"
         description: "Identificador único do time que esta com a interação"
+      botFowardedToTeam:
+        type: "string"
+        description: "Identificador único do time no qual o bot encaminhou"
+      botFowardedAt:
+        type: "string"
+        description: "Data no qual o encaminhamento pelo bot foi feita"
     
 
   ResponseObjectCreate:
