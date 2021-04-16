@@ -4264,14 +4264,14 @@ definitions:
     type: "object"
     required:
     - name
-    - productDescription
+    - description
     - mainVariant
     - variants
     properties:
       name:
         type: "string"
         description: "Nome do produto"
-      productDescription:
+      description:
         type: "string"
         description: "Descrição do produto"
       erpId:
