@@ -3,7 +3,7 @@ info:
   version: "v1.0"
   title: "OmniChat"
   x-logo:
-    url: 'assets/omnichat_logo.png'
+    url: "assets/omnichat_logo.png"
   description: |
 
     # Introdução
@@ -105,7 +105,7 @@ info:
     -H "Accept: application/json" \
     --data-urlencode 'where={"status":{"$in": ["PAID","SHIPPED"] }}'
     ```
-    
+
     Todos os produtos que tenham algum valor em *definition1*:
     ```curl
       curl "https://api.omni.chat/v1/products \
@@ -133,8 +133,8 @@ info:
       "iso": "2011-08-21T18:02:52.249Z"
     }
     ```
-    A propriedade iso contem um UTC timestamp no formato ISO 8601 com precisão de milisegundos: `YYYY-MM-DDTHH:MM:SS.MMMZ`
-    
+    A propriedade iso contem um UTC timestamp no formato ISO 8601 com precisão de milissegundos: `YYYY-MM-DDTHH:MM:SS.MMMZ`
+
     ## Modelo
     A OmniChat utiliza uma base de dados NoSQL para melhor performance e escalabilidade.
     Para que um objeto possa ser relacionado com outro primeiro você precisa criar o objeto na OmniChat para obter o *objectId* do mesmo. 
@@ -151,22 +151,22 @@ info:
 host: "api.omni.chat"
 basePath: "/v1"
 schemes:
-- "https"
+  - "https"
 tags:
   - name: chats
     description: Representa uma conversa entre um cliente e a loja. Possui uma ou mais mensagens relacionadas.
   - name: messages
     description: Mensagens enviadas ou recebidas
   - name: message-templates
-    description: Templates pré cadatradas para criação de mensagens 
+    description: Templates pré cadastradas para criação de mensagens
   - name: interactions
     description: |
       Interações com clientes da sua loja e seus indicadores
       A conversa entre um cliente e a empresa em um determinado canal (ex WhatsApp) é 
-      representada por um único object `Chat`, mesmo que esta conversa seja finalizada e aberta inumeras vezes.
-      Para que seja possível medir e gerenciar quantas vezes o cliente chamou, tempo que um atendete demorou para
+      representada por um único object `Chat`, mesmo que esta conversa seja finalizada e aberta inúmeras vezes.
+      Para que seja possível medir e gerenciar quantas vezes o cliente chamou, tempo que um atendente demorou para
   - name: customers
-    description: O cliente (customers) é o comprador cadastrado na loja e que pode efetuar pedidos. Pode ser do tipo pessoa física ou jurídica. Deve ter um endereço de entrega associados a ele. 
+    description: O cliente (customers) é o comprador cadastrado na loja e que pode efetuar pedidos. Pode ser do tipo pessoa física ou jurídica. Deve ter um endereço de entrega associados a ele.
   - name: products
     description: Produtos são itens vendidos por uma loja na OmniChat. Na criação de um pedido (order) ele será convertido em um item. Um produto pode ter variantes, que são diferentes opções do produto, como por exemplo, cor e tamanho.
   - name: orders
@@ -184,36 +184,37 @@ paths:
       tags:
         - chats
       produces:
-      - "application/json"
+        - "application/json"
       parameters:
-      - name: "where"
-        in: "query"
-        required: false
-        type: "string"
-      - name: "limit"
-        in: "query"
-        required: false
-        type: "string"
-      - name: "x-api-secret"
-        in: "header"
-        required: true
-        type: "string"
-      - name: "order"
-        in: "query"
-        required: false
-        type: "string"
-      - name: "offset"
-        in: "query"
-        required: false
-        type: "string"
+        - name: "where"
+          in: "query"
+          required: false
+          type: "string"
+        - name: "limit"
+          in: "query"
+          required: false
+          type: "string"
+        - name: "x-api-secret"
+          in: "header"
+          required: true
+          type: "string"
+        - name: "order"
+          in: "query"
+          required: false
+          type: "string"
+        - name: "offset"
+          in: "query"
+          required: false
+          type: "string"
       responses:
         200:
           description: "200 response"
           schema:
             $ref: "#/definitions/Chats"
       security:
-      - api_key: []
-      x-amazon-apigateway-request-validator: "Validate query string parameters and\
+        - api_key: []
+      x-amazon-apigateway-request-validator:
+        "Validate query string parameters and\
         \ headers"
       x-amazon-apigateway-integration:
         uri: "https://api-adapter.omni.chat/chats"
@@ -237,24 +238,25 @@ paths:
       tags:
         - chats
       produces:
-      - "application/json"
+        - "application/json"
       parameters:
-      - name: "where"
-        in: "query"
-        required: false
-        type: "string"
-      - name: "x-api-secret"
-        in: "header"
-        required: true
-        type: "string"
+        - name: "where"
+          in: "query"
+          required: false
+          type: "string"
+        - name: "x-api-secret"
+          in: "header"
+          required: true
+          type: "string"
       responses:
         200:
           description: "200 response"
           schema:
             $ref: "#/definitions/ResponseCount"
       security:
-      - api_key: []
-      x-amazon-apigateway-request-validator: "Validate query string parameters and\
+        - api_key: []
+      x-amazon-apigateway-request-validator:
+        "Validate query string parameters and\
         \ headers"
       x-amazon-apigateway-integration:
         uri: "https://api-adapter.omni.chat/chats/count"
@@ -271,20 +273,20 @@ paths:
         type: "http"
   /chats/{objectId}:
     get:
-      description: "Obter uma unica conversa"
+      description: "Obter uma única conversa"
       tags:
         - chats
       produces:
-      - "application/json"
+        - "application/json"
       parameters:
-      - name: "objectId"
-        in: "path"
-        required: true
-        type: "string"
-      - name: "x-api-secret"
-        in: "header"
-        required: true
-        type: "string"
+        - name: "objectId"
+          in: "path"
+          required: true
+          type: "string"
+        - name: "x-api-secret"
+          in: "header"
+          required: true
+          type: "string"
       responses:
         200:
           description: "200 response"
@@ -295,8 +297,9 @@ paths:
           schema:
             $ref: "#/definitions/ResponseError"
       security:
-      - api_key: []
-      x-amazon-apigateway-request-validator: "Validate query string parameters and\
+        - api_key: []
+      x-amazon-apigateway-request-validator:
+        "Validate query string parameters and\
         \ headers"
       x-amazon-apigateway-integration:
         uri: "https://api-adapter.omni.chat/chats/{objectId}"
@@ -320,14 +323,14 @@ paths:
       tags:
         - chats
       parameters:
-      - name: "objectId"
-        in: "path"
-        required: true
-        type: "string"
-      - name: "x-api-secret"
-        in: "header"
-        required: true
-        type: "string"
+        - name: "objectId"
+          in: "path"
+          required: true
+          type: "string"
+        - name: "x-api-secret"
+          in: "header"
+          required: true
+          type: "string"
       responses:
         200:
           description: "200 response"
@@ -354,39 +357,39 @@ paths:
       tags:
         - chats
       produces:
-      - "application/json"
+        - "application/json"
       parameters:
-      - name: "where"
-        in: "query"
-        required: false
-        type: "string"
-      - name: "objectId"
-        in: "path"
-        required: true
-        type: "string"
-      - name: "limit"
-        in: "query"
-        required: false
-        type: "string"
-      - name: "x-api-secret"
-        in: "header"
-        required: true
-        type: "string"
-      - name: "order"
-        in: "query"
-        required: false
-        type: "string"
-      - name: "offset"
-        in: "query"
-        required: false
-        type: "string"
+        - name: "where"
+          in: "query"
+          required: false
+          type: "string"
+        - name: "objectId"
+          in: "path"
+          required: true
+          type: "string"
+        - name: "limit"
+          in: "query"
+          required: false
+          type: "string"
+        - name: "x-api-secret"
+          in: "header"
+          required: true
+          type: "string"
+        - name: "order"
+          in: "query"
+          required: false
+          type: "string"
+        - name: "offset"
+          in: "query"
+          required: false
+          type: "string"
       responses:
         200:
           description: "200 response"
           schema:
             $ref: "#/definitions/Messages"
       security:
-      - api_key: []
+        - api_key: []
       x-amazon-apigateway-integration:
         uri: "https://api-adapter.omni.chat/chats/{objectId}/messages"
         responses:
@@ -410,24 +413,25 @@ paths:
       tags:
         - chats
       produces:
-      - "application/json"
+        - "application/json"
       parameters:
-      - name: "objectId"
-        in: "path"
-        required: true
-        type: "string"
-      - name: "x-api-secret"
-        in: "header"
-        required: true
-        type: "string"
+        - name: "objectId"
+          in: "path"
+          required: true
+          type: "string"
+        - name: "x-api-secret"
+          in: "header"
+          required: true
+          type: "string"
       responses:
         200:
           description: "200 response"
           schema:
             $ref: "#/definitions/ResponseCount"
       security:
-      - api_key: []
-      x-amazon-apigateway-request-validator: "Validate query string parameters and\
+        - api_key: []
+      x-amazon-apigateway-request-validator:
+        "Validate query string parameters and\
         \ headers"
       x-amazon-apigateway-integration:
         uri: "https://api-adapter.omni.chat/chats/{objectId}/messages/count"
@@ -448,27 +452,27 @@ paths:
         - chats
       description: "Obter de uma conversa uma única mensagem"
       produces:
-      - "application/json"
+        - "application/json"
       parameters:
-      - name: "messageId"
-        in: "path"
-        required: true
-        type: "string"
-      - name: "objectId"
-        in: "path"
-        required: true
-        type: "string"
-      - name: "x-api-secret"
-        in: "header"
-        required: true
-        type: "string"
+        - name: "messageId"
+          in: "path"
+          required: true
+          type: "string"
+        - name: "objectId"
+          in: "path"
+          required: true
+          type: "string"
+        - name: "x-api-secret"
+          in: "header"
+          required: true
+          type: "string"
       responses:
         200:
           description: "200 response"
           schema:
             $ref: "#/definitions/Message"
       security:
-      - api_key: []
+        - api_key: []
       x-amazon-apigateway-integration:
         uri: "https://api-adapter.omni.chat/chats/{objectId}/messages/{messageId}"
         responses:
@@ -489,23 +493,23 @@ paths:
       tags:
         - chats
       consumes:
-      - "application/json"
+        - "application/json"
       produces:
-      - "application/json"
+        - "application/json"
       parameters:
-      - name: "objectId"
-        in: "path"
-        required: true
-        type: "string"
-      - name: "x-api-secret"
-        in: "header"
-        required: true
-        type: "string"
-      - in: "body"
-        name: "ChatRouting"
-        required: true
-        schema:
-          $ref: "#/definitions/ChatRouting"
+        - name: "objectId"
+          in: "path"
+          required: true
+          type: "string"
+        - name: "x-api-secret"
+          in: "header"
+          required: true
+          type: "string"
+        - in: "body"
+          name: "ChatRouting"
+          required: true
+          schema:
+            $ref: "#/definitions/ChatRouting"
       responses:
         200:
           description: "200 response"
@@ -536,23 +540,23 @@ paths:
       tags:
         - chats
       consumes:
-      - "application/json"
+        - "application/json"
       produces:
-      - "application/json"
+        - "application/json"
       parameters:
-      - name: "objectId"
-        in: "path"
-        required: true
-        type: "string"
-      - name: "x-api-secret"
-        in: "header"
-        required: true
-        type: "string"
-      - in: "body"
-        name: "ChatFinishing"
-        required: true
-        schema:
-          $ref: "#/definitions/ChatFinishing"
+        - name: "objectId"
+          in: "path"
+          required: true
+          type: "string"
+        - name: "x-api-secret"
+          in: "header"
+          required: true
+          type: "string"
+        - in: "body"
+          name: "ChatFinishing"
+          required: true
+          schema:
+            $ref: "#/definitions/ChatFinishing"
       responses:
         200:
           description: "200 response"
@@ -584,36 +588,37 @@ paths:
       tags:
         - customers
       produces:
-      - "application/json"
+        - "application/json"
       parameters:
-      - name: "where"
-        in: "query"
-        required: false
-        type: "string"
-      - name: "limit"
-        in: "query"
-        required: false
-        type: "string"
-      - name: "x-api-secret"
-        in: "header"
-        required: true
-        type: "string"
-      - name: "order"
-        in: "query"
-        required: false
-        type: "string"
-      - name: "offset"
-        in: "query"
-        required: false
-        type: "string"
+        - name: "where"
+          in: "query"
+          required: false
+          type: "string"
+        - name: "limit"
+          in: "query"
+          required: false
+          type: "string"
+        - name: "x-api-secret"
+          in: "header"
+          required: true
+          type: "string"
+        - name: "order"
+          in: "query"
+          required: false
+          type: "string"
+        - name: "offset"
+          in: "query"
+          required: false
+          type: "string"
       responses:
         200:
           description: "200 response"
           schema:
             $ref: "#/definitions/Customers"
       security:
-      - api_key: []
-      x-amazon-apigateway-request-validator: "Validate query string parameters and\
+        - api_key: []
+      x-amazon-apigateway-request-validator:
+        "Validate query string parameters and\
         \ headers"
       x-amazon-apigateway-integration:
         uri: "https://api-adapter.omni.chat/customers"
@@ -636,19 +641,19 @@ paths:
       tags:
         - customers
       consumes:
-      - "application/json"
+        - "application/json"
       produces:
-      - "application/json"
+        - "application/json"
       parameters:
-      - name: "x-api-secret"
-        in: "header"
-        required: true
-        type: "string"
-      - in: "body"
-        name: "NewCustomer"
-        required: true
-        schema:
-          $ref: "#/definitions/NewCustomer"
+        - name: "x-api-secret"
+          in: "header"
+          required: true
+          type: "string"
+        - in: "body"
+          name: "NewCustomer"
+          required: true
+          schema:
+            $ref: "#/definitions/NewCustomer"
       responses:
         201:
           description: "201 response"
@@ -657,8 +662,9 @@ paths:
         400:
           description: "400 response"
       security:
-      - api_key: []
-      x-amazon-apigateway-request-validator: "Validate query string parameters and\
+        - api_key: []
+      x-amazon-apigateway-request-validator:
+        "Validate query string parameters and\
         \ headers"
       x-amazon-apigateway-integration:
         uri: "https://api-adapter.omni.chat/customers"
@@ -682,24 +688,25 @@ paths:
       tags:
         - customers
       produces:
-      - "application/json"
+        - "application/json"
       parameters:
-      - name: "where"
-        in: "query"
-        required: false
-        type: "string"
-      - name: "x-api-secret"
-        in: "header"
-        required: true
-        type: "string"
+        - name: "where"
+          in: "query"
+          required: false
+          type: "string"
+        - name: "x-api-secret"
+          in: "header"
+          required: true
+          type: "string"
       responses:
         200:
           description: "200 response"
           schema:
             $ref: "#/definitions/ResponseCount"
       security:
-      - api_key: []
-      x-amazon-apigateway-request-validator: "Validate query string parameters and\
+        - api_key: []
+      x-amazon-apigateway-request-validator:
+        "Validate query string parameters and\
         \ headers"
       x-amazon-apigateway-integration:
         uri: "https://api-adapter.omni.chat/customers/count"
@@ -720,16 +727,16 @@ paths:
       tags:
         - customers
       produces:
-      - "application/json"
+        - "application/json"
       parameters:
-      - name: "objectId"
-        in: "path"
-        required: true
-        type: "string"
-      - name: "x-api-secret"
-        in: "header"
-        required: true
-        type: "string"
+        - name: "objectId"
+          in: "path"
+          required: true
+          type: "string"
+        - name: "x-api-secret"
+          in: "header"
+          required: true
+          type: "string"
       responses:
         200:
           description: "200 response"
@@ -740,8 +747,9 @@ paths:
           schema:
             $ref: "#/definitions/ResponseError"
       security:
-      - api_key: []
-      x-amazon-apigateway-request-validator: "Validate query string parameters and\
+        - api_key: []
+      x-amazon-apigateway-request-validator:
+        "Validate query string parameters and\
         \ headers"
       x-amazon-apigateway-integration:
         uri: "https://api-adapter.omni.chat/customers/{objectId}"
@@ -765,16 +773,16 @@ paths:
       tags:
         - customers
       produces:
-      - "application/json"
+        - "application/json"
       parameters:
-      - name: "objectId"
-        in: "path"
-        required: true
-        type: "string"
-      - name: "x-api-secret"
-        in: "header"
-        required: true
-        type: "string"
+        - name: "objectId"
+          in: "path"
+          required: true
+          type: "string"
+        - name: "x-api-secret"
+          in: "header"
+          required: true
+          type: "string"
       responses:
         200:
           description: "200 response"
@@ -787,8 +795,9 @@ paths:
           schema:
             $ref: "#/definitions/ResponseError"
       security:
-      - api_key: []
-      x-amazon-apigateway-request-validator: "Validate query string parameters and\
+        - api_key: []
+      x-amazon-apigateway-request-validator:
+        "Validate query string parameters and\
         \ headers"
       x-amazon-apigateway-integration:
         uri: "https://api-adapter.omni.chat/customers/{objectId}"
@@ -812,16 +821,16 @@ paths:
       tags:
         - customers
       produces:
-      - "application/json"
+        - "application/json"
       parameters:
-      - name: "objectId"
-        in: "path"
-        required: true
-        type: "string"
-      - name: "x-api-secret"
-        in: "header"
-        required: true
-        type: "string"
+        - name: "objectId"
+          in: "path"
+          required: true
+          type: "string"
+        - name: "x-api-secret"
+          in: "header"
+          required: true
+          type: "string"
       responses:
         200:
           description: "200 response"
@@ -832,7 +841,7 @@ paths:
           schema:
             $ref: "#/definitions/ResponseError"
       security:
-      - api_key: []
+        - api_key: []
       x-amazon-apigateway-integration:
         uri: "https://api-adapter.omni.chat/customers/{objectId}"
         responses:
@@ -854,36 +863,37 @@ paths:
       tags:
         - interactions
       produces:
-      - "application/json"
+        - "application/json"
       parameters:
-      - name: "where"
-        in: "query"
-        required: false
-        type: "string"
-      - name: "limit"
-        in: "query"
-        required: false
-        type: "string"
-      - name: "x-api-secret"
-        in: "header"
-        required: true
-        type: "string"
-      - name: "order"
-        in: "query"
-        required: false
-        type: "string"
-      - name: "offset"
-        in: "query"
-        required: false
-        type: "string"
+        - name: "where"
+          in: "query"
+          required: false
+          type: "string"
+        - name: "limit"
+          in: "query"
+          required: false
+          type: "string"
+        - name: "x-api-secret"
+          in: "header"
+          required: true
+          type: "string"
+        - name: "order"
+          in: "query"
+          required: false
+          type: "string"
+        - name: "offset"
+          in: "query"
+          required: false
+          type: "string"
       responses:
         200:
           description: "200 response"
           schema:
             $ref: "#/definitions/Interactions"
       security:
-      - api_key: []
-      x-amazon-apigateway-request-validator: "Validate query string parameters and\
+        - api_key: []
+      x-amazon-apigateway-request-validator:
+        "Validate query string parameters and\
         \ headers"
       x-amazon-apigateway-integration:
         uri: "https://api-adapter.omni.chat/interactions"
@@ -907,24 +917,25 @@ paths:
       tags:
         - interactions
       produces:
-      - "application/json"
+        - "application/json"
       parameters:
-      - name: "where"
-        in: "query"
-        required: false
-        type: "string"
-      - name: "x-api-secret"
-        in: "header"
-        required: true
-        type: "string"
+        - name: "where"
+          in: "query"
+          required: false
+          type: "string"
+        - name: "x-api-secret"
+          in: "header"
+          required: true
+          type: "string"
       responses:
         200:
           description: "200 response"
           schema:
             $ref: "#/definitions/ResponseCount"
       security:
-      - api_key: []
-      x-amazon-apigateway-request-validator: "Validate query string parameters and\
+        - api_key: []
+      x-amazon-apigateway-request-validator:
+        "Validate query string parameters and\
         \ headers"
       x-amazon-apigateway-integration:
         uri: "https://api-adapter.omni.chat/interactions/count"
@@ -945,16 +956,16 @@ paths:
       tags:
         - interactions
       produces:
-      - "application/json"
+        - "application/json"
       parameters:
-      - name: "objectId"
-        in: "path"
-        required: true
-        type: "string"
-      - name: "x-api-secret"
-        in: "header"
-        required: true
-        type: "string"
+        - name: "objectId"
+          in: "path"
+          required: true
+          type: "string"
+        - name: "x-api-secret"
+          in: "header"
+          required: true
+          type: "string"
       responses:
         200:
           description: "200 response"
@@ -965,8 +976,9 @@ paths:
           schema:
             $ref: "#/definitions/ResponseError"
       security:
-      - api_key: []
-      x-amazon-apigateway-request-validator: "Validate query string parameters and\
+        - api_key: []
+      x-amazon-apigateway-request-validator:
+        "Validate query string parameters and\
         \ headers"
       x-amazon-apigateway-integration:
         uri: "https://api-adapter.omni.chat/interactions/{objectId}"
@@ -991,34 +1003,35 @@ paths:
       tags:
         - message-templates
       parameters:
-      - name: "where"
-        in: "query"
-        required: false
-        type: "string"
-      - name: "limit"
-        in: "query"
-        required: false
-        type: "string"
-      - name: "x-api-secret"
-        in: "header"
-        required: true
-        type: "string"
-      - name: "order"
-        in: "query"
-        required: false
-        type: "string"
-      - name: "offset"
-        in: "query"
-        required: false
-        type: "string"
+        - name: "where"
+          in: "query"
+          required: false
+          type: "string"
+        - name: "limit"
+          in: "query"
+          required: false
+          type: "string"
+        - name: "x-api-secret"
+          in: "header"
+          required: true
+          type: "string"
+        - name: "order"
+          in: "query"
+          required: false
+          type: "string"
+        - name: "offset"
+          in: "query"
+          required: false
+          type: "string"
       responses:
         200:
           description: "200 response"
           schema:
             $ref: "#/definitions/MessageTemplate"
       security:
-      - api_key: []
-      x-amazon-apigateway-request-validator: "Validate query string parameters and\
+        - api_key: []
+      x-amazon-apigateway-request-validator:
+        "Validate query string parameters and\
         \ headers"
       x-amazon-apigateway-integration:
         uri: "https://api-adapter.omni.chat/message-templates"
@@ -1042,22 +1055,23 @@ paths:
       tags:
         - message-templates
       parameters:
-      - name: "where"
-        in: "query"
-        required: false
-        type: "string"
-      - name: "x-api-secret"
-        in: "header"
-        required: false
-        type: "string"
+        - name: "where"
+          in: "query"
+          required: false
+          type: "string"
+        - name: "x-api-secret"
+          in: "header"
+          required: false
+          type: "string"
       responses:
         200:
           description: "200 response"
           schema:
             $ref: "#/definitions/ResponseCount"
       security:
-      - api_key: []
-      x-amazon-apigateway-request-validator: "Validate query string parameters and\
+        - api_key: []
+      x-amazon-apigateway-request-validator:
+        "Validate query string parameters and\
         \ headers"
       x-amazon-apigateway-integration:
         uri: "https://api-adapter.omni.chat/message-templates/count"
@@ -1078,36 +1092,37 @@ paths:
       tags:
         - messages
       produces:
-      - "application/json"
+        - "application/json"
       parameters:
-      - name: "where"
-        in: "query"
-        required: false
-        type: "string"
-      - name: "limit"
-        in: "query"
-        required: false
-        type: "string"
-      - name: "x-api-secret"
-        in: "header"
-        required: true
-        type: "string"
-      - name: "order"
-        in: "query"
-        required: false
-        type: "string"
-      - name: "offset"
-        in: "query"
-        required: false
-        type: "string"
+        - name: "where"
+          in: "query"
+          required: false
+          type: "string"
+        - name: "limit"
+          in: "query"
+          required: false
+          type: "string"
+        - name: "x-api-secret"
+          in: "header"
+          required: true
+          type: "string"
+        - name: "order"
+          in: "query"
+          required: false
+          type: "string"
+        - name: "offset"
+          in: "query"
+          required: false
+          type: "string"
       responses:
         200:
           description: "200 response"
           schema:
             $ref: "#/definitions/Messages"
       security:
-      - api_key: []
-      x-amazon-apigateway-request-validator: "Validate query string parameters and\
+        - api_key: []
+      x-amazon-apigateway-request-validator:
+        "Validate query string parameters and\
         \ headers"
       x-amazon-apigateway-integration:
         uri: "https://api-adapter.omni.chat/messages"
@@ -1130,21 +1145,21 @@ paths:
       tags:
         - messages
       produces:
-      - "application/json"
+        - "application/json"
       parameters:
-      - name: "x-api-secret"
-        in: "header"
-        required: false
-        type: "string"
-      - name: "x-api-key"
-        in: "header"
-        required: false
-        type: "string"
-      - in: "body"
-        name: "NewMessage"
-        required: true
-        schema:
-          $ref: "#/definitions/NewMessage"
+        - name: "x-api-secret"
+          in: "header"
+          required: false
+          type: "string"
+        - name: "x-api-key"
+          in: "header"
+          required: false
+          type: "string"
+        - in: "body"
+          name: "NewMessage"
+          required: true
+          schema:
+            $ref: "#/definitions/NewMessage"
       responses:
         201:
           description: "201 response"
@@ -1155,8 +1170,9 @@ paths:
           schema:
             $ref: "#/definitions/ResponseError"
       security:
-      - api_key: []
-      x-amazon-apigateway-request-validator: "Validate query string parameters and\
+        - api_key: []
+      x-amazon-apigateway-request-validator:
+        "Validate query string parameters and\
         \ headers"
       x-amazon-apigateway-integration:
         uri: "https://api-adapter.omni.chat/messages"
@@ -1179,24 +1195,25 @@ paths:
       tags:
         - messages
       produces:
-      - "application/json"
+        - "application/json"
       parameters:
-      - name: "objectId"
-        in: "path"
-        required: true
-        type: "string"
-      - name: "x-api-secret"
-        in: "header"
-        required: true
-        type: "string"
+        - name: "objectId"
+          in: "path"
+          required: true
+          type: "string"
+        - name: "x-api-secret"
+          in: "header"
+          required: true
+          type: "string"
       responses:
         200:
           description: "200 response"
           schema:
             $ref: "#/definitions/Message"
       security:
-      - api_key: []
-      x-amazon-apigateway-request-validator: "Validate query string parameters and\
+        - api_key: []
+      x-amazon-apigateway-request-validator:
+        "Validate query string parameters and\
         \ headers"
       x-amazon-apigateway-integration:
         uri: "https://api-adapter.omni.chat/messages/{objectId}"
@@ -1205,7 +1222,8 @@ paths:
             statusCode: "200"
         requestParameters:
           integration.request.header.X-Parse-REST-API-Key: "'RFxCx77Nf9VEFNnFIUxSXTrLrdfb4ntZRHG7NBIO'"
-          integration.request.querystring.include: "'order, salesPerson, product,\
+          integration.request.querystring.include:
+            "'order, salesPerson, product,\
             \ variant, chat, chat.customer, chat.customer.address'"
           integration.request.header.X-Parse-Application-Id: "'lHC0oT3G1oZRPB2otwYngjMjKnsOVFGfxWw5PrTM'"
           integration.request.header.x-api-secret: "method.request.header.x-api-secret"
@@ -1219,35 +1237,35 @@ paths:
       tags:
         - orders
       produces:
-      - "application/json"
+        - "application/json"
       parameters:
-      - name: "where"
-        in: "query"
-        required: false
-        type: "string"
-      - name: "limit"
-        in: "query"
-        required: false
-        type: "string"
-      - name: "x-api-secret"
-        in: "header"
-        required: true
-        type: "string"
-      - name: "order"
-        in: "query"
-        required: false
-        type: "string"
-      - name: "offset"
-        in: "query"
-        required: false
-        type: "string"
+        - name: "where"
+          in: "query"
+          required: false
+          type: "string"
+        - name: "limit"
+          in: "query"
+          required: false
+          type: "string"
+        - name: "x-api-secret"
+          in: "header"
+          required: true
+          type: "string"
+        - name: "order"
+          in: "query"
+          required: false
+          type: "string"
+        - name: "offset"
+          in: "query"
+          required: false
+          type: "string"
       responses:
         200:
           description: "200 response"
           schema:
             $ref: "#/definitions/Orders"
       security:
-      - api_key: []
+        - api_key: []
       x-amazon-apigateway-integration:
         uri: "https://api-adapter.omni.chat/orders"
         responses:
@@ -1270,24 +1288,24 @@ paths:
       tags:
         - orders
       produces:
-      - "application/json"
+        - "application/json"
       parameters:
-      - name: "x-api-secret"
-        in: "header"
-      - name: "x-api-key"
-        in: "header"
-      - in: "body"
-        name: "NewOrder"
-        required: true
-        schema:
-          $ref: "#/definitions/NewOrder"
+        - name: "x-api-secret"
+          in: "header"
+        - name: "x-api-key"
+          in: "header"
+        - in: "body"
+          name: "NewOrder"
+          required: true
+          schema:
+            $ref: "#/definitions/NewOrder"
       responses:
         200:
           description: "200 response"
           schema:
             $ref: "#/definitions/Orders"
       security:
-      - api_key: []
+        - api_key: []
       x-amazon-apigateway-integration:
         uri: "https://api-adapter.omni.chat/orders"
         responses:
@@ -1301,31 +1319,32 @@ paths:
         passthroughBehavior: "when_no_match"
         httpMethod: "POST"
         type: "http"
-  
+
   /orders/count:
     get:
       description: "Contar pedidos"
       tags:
         - orders
       produces:
-      - "application/json"
+        - "application/json"
       parameters:
-      - name: "where"
-        in: "query"
-        required: false
-        type: "string"
-      - name: "x-api-secret"
-        in: "header"
-        required: true
-        type: "string"
+        - name: "where"
+          in: "query"
+          required: false
+          type: "string"
+        - name: "x-api-secret"
+          in: "header"
+          required: true
+          type: "string"
       responses:
         200:
           description: "200 response"
           schema:
             $ref: "#/definitions/ResponseCount"
       security:
-      - api_key: []
-      x-amazon-apigateway-request-validator: "Validate query string parameters and\
+        - api_key: []
+      x-amazon-apigateway-request-validator:
+        "Validate query string parameters and\
         \ headers"
       x-amazon-apigateway-integration:
         uri: "https://api-adapter.omni.chat/orders/count"
@@ -1346,16 +1365,16 @@ paths:
       tags:
         - orders
       produces:
-      - "application/json"
+        - "application/json"
       parameters:
-      - name: "objectId"
-        in: "path"
-        required: true
-        type: "string"
-      - name: "x-api-secret"
-        in: "header"
-        required: true
-        type: "string"
+        - name: "objectId"
+          in: "path"
+          required: true
+          type: "string"
+        - name: "x-api-secret"
+          in: "header"
+          required: true
+          type: "string"
       responses:
         200:
           description: "200 response"
@@ -1366,8 +1385,9 @@ paths:
           schema:
             $ref: "#/definitions/ResponseError"
       security:
-      - api_key: []
-      x-amazon-apigateway-request-validator: "Validate query string parameters and\
+        - api_key: []
+      x-amazon-apigateway-request-validator:
+        "Validate query string parameters and\
         \ headers"
       x-amazon-apigateway-integration:
         uri: "https://api-adapter.omni.chat/orders/{objectId}"
@@ -1393,28 +1413,28 @@ paths:
         - orders
       description: "Alterar o status de uma ordem"
       consumes:
-      - "application/json"
+        - "application/json"
       produces:
-      - "application/json"
+        - "application/json"
       parameters:
-      - name: "objectId"
-        in: "path"
-        required: true
-        type: "string"
-      - name: "x-api-secret"
-        in: "header"
-        required: true
-        type: "string"
-      - in: "body"
-        name: "StatusChange"
-        required: true
-        schema:
-          $ref: "#/definitions/StatusChange"
+        - name: "objectId"
+          in: "path"
+          required: true
+          type: "string"
+        - name: "x-api-secret"
+          in: "header"
+          required: true
+          type: "string"
+        - in: "body"
+          name: "StatusChange"
+          required: true
+          schema:
+            $ref: "#/definitions/StatusChange"
       responses:
         200:
           description: "200 response"
       security:
-      - api_key: []
+        - api_key: []
       x-amazon-apigateway-integration:
         uri: "https://api-adapter.omni.chat/orders/{objectId}/statusChanges"
         responses:
@@ -1427,44 +1447,45 @@ paths:
           integration.request.path.objectId: "method.request.path.objectId"
         passthroughBehavior: "when_no_match"
         httpMethod: "POST"
-        type: "http"   
-        
+        type: "http"
+
   /products:
     get:
       description: "Listar produtos"
       tags:
         - products
       produces:
-      - "application/json"
+        - "application/json"
       parameters:
-      - name: "where"
-        in: "query"
-        required: false
-        type: "string"
-      - name: "limit"
-        in: "query"
-        required: false
-        type: "string"
-      - name: "x-api-secret"
-        in: "header"
-        required: true
-        type: "string"
-      - name: "order"
-        in: "query"
-        required: false
-        type: "string"
-      - name: "offset"
-        in: "query"
-        required: false
-        type: "string"
+        - name: "where"
+          in: "query"
+          required: false
+          type: "string"
+        - name: "limit"
+          in: "query"
+          required: false
+          type: "string"
+        - name: "x-api-secret"
+          in: "header"
+          required: true
+          type: "string"
+        - name: "order"
+          in: "query"
+          required: false
+          type: "string"
+        - name: "offset"
+          in: "query"
+          required: false
+          type: "string"
       responses:
         200:
           description: "200 response"
           schema:
             $ref: "#/definitions/Products"
       security:
-      - api_key: []
-      x-amazon-apigateway-request-validator: "Validate query string parameters and\
+        - api_key: []
+      x-amazon-apigateway-request-validator:
+        "Validate query string parameters and\
         \ headers"
       x-amazon-apigateway-integration:
         uri: "https://api-adapter.omni.chat/products"
@@ -1487,19 +1508,19 @@ paths:
       tags:
         - products
       consumes:
-      - "application/json"
+        - "application/json"
       produces:
-      - "application/json"
+        - "application/json"
       parameters:
-      - name: "x-api-secret"
-        in: "header"
-        required: true
-        type: "string"
-      - in: "body"
-        name: "NewProduct"
-        required: true
-        schema:
-          $ref: "#/definitions/NewProduct"
+        - name: "x-api-secret"
+          in: "header"
+          required: true
+          type: "string"
+        - in: "body"
+          name: "NewProduct"
+          required: true
+          schema:
+            $ref: "#/definitions/NewProduct"
       responses:
         201:
           description: "201 response"
@@ -1518,8 +1539,9 @@ paths:
           schema:
             $ref: "#/definitions/ResponseError"
       security:
-      - api_key: []
-      x-amazon-apigateway-request-validator: "Validate query string parameters and\
+        - api_key: []
+      x-amazon-apigateway-request-validator:
+        "Validate query string parameters and\
         \ headers"
       x-amazon-apigateway-integration:
         uri: "https://api-adapter.omni.chat/products"
@@ -1545,24 +1567,25 @@ paths:
       tags:
         - products
       produces:
-      - "application/json"
+        - "application/json"
       parameters:
-      - name: "where"
-        in: "query"
-        required: false
-        type: "string"
-      - name: "x-api-secret"
-        in: "header"
-        required: true
-        type: "string"
+        - name: "where"
+          in: "query"
+          required: false
+          type: "string"
+        - name: "x-api-secret"
+          in: "header"
+          required: true
+          type: "string"
       responses:
         200:
           description: "200 response"
           schema:
             $ref: "#/definitions/ResponseCount"
       security:
-      - api_key: []
-      x-amazon-apigateway-request-validator: "Validate query string parameters and\
+        - api_key: []
+      x-amazon-apigateway-request-validator:
+        "Validate query string parameters and\
         \ headers"
       x-amazon-apigateway-integration:
         uri: "https://api-adapter.omni.chat/products/count"
@@ -1583,16 +1606,16 @@ paths:
       tags:
         - products
       produces:
-      - "application/json"
+        - "application/json"
       parameters:
-      - name: "objectId"
-        in: "path"
-        required: true
-        type: "string"
-      - name: "x-api-secret"
-        in: "header"
-        required: true
-        type: "string"
+        - name: "objectId"
+          in: "path"
+          required: true
+          type: "string"
+        - name: "x-api-secret"
+          in: "header"
+          required: true
+          type: "string"
       responses:
         200:
           description: "200 response"
@@ -1603,8 +1626,9 @@ paths:
           schema:
             $ref: "#/definitions/ResponseError"
       security:
-      - api_key: []
-      x-amazon-apigateway-request-validator: "Validate query string parameters and\
+        - api_key: []
+      x-amazon-apigateway-request-validator:
+        "Validate query string parameters and\
         \ headers"
       x-amazon-apigateway-integration:
         uri: "https://api-adapter.omni.chat/products/{objectId}"
@@ -1627,16 +1651,16 @@ paths:
       tags:
         - products
       produces:
-      - "application/json"
+        - "application/json"
       parameters:
-      - name: "objectId"
-        in: "path"
-        required: true
-        type: "string"
-      - name: "x-api-secret"
-        in: "header"
-        required: true
-        type: "string"
+        - name: "objectId"
+          in: "path"
+          required: true
+          type: "string"
+        - name: "x-api-secret"
+          in: "header"
+          required: true
+          type: "string"
       responses:
         200:
           description: "200 response"
@@ -1649,8 +1673,9 @@ paths:
           schema:
             $ref: "#/definitions/ResponseError"
       security:
-      - api_key: []
-      x-amazon-apigateway-request-validator: "Validate query string parameters and\
+        - api_key: []
+      x-amazon-apigateway-request-validator:
+        "Validate query string parameters and\
         \ headers"
       x-amazon-apigateway-integration:
         uri: "https://api-adapter.omni.chat/products/{objectId}"
@@ -1674,16 +1699,16 @@ paths:
       tags:
         - products
       produces:
-      - "application/json"
+        - "application/json"
       parameters:
-      - name: "objectId"
-        in: "path"
-        required: true
-        type: "string"
-      - name: "x-api-secret"
-        in: "header"
-        required: true
-        type: "string"
+        - name: "objectId"
+          in: "path"
+          required: true
+          type: "string"
+        - name: "x-api-secret"
+          in: "header"
+          required: true
+          type: "string"
       responses:
         200:
           description: "200 response"
@@ -1694,7 +1719,7 @@ paths:
           schema:
             $ref: "#/definitions/ResponseError"
       security:
-      - api_key: []
+        - api_key: []
       x-amazon-apigateway-integration:
         uri: "https://api-adapter.omni.chat/products/{objectId}"
         responses:
@@ -1716,23 +1741,23 @@ paths:
       tags:
         - products
       produces:
-      - "application/json"
+        - "application/json"
       parameters:
-      - name: "objectId"
-        in: "path"
-        required: true
-        type: "string"
-      - name: "x-api-secret"
-        in: "header"
-        required: true
-        type: "string"
+        - name: "objectId"
+          in: "path"
+          required: true
+          type: "string"
+        - name: "x-api-secret"
+          in: "header"
+          required: true
+          type: "string"
       responses:
         200:
           description: "200 response"
           schema:
             $ref: "#/definitions/Variants"
       security:
-      - api_key: []
+        - api_key: []
       x-amazon-apigateway-integration:
         uri: "https://api-adapter.omni.chat/products/{objectId}/variants"
         responses:
@@ -1751,28 +1776,28 @@ paths:
       tags:
         - products
       produces:
-      - "application/json"
+        - "application/json"
       parameters:
-      - name: "objectId"
-        in: "path"
-        required: true
-        type: "string"
-      - name: "x-api-secret"
-        in: "header"
-        required: true
-        type: "string"
-      - in: "body"
-        name: "NewVariant"
-        required: true
-        schema:
-          $ref: "#/definitions/NewVariant"
+        - name: "objectId"
+          in: "path"
+          required: true
+          type: "string"
+        - name: "x-api-secret"
+          in: "header"
+          required: true
+          type: "string"
+        - in: "body"
+          name: "NewVariant"
+          required: true
+          schema:
+            $ref: "#/definitions/NewVariant"
       responses:
         200:
           description: "200 response"
           schema:
             $ref: "#/definitions/ResponseObjectCreate"
       security:
-      - api_key: []
+        - api_key: []
       x-amazon-apigateway-integration:
         uri: "https://api-adapter.omni.chat/products/{objectId}/variants"
         responses:
@@ -1792,24 +1817,25 @@ paths:
       tags:
         - products
       produces:
-      - "application/json"
+        - "application/json"
       parameters:
-      - name: "objectId"
-        in: "path"
-        required: true
-        type: "string"
-      - name: "x-api-secret"
-        in: "header"
-        required: true
-        type: "string"
+        - name: "objectId"
+          in: "path"
+          required: true
+          type: "string"
+        - name: "x-api-secret"
+          in: "header"
+          required: true
+          type: "string"
       responses:
         200:
           description: "200 response"
           schema:
             $ref: "#/definitions/ResponseCount"
       security:
-      - api_key: []
-      x-amazon-apigateway-request-validator: "Validate query string parameters and\
+        - api_key: []
+      x-amazon-apigateway-request-validator:
+        "Validate query string parameters and\
         \ headers"
       x-amazon-apigateway-integration:
         uri: "https://api-adapter.omni.chat/products/{objectId}/variants/count"
@@ -1830,27 +1856,27 @@ paths:
       tags:
         - products
       produces:
-      - "application/json"
+        - "application/json"
       parameters:
-      - name: "variantId"
-        in: "path"
-        required: true
-        type: "string"
-      - name: "objectId"
-        in: "path"
-        required: true
-        type: "string"
-      - name: "x-api-secret"
-        in: "header"
-        required: true
-        type: "string"
+        - name: "variantId"
+          in: "path"
+          required: true
+          type: "string"
+        - name: "objectId"
+          in: "path"
+          required: true
+          type: "string"
+        - name: "x-api-secret"
+          in: "header"
+          required: true
+          type: "string"
       responses:
         200:
           description: "200 response"
           schema:
             $ref: "#/definitions/ResponseUpdatedObject"
       security:
-      - api_key: []
+        - api_key: []
       x-amazon-apigateway-integration:
         uri: "https://api-adapter.omni.chat/products/{objectId}/variants/{variantId}"
         responses:
@@ -1870,27 +1896,27 @@ paths:
       tags:
         - products
       produces:
-      - "application/json"
+        - "application/json"
       parameters:
-      - name: "variantId"
-        in: "path"
-        required: true
-        type: "string"
-      - name: "objectId"
-        in: "path"
-        required: true
-        type: "string"
-      - name: "x-api-secret"
-        in: "header"
-        required: true
-        type: "string"
+        - name: "variantId"
+          in: "path"
+          required: true
+          type: "string"
+        - name: "objectId"
+          in: "path"
+          required: true
+          type: "string"
+        - name: "x-api-secret"
+          in: "header"
+          required: true
+          type: "string"
       responses:
         200:
           description: "200 response"
           schema:
             $ref: "#/definitions/ResponseEmpty"
       security:
-      - api_key: []
+        - api_key: []
       x-amazon-apigateway-integration:
         uri: "https://api-adapter.omni.chat/products/{objectId}/variants/{variantId}"
         responses:
@@ -1907,24 +1933,24 @@ paths:
         type: "http"
   /products/{objectId}/variants/{variantId}/prices:
     get:
-      description: "Listar os preços de um produto por uma variante."  
+      description: "Listar os preços de um produto por uma variante."
       tags:
         - products
       produces:
-      - "application/json"
+        - "application/json"
       parameters:
-      - name: "objectId"
-        in: "path"
-        required: true
-        type: "string"
-      - name: "variantId"
-        in: "path"
-        required: true
-        type: "string"
-      - name: "x-api-secret"
-        in: "header"
-        required: true
-        type: "string"
+        - name: "objectId"
+          in: "path"
+          required: true
+          type: "string"
+        - name: "variantId"
+          in: "path"
+          required: true
+          type: "string"
+        - name: "x-api-secret"
+          in: "header"
+          required: true
+          type: "string"
       responses:
         200:
           description: "200 response"
@@ -1935,8 +1961,9 @@ paths:
           schema:
             $ref: "#/definitions/ResponseError"
       security:
-      - api_key: []
-      x-amazon-apigateway-request-validator: "Validate query string parameters and\
+        - api_key: []
+      x-amazon-apigateway-request-validator:
+        "Validate query string parameters and\
         \ headers"
       x-amazon-apigateway-integration:
         uri: "https://api-adapter.omni.chat/products/{objectId}/variants/{variantId}/prices"
@@ -1956,25 +1983,25 @@ paths:
         type: "http"
   /products/{objectId}/prices:
     post:
-      description: "Criar um preço para o produto"   
+      description: "Criar um preço para o produto"
       tags:
         - products
       produces:
-      - "application/json"
+        - "application/json"
       parameters:
-      - name: "objectId"
-        in: "path"
-        required: true
-        type: "string"
-      - name: "x-api-secret"
-        in: "header"
-        required: true
-        type: "string"
-      - in: "body"
-        name: "NewPrice"
-        required: true
-        schema:
-          $ref: "#/definitions/NewPrice"
+        - name: "objectId"
+          in: "path"
+          required: true
+          type: "string"
+        - name: "x-api-secret"
+          in: "header"
+          required: true
+          type: "string"
+        - in: "body"
+          name: "NewPrice"
+          required: true
+          schema:
+            $ref: "#/definitions/NewPrice"
       responses:
         201:
           description: "201 response"
@@ -1993,8 +2020,9 @@ paths:
           schema:
             $ref: "#/definitions/ResponseError"
       security:
-      - api_key: []
-      x-amazon-apigateway-request-validator: "Validate query string parameters and\
+        - api_key: []
+      x-amazon-apigateway-request-validator:
+        "Validate query string parameters and\
         \ headers"
       x-amazon-apigateway-integration:
         uri: "https://api-adapter.omni.chat/products/{objectId}/prices"
@@ -2017,24 +2045,24 @@ paths:
         type: "http"
   /products/{objectId}/prices/{priceId}:
     get:
-      description: "Obter um unico preço de produto"   
+      description: "Obter um único preço de produto"
       tags:
         - products
       produces:
-      - "application/json"
+        - "application/json"
       parameters:
-      - name: "priceId"
-        in: "path"
-        required: true
-        type: "string"
-      - name: "objectId"
-        in: "path"
-        required: true
-        type: "string"
-      - name: "x-api-secret"
-        in: "header"
-        required: true
-        type: "string"
+        - name: "priceId"
+          in: "path"
+          required: true
+          type: "string"
+        - name: "objectId"
+          in: "path"
+          required: true
+          type: "string"
+        - name: "x-api-secret"
+          in: "header"
+          required: true
+          type: "string"
       responses:
         200:
           description: "200 response"
@@ -2045,8 +2073,9 @@ paths:
           schema:
             $ref: "#/definitions/ResponseError"
       security:
-      - api_key: []
-      x-amazon-apigateway-request-validator: "Validate query string parameters and\
+        - api_key: []
+      x-amazon-apigateway-request-validator:
+        "Validate query string parameters and\
         \ headers"
       x-amazon-apigateway-integration:
         uri: "https://api-adapter.omni.chat/products/{objectId}/prices/{priceId}"
@@ -2063,31 +2092,31 @@ paths:
         httpMethod: "GET"
         type: "http"
     put:
-      description: "Atualizar preço de um produto"   
+      description: "Atualizar preço de um produto"
       tags:
         - products
       produces:
-      - "application/json"
+        - "application/json"
       parameters:
-      - name: "priceId"
-        in: "path"
-        required: true
-        type: "string"
-      - name: "objectId"
-        in: "path"
-        required: true
-        type: "string"
-      - name: "x-api-secret"
-        in: "header"
-        required: true
-        type: "string"
+        - name: "priceId"
+          in: "path"
+          required: true
+          type: "string"
+        - name: "objectId"
+          in: "path"
+          required: true
+          type: "string"
+        - name: "x-api-secret"
+          in: "header"
+          required: true
+          type: "string"
       responses:
         200:
           description: "200 response"
           schema:
             $ref: "#/definitions/ResponseUpdatedObject"
       security:
-      - api_key: []
+        - api_key: []
       x-amazon-apigateway-integration:
         uri: "https://api-adapter.omni.chat/products/{objectId}/prices/{priceId}"
         responses:
@@ -2103,31 +2132,31 @@ paths:
         httpMethod: "PUT"
         type: "http"
     delete:
-      description: "Deletar preço de um produto"   
+      description: "Deletar preço de um produto"
       tags:
         - products
       produces:
-      - "application/json"
+        - "application/json"
       parameters:
-      - name: "priceId"
-        in: "path"
-        required: true
-        type: "string"
-      - name: "objectId"
-        in: "path"
-        required: true
-        type: "string"
-      - name: "x-api-secret"
-        in: "header"
-        required: true
-        type: "string"
+        - name: "priceId"
+          in: "path"
+          required: true
+          type: "string"
+        - name: "objectId"
+          in: "path"
+          required: true
+          type: "string"
+        - name: "x-api-secret"
+          in: "header"
+          required: true
+          type: "string"
       responses:
         200:
           description: "200 response"
           schema:
             $ref: "#/definitions/ResponseEmpty"
       security:
-      - api_key: []
+        - api_key: []
       x-amazon-apigateway-integration:
         uri: "https://api-adapter.omni.chat/products/{objectId}/prices/{priceId}"
         responses:
@@ -2148,34 +2177,35 @@ paths:
       tags:
         - teams
       parameters:
-      - name: "where"
-        in: "query"
-        required: false
-        type: "string"
-      - name: "limit"
-        in: "query"
-        required: false
-        type: "string"
-      - name: "x-api-secret"
-        in: "header"
-        required: false
-        type: "string"
-      - name: "order"
-        in: "query"
-        required: false
-        type: "string"
-      - name: "offset"
-        in: "query"
-        required: false
-        type: "string"
+        - name: "where"
+          in: "query"
+          required: false
+          type: "string"
+        - name: "limit"
+          in: "query"
+          required: false
+          type: "string"
+        - name: "x-api-secret"
+          in: "header"
+          required: false
+          type: "string"
+        - name: "order"
+          in: "query"
+          required: false
+          type: "string"
+        - name: "offset"
+          in: "query"
+          required: false
+          type: "string"
       responses:
         200:
           description: "200 response"
           schema:
             $ref: "#/definitions/Teams"
       security:
-      - api_key: []
-      x-amazon-apigateway-request-validator: "Validate query string parameters and\
+        - api_key: []
+      x-amazon-apigateway-request-validator:
+        "Validate query string parameters and\
         \ headers"
       x-amazon-apigateway-integration:
         uri: "https://api-adapter.omni.chat/teams"
@@ -2198,19 +2228,19 @@ paths:
       tags:
         - teams
       consumes:
-      - "application/json"
+        - "application/json"
       produces:
-      - "application/json"
+        - "application/json"
       parameters:
-      - name: "x-api-secret"
-        in: "header"
-        required: true
-        type: "string"
-      - in: "body"
-        name: "NewTeam"
-        required: true
-        schema:
-          $ref: "#/definitions/NewTeam"
+        - name: "x-api-secret"
+          in: "header"
+          required: true
+          type: "string"
+        - in: "body"
+          name: "NewTeam"
+          required: true
+          schema:
+            $ref: "#/definitions/NewTeam"
       responses:
         201:
           description: "201 response"
@@ -2219,8 +2249,9 @@ paths:
         400:
           description: "400 response"
       security:
-      - api_key: []
-      x-amazon-apigateway-request-validator: "Validate query string parameters and\
+        - api_key: []
+      x-amazon-apigateway-request-validator:
+        "Validate query string parameters and\
         \ headers"
       x-amazon-apigateway-integration:
         uri: "https://api-adapter.omni.chat/teams"
@@ -2244,16 +2275,16 @@ paths:
       tags:
         - teams
       produces:
-      - "application/json"
+        - "application/json"
       parameters:
-      - name: "objectId"
-        in: "path"
-        required: true
-        type: "string"
-      - name: "x-api-secret"
-        in: "header"
-        required: true
-        type: "string"
+        - name: "objectId"
+          in: "path"
+          required: true
+          type: "string"
+        - name: "x-api-secret"
+          in: "header"
+          required: true
+          type: "string"
       responses:
         200:
           description: "200 response"
@@ -2264,8 +2295,9 @@ paths:
           schema:
             $ref: "#/definitions/ResponseError"
       security:
-      - api_key: []
-      x-amazon-apigateway-request-validator: "Validate query string parameters and\
+        - api_key: []
+      x-amazon-apigateway-request-validator:
+        "Validate query string parameters and\
         \ headers"
       x-amazon-apigateway-integration:
         uri: "https://api-adapter.omni.chat/teams/{objectId}"
@@ -2289,23 +2321,23 @@ paths:
       tags:
         - teams
       produces:
-      - "application/json"
+        - "application/json"
       parameters:
-      - name: "objectId"
-        in: "path"
-        required: true
-        type: "string"
-      - name: "x-api-secret"
-        in: "header"
-        required: true
-        type: "string"
+        - name: "objectId"
+          in: "path"
+          required: true
+          type: "string"
+        - name: "x-api-secret"
+          in: "header"
+          required: true
+          type: "string"
       responses:
         200:
           description: "200 response"
           schema:
             $ref: "#/definitions/ResponseUpdatedObject"
       security:
-      - api_key: []
+        - api_key: []
       x-amazon-apigateway-integration:
         uri: "https://api-adapter.omni.chat/teams/{objectId}"
         responses:
@@ -2324,16 +2356,16 @@ paths:
       tags:
         - teams
       produces:
-      - "application/json"
+        - "application/json"
       parameters:
-      - name: "objectId"
-        in: "path"
-        required: true
-        type: "string"
-      - name: "x-api-secret"
-        in: "header"
-        required: true
-        type: "string"
+        - name: "objectId"
+          in: "path"
+          required: true
+          type: "string"
+        - name: "x-api-secret"
+          in: "header"
+          required: true
+          type: "string"
       responses:
         200:
           description: "200 response"
@@ -2344,7 +2376,7 @@ paths:
           schema:
             $ref: "#/definitions/ResponseError"
       security:
-      - api_key: []
+        - api_key: []
       x-amazon-apigateway-integration:
         uri: "https://api-adapter.omni.chat/teams/{objectId}"
         responses:
@@ -2366,23 +2398,23 @@ paths:
       tags:
         - teams
       produces:
-      - "application/json"
+        - "application/json"
       parameters:
-      - name: "objectId"
-        in: "path"
-        required: true
-        type: "string"
-      - name: "x-api-secret"
-        in: "header"
-        required: true
-        type: "string"
+        - name: "objectId"
+          in: "path"
+          required: true
+          type: "string"
+        - name: "x-api-secret"
+          in: "header"
+          required: true
+          type: "string"
       responses:
         200:
           description: "200 response"
           schema:
             $ref: "#/definitions/ResponseUpdatedObject"
       security:
-      - api_key: []
+        - api_key: []
       x-amazon-apigateway-integration:
         uri: "https://api-adapter.omni.chat/teams/{objectId}/supervisors"
         responses:
@@ -2401,16 +2433,16 @@ paths:
       tags:
         - teams
       produces:
-      - "application/json"
+        - "application/json"
       parameters:
-      - name: "objectId"
-        in: "path"
-        required: true
-        type: "string"
-      - name: "x-api-secret"
-        in: "header"
-        required: true
-        type: "string"
+        - name: "objectId"
+          in: "path"
+          required: true
+          type: "string"
+        - name: "x-api-secret"
+          in: "header"
+          required: true
+          type: "string"
       responses:
         200:
           description: "200 response"
@@ -2421,7 +2453,7 @@ paths:
           schema:
             $ref: "#/definitions/ResponseError"
       security:
-      - api_key: []
+        - api_key: []
       x-amazon-apigateway-integration:
         uri: "https://api-adapter.omni.chat/teams/{objectId}/supervisors"
         responses:
@@ -2439,27 +2471,27 @@ paths:
         type: "http"
   /teams/{objectId}/users:
     put:
-      description: "Remover um usuário num time"
+      description: "Adicionar um usuário num time"
       tags:
         - teams
       produces:
-      - "application/json"
+        - "application/json"
       parameters:
-      - name: "objectId"
-        in: "path"
-        required: true
-        type: "string"
-      - name: "x-api-secret"
-        in: "header"
-        required: true
-        type: "string"
+        - name: "objectId"
+          in: "path"
+          required: true
+          type: "string"
+        - name: "x-api-secret"
+          in: "header"
+          required: true
+          type: "string"
       responses:
         200:
           description: "200 response"
           schema:
             $ref: "#/definitions/ResponseUpdatedObject"
       security:
-      - api_key: []
+        - api_key: []
       x-amazon-apigateway-integration:
         uri: "https://api-adapter.omni.chat/teams/{objectId}/users"
         responses:
@@ -2474,20 +2506,20 @@ paths:
         httpMethod: "PUT"
         type: "http"
     delete:
-      description: "Remover um usuário de num time"
+      description: "Remover um usuário de um time"
       tags:
         - teams
       produces:
-      - "application/json"
+        - "application/json"
       parameters:
-      - name: "objectId"
-        in: "path"
-        required: true
-        type: "string"
-      - name: "x-api-secret"
-        in: "header"
-        required: true
-        type: "string"
+        - name: "objectId"
+          in: "path"
+          required: true
+          type: "string"
+        - name: "x-api-secret"
+          in: "header"
+          required: true
+          type: "string"
       responses:
         200:
           description: "200 response"
@@ -2498,7 +2530,7 @@ paths:
           schema:
             $ref: "#/definitions/ResponseError"
       security:
-      - api_key: []
+        - api_key: []
       x-amazon-apigateway-integration:
         uri: "https://api-adapter.omni.chat/teams/{objectId}/users"
         responses:
@@ -2520,36 +2552,37 @@ paths:
       tags:
         - branches
       produces:
-      - "application/json"
+        - "application/json"
       parameters:
-      - name: "where"
-        in: "query"
-        required: false
-        type: "string"
-      - name: "limit"
-        in: "query"
-        required: false
-        type: "string"
-      - name: "x-api-secret"
-        in: "header"
-        required: true
-        type: "string"
-      - name: "order"
-        in: "query"
-        required: false
-        type: "string"
-      - name: "offset"
-        in: "query"
-        required: false
-        type: "string"
+        - name: "where"
+          in: "query"
+          required: false
+          type: "string"
+        - name: "limit"
+          in: "query"
+          required: false
+          type: "string"
+        - name: "x-api-secret"
+          in: "header"
+          required: true
+          type: "string"
+        - name: "order"
+          in: "query"
+          required: false
+          type: "string"
+        - name: "offset"
+          in: "query"
+          required: false
+          type: "string"
       responses:
         200:
           description: "200 response"
           schema:
             $ref: "#/definitions/Branches"
       security:
-      - api_key: []
-      x-amazon-apigateway-request-validator: "Validate query string parameters and\
+        - api_key: []
+      x-amazon-apigateway-request-validator:
+        "Validate query string parameters and\
         \ headers"
       x-amazon-apigateway-integration:
         uri: "https://api-adapter.omni.chat/branches"
@@ -2572,19 +2605,19 @@ paths:
       tags:
         - branches
       consumes:
-      - "application/json"
+        - "application/json"
       produces:
-      - "application/json"
+        - "application/json"
       parameters:
-      - name: "x-api-secret"
-        in: "header"
-        required: true
-        type: "string"
-      - in: "body"
-        name: "NewBranch"
-        required: true
-        schema:
-          $ref: "#/definitions/NewBranch"
+        - name: "x-api-secret"
+          in: "header"
+          required: true
+          type: "string"
+        - in: "body"
+          name: "NewBranch"
+          required: true
+          schema:
+            $ref: "#/definitions/NewBranch"
       responses:
         201:
           description: "201 response"
@@ -2593,8 +2626,9 @@ paths:
         400:
           description: "400 response"
       security:
-      - api_key: []
-      x-amazon-apigateway-request-validator: "Validate query string parameters and\
+        - api_key: []
+      x-amazon-apigateway-request-validator:
+        "Validate query string parameters and\
         \ headers"
       x-amazon-apigateway-integration:
         uri: "https://api-adapter.omni.chat/pricingtables"
@@ -2618,16 +2652,16 @@ paths:
       tags:
         - branches
       produces:
-      - "application/json"
+        - "application/json"
       parameters:
-      - name: "objectId"
-        in: "path"
-        required: true
-        type: "string"
-      - name: "x-api-secret"
-        in: "header"
-        required: true
-        type: "string"
+        - name: "objectId"
+          in: "path"
+          required: true
+          type: "string"
+        - name: "x-api-secret"
+          in: "header"
+          required: true
+          type: "string"
       responses:
         200:
           description: "200 response"
@@ -2638,8 +2672,9 @@ paths:
           schema:
             $ref: "#/definitions/ResponseError"
       security:
-      - api_key: []
-      x-amazon-apigateway-request-validator: "Validate query string parameters and\
+        - api_key: []
+      x-amazon-apigateway-request-validator:
+        "Validate query string parameters and\
         \ headers"
       x-amazon-apigateway-integration:
         uri: "https://api-adapter.omni.chat/branches/{objectId}"
@@ -2663,16 +2698,16 @@ paths:
       tags:
         - branches
       produces:
-      - "application/json"
+        - "application/json"
       parameters:
-      - name: "objectId"
-        in: "path"
-        required: true
-        type: "string"
-      - name: "x-api-secret"
-        in: "header"
-        required: true
-        type: "string"
+        - name: "objectId"
+          in: "path"
+          required: true
+          type: "string"
+        - name: "x-api-secret"
+          in: "header"
+          required: true
+          type: "string"
       responses:
         200:
           description: "200 response"
@@ -2685,7 +2720,7 @@ paths:
           schema:
             $ref: "#/definitions/ResponseError"
       security:
-      - api_key: []
+        - api_key: []
       x-amazon-apigateway-integration:
         uri: "https://api-adapter.omni.chat/branches/{objectId}"
         responses:
@@ -2704,16 +2739,16 @@ paths:
       tags:
         - branches
       produces:
-      - "application/json"
+        - "application/json"
       parameters:
-      - name: "objectId"
-        in: "path"
-        required: true
-        type: "string"
-      - name: "x-api-secret"
-        in: "header"
-        required: true
-        type: "string"
+        - name: "objectId"
+          in: "path"
+          required: true
+          type: "string"
+        - name: "x-api-secret"
+          in: "header"
+          required: true
+          type: "string"
       responses:
         200:
           description: "200 response"
@@ -2724,7 +2759,7 @@ paths:
           schema:
             $ref: "#/definitions/ResponseError"
       security:
-      - api_key: []
+        - api_key: []
       x-amazon-apigateway-integration:
         uri: "https://api-adapter.omni.chat/branches/{objectId}"
         responses:
@@ -2740,43 +2775,44 @@ paths:
         passthroughBehavior: "when_no_match"
         httpMethod: "DELETE"
         type: "http"
-  
+
   /pricingtables:
     get:
       description: "Listar Tabela de Preços"
       tags:
         - pricingtables
       produces:
-      - "application/json"
+        - "application/json"
       parameters:
-      - name: "where"
-        in: "query"
-        required: false
-        type: "string"
-      - name: "limit"
-        in: "query"
-        required: false
-        type: "string"
-      - name: "x-api-secret"
-        in: "header"
-        required: false
-        type: "string"
-      - name: "order"
-        in: "query"
-        required: false
-        type: "string"
-      - name: "offset"
-        in: "query"
-        required: false
-        type: "string"
+        - name: "where"
+          in: "query"
+          required: false
+          type: "string"
+        - name: "limit"
+          in: "query"
+          required: false
+          type: "string"
+        - name: "x-api-secret"
+          in: "header"
+          required: false
+          type: "string"
+        - name: "order"
+          in: "query"
+          required: false
+          type: "string"
+        - name: "offset"
+          in: "query"
+          required: false
+          type: "string"
       responses:
         200:
           description: "200 response"
           schema:
             $ref: "#/definitions/PricingTables"
       security:
-      - api_key: []
-      x-amazon-apigateway-request-validator: "Validate query string parameters and\
+        - api_key: []
+      x-amazon-apigateway-request-validator:
+        "Validate query string parameters and\
         \ headers"
       x-amazon-apigateway-integration:
         uri: "https://api-adapter.omni.chat/pricingtables"
@@ -2795,23 +2831,23 @@ paths:
         httpMethod: "GET"
         type: "http"
     post:
-      description: "Criar Tabela de Preço" 
+      description: "Criar Tabela de Preço"
       tags:
         - pricingtables
       consumes:
-      - "application/json"
+        - "application/json"
       produces:
-      - "application/json"
+        - "application/json"
       parameters:
-      - name: "x-api-secret"
-        in: "header"
-        required: true
-        type: "string"
-      - in: "body"
-        name: "NewPricingTable"
-        required: true
-        schema:
-          $ref: "#/definitions/NewPricingTable"
+        - name: "x-api-secret"
+          in: "header"
+          required: true
+          type: "string"
+        - in: "body"
+          name: "NewPricingTable"
+          required: true
+          schema:
+            $ref: "#/definitions/NewPricingTable"
       responses:
         201:
           description: "201 response"
@@ -2820,8 +2856,9 @@ paths:
         400:
           description: "400 response"
       security:
-      - api_key: []
-      x-amazon-apigateway-request-validator: "Validate query string parameters and\
+        - api_key: []
+      x-amazon-apigateway-request-validator:
+        "Validate query string parameters and\
         \ headers"
       x-amazon-apigateway-integration:
         uri: "https://api-adapter.omni.chat/pricingtables"
@@ -2841,20 +2878,20 @@ paths:
         type: "http"
   /pricingtables/{objectId}:
     get:
-      description: "Obter uma unica Tabela de Preço"
+      description: "Obter uma única Tabela de Preço"
       tags:
         - pricingtables
       produces:
-      - "application/json"
+        - "application/json"
       parameters:
-      - name: "objectId"
-        in: "path"
-        required: true
-        type: "string"
-      - name: "x-api-secret"
-        in: "header"
-        required: true
-        type: "string"
+        - name: "objectId"
+          in: "path"
+          required: true
+          type: "string"
+        - name: "x-api-secret"
+          in: "header"
+          required: true
+          type: "string"
       responses:
         200:
           description: "200 response"
@@ -2865,8 +2902,9 @@ paths:
           schema:
             $ref: "#/definitions/ResponseError"
       security:
-      - api_key: []
-      x-amazon-apigateway-request-validator: "Validate query string parameters and\
+        - api_key: []
+      x-amazon-apigateway-request-validator:
+        "Validate query string parameters and\
         \ headers"
       x-amazon-apigateway-integration:
         uri: "https://api-adapter.omni.chat/pricingtables/{objectId}"
@@ -2888,23 +2926,23 @@ paths:
       tags:
         - pricingtables
       produces:
-      - "application/json"
+        - "application/json"
       parameters:
-      - name: "objectId"
-        in: "path"
-        required: true
-        type: "string"
-      - name: "x-api-secret"
-        in: "header"
-        required: true
-        type: "string"
+        - name: "objectId"
+          in: "path"
+          required: true
+          type: "string"
+        - name: "x-api-secret"
+          in: "header"
+          required: true
+          type: "string"
       responses:
         200:
           description: "200 response"
           schema:
             $ref: "#/definitions/ResponseUpdatedObject"
       security:
-      - api_key: []
+        - api_key: []
       x-amazon-apigateway-integration:
         uri: "https://api-adapter.omni.chat/pricingtable/{objectId}"
         responses:
@@ -2923,16 +2961,16 @@ paths:
       tags:
         - pricingtables
       produces:
-      - "application/json"
+        - "application/json"
       parameters:
-      - name: "objectId"
-        in: "path"
-        required: true
-        type: "string"
-      - name: "x-api-secret"
-        in: "header"
-        required: true
-        type: "string"
+        - name: "objectId"
+          in: "path"
+          required: true
+          type: "string"
+        - name: "x-api-secret"
+          in: "header"
+          required: true
+          type: "string"
       responses:
         200:
           description: "200 response"
@@ -2943,7 +2981,7 @@ paths:
           schema:
             $ref: "#/definitions/ResponseError"
       security:
-      - api_key: []
+        - api_key: []
       x-amazon-apigateway-integration:
         uri: "https://api-adapter.omni.chat/pricingtables/{objectId}"
         responses:
@@ -2961,27 +2999,27 @@ paths:
         type: "http"
   /pricingtables/{objectId}/branches:
     put:
-      description: "Adicionar uma filial em uma Tabela de Preços" 
+      description: "Adicionar uma filial em uma Tabela de Preços"
       tags:
         - pricingtables
       produces:
-      - "application/json"
+        - "application/json"
       parameters:
-      - name: "objectId"
-        in: "path"
-        required: true
-        type: "string"
-      - name: "x-api-secret"
-        in: "header"
-        required: true
-        type: "string"
+        - name: "objectId"
+          in: "path"
+          required: true
+          type: "string"
+        - name: "x-api-secret"
+          in: "header"
+          required: true
+          type: "string"
       responses:
         200:
           description: "200 response"
           schema:
             $ref: "#/definitions/ResponseUpdatedObject"
       security:
-      - api_key: []
+        - api_key: []
       x-amazon-apigateway-integration:
         uri: "https://api-adapter.omni.chat/pricingtables/{objectId}/branches"
         responses:
@@ -2996,20 +3034,20 @@ paths:
         httpMethod: "PUT"
         type: "http"
     delete:
-      description: "Remover uma filial em uma Tabela de Preços" 
+      description: "Remover uma filial em uma Tabela de Preços"
       tags:
         - pricingtables
       produces:
-      - "application/json"
+        - "application/json"
       parameters:
-      - name: "objectId"
-        in: "path"
-        required: true
-        type: "string"
-      - name: "x-api-secret"
-        in: "header"
-        required: true
-        type: "string"
+        - name: "objectId"
+          in: "path"
+          required: true
+          type: "string"
+        - name: "x-api-secret"
+          in: "header"
+          required: true
+          type: "string"
       responses:
         200:
           description: "200 response"
@@ -3020,7 +3058,7 @@ paths:
           schema:
             $ref: "#/definitions/ResponseError"
       security:
-      - api_key: []
+        - api_key: []
       x-amazon-apigateway-integration:
         uri: "https://api-adapter.omni.chat/pricingtables/{objectId}/branches"
         responses:
@@ -3040,28 +3078,28 @@ paths:
       tags:
         - pricingtables
       produces:
-      - "application/json"
+        - "application/json"
       parameters:
-      - name: "objectId"
-        in: "path"
-        required: true
-        type: "string"
-      - name: "x-api-secret"
-        in: "header"
-        required: true
-        type: "string"
-      - in: "body"
-        name: "OnlyObjectId"
-        required: true
-        schema:
-          $ref: "#/definitions/OnlyObjectId"
+        - name: "objectId"
+          in: "path"
+          required: true
+          type: "string"
+        - name: "x-api-secret"
+          in: "header"
+          required: true
+          type: "string"
+        - in: "body"
+          name: "OnlyObjectId"
+          required: true
+          schema:
+            $ref: "#/definitions/OnlyObjectId"
       responses:
         200:
           description: "200 response"
           schema:
             $ref: "#/definitions/ResponseUpdatedObject"
       security:
-      - api_key: []
+        - api_key: []
       x-amazon-apigateway-integration:
         uri: "https://api-adapter.omni.chat/pricingtables/{objectId}/teams"
         responses:
@@ -3080,16 +3118,16 @@ paths:
       tags:
         - pricingtables
       produces:
-      - "application/json"
+        - "application/json"
       parameters:
-      - name: "objectId"
-        in: "path"
-        required: true
-        type: "string"
-      - name: "x-api-secret"
-        in: "header"
-        required: true
-        type: "string"
+        - name: "objectId"
+          in: "path"
+          required: true
+          type: "string"
+        - name: "x-api-secret"
+          in: "header"
+          required: true
+          type: "string"
       responses:
         200:
           description: "200 response"
@@ -3100,7 +3138,7 @@ paths:
           schema:
             $ref: "#/definitions/ResponseError"
       security:
-      - api_key: []
+        - api_key: []
       x-amazon-apigateway-integration:
         uri: "https://api-adapter.omni.chat/pricingtables/{objectId}/teams"
         responses:
@@ -3115,43 +3153,43 @@ paths:
         httpMethod: "DELETE"
         type: "http"
 
-
   /users:
     get:
       description: "Listar usuários"
       tags:
         - users
       produces:
-      - "application/json"
+        - "application/json"
       parameters:
-      - name: "where"
-        in: "query"
-        required: false
-        type: "string"
-      - name: "limit"
-        in: "query"
-        required: false
-        type: "string"
-      - name: "x-api-secret"
-        in: "header"
-        required: true
-        type: "string"
-      - name: "order"
-        in: "query"
-        required: false
-        type: "string"
-      - name: "offset"
-        in: "query"
-        required: false
-        type: "string"
+        - name: "where"
+          in: "query"
+          required: false
+          type: "string"
+        - name: "limit"
+          in: "query"
+          required: false
+          type: "string"
+        - name: "x-api-secret"
+          in: "header"
+          required: true
+          type: "string"
+        - name: "order"
+          in: "query"
+          required: false
+          type: "string"
+        - name: "offset"
+          in: "query"
+          required: false
+          type: "string"
       responses:
         200:
           description: "200 response"
           schema:
             $ref: "#/definitions/Users"
       security:
-      - api_key: []
-      x-amazon-apigateway-request-validator: "Validate query string parameters and\
+        - api_key: []
+      x-amazon-apigateway-request-validator:
+        "Validate query string parameters and\
         \ headers"
       x-amazon-apigateway-integration:
         uri: "https://api-adapter.omni.chat/users"
@@ -3174,19 +3212,19 @@ paths:
       tags:
         - users
       consumes:
-      - "application/json"
+        - "application/json"
       produces:
-      - "application/json"
+        - "application/json"
       parameters:
-      - name: "x-api-secret"
-        in: "header"
-        required: true
-        type: "string"
-      - in: "body"
-        name: "NewUser"
-        required: true
-        schema:
-          $ref: "#/definitions/NewUser"
+        - name: "x-api-secret"
+          in: "header"
+          required: true
+          type: "string"
+        - in: "body"
+          name: "NewUser"
+          required: true
+          schema:
+            $ref: "#/definitions/NewUser"
       responses:
         201:
           description: "201 response"
@@ -3195,8 +3233,9 @@ paths:
         400:
           description: "400 response"
       security:
-      - api_key: []
-      x-amazon-apigateway-request-validator: "Validate query string parameters and\
+        - api_key: []
+      x-amazon-apigateway-request-validator:
+        "Validate query string parameters and\
         \ headers"
       x-amazon-apigateway-integration:
         uri: "https://api-adapter.omni.chat/users"
@@ -3220,24 +3259,25 @@ paths:
       tags:
         - users
       produces:
-      - "application/json"
+        - "application/json"
       parameters:
-      - name: "where"
-        in: "query"
-        required: false
-        type: "string"
-      - name: "x-api-secret"
-        in: "header"
-        required: true
-        type: "string"
+        - name: "where"
+          in: "query"
+          required: false
+          type: "string"
+        - name: "x-api-secret"
+          in: "header"
+          required: true
+          type: "string"
       responses:
         200:
           description: "200 response"
           schema:
             $ref: "#/definitions/ResponseCount"
       security:
-      - api_key: []
-      x-amazon-apigateway-request-validator: "Validate query string parameters and\
+        - api_key: []
+      x-amazon-apigateway-request-validator:
+        "Validate query string parameters and\
         \ headers"
       x-amazon-apigateway-integration:
         uri: "https://api-adapter.omni.chat/users/count"
@@ -3258,16 +3298,16 @@ paths:
       tags:
         - users
       produces:
-      - "application/json"
+        - "application/json"
       parameters:
-      - name: "objectId"
-        in: "path"
-        required: true
-        type: "string"
-      - name: "x-api-secret"
-        in: "header"
-        required: true
-        type: "string"
+        - name: "objectId"
+          in: "path"
+          required: true
+          type: "string"
+        - name: "x-api-secret"
+          in: "header"
+          required: true
+          type: "string"
       responses:
         200:
           description: "200 response"
@@ -3278,8 +3318,9 @@ paths:
           schema:
             $ref: "#/definitions/ResponseError"
       security:
-      - api_key: []
-      x-amazon-apigateway-request-validator: "Validate query string parameters and\
+        - api_key: []
+      x-amazon-apigateway-request-validator:
+        "Validate query string parameters and\
         \ headers"
       x-amazon-apigateway-integration:
         uri: "https://api-adapter.omni.chat/users/{objectId}"
@@ -3302,16 +3343,16 @@ paths:
       tags:
         - users
       produces:
-      - "application/json"
+        - "application/json"
       parameters:
-      - name: "objectId"
-        in: "path"
-        required: true
-        type: "string"
-      - name: "x-api-secret"
-        in: "header"
-        required: true
-        type: "string"
+        - name: "objectId"
+          in: "path"
+          required: true
+          type: "string"
+        - name: "x-api-secret"
+          in: "header"
+          required: true
+          type: "string"
       responses:
         200:
           description: "200 response"
@@ -3324,8 +3365,9 @@ paths:
           schema:
             $ref: "#/definitions/ResponseError"
       security:
-      - api_key: []
-      x-amazon-apigateway-request-validator: "Validate query string parameters and\
+        - api_key: []
+      x-amazon-apigateway-request-validator:
+        "Validate query string parameters and\
         \ headers"
       x-amazon-apigateway-integration:
         uri: "https://api-adapter.omni.chat/users/{objectId}"
@@ -3346,23 +3388,23 @@ paths:
         type: "http"
   /users/settings:
     post:
-      description: 'Atualiza acesso HSM de um range usuários'
+      description: "Atualiza acesso HSM de um range usuários"
       tags:
         - users
       consumes:
-      - "application/json"
+        - "application/json"
       produces:
-      - "application/json"
+        - "application/json"
       parameters:
-      - name: "x-api-secret"
-        in: "header"
-        required: true
-        type: "string"
-      - in: "body"
-        name: "UserSettingsModel"
-        required: true
-        schema:
-          $ref: "#/definitions/UserSettingsModel"
+        - name: "x-api-secret"
+          in: "header"
+          required: true
+          type: "string"
+        - in: "body"
+          name: "UserSettingsModel"
+          required: true
+          schema:
+            $ref: "#/definitions/UserSettingsModel"
       responses:
         200:
           description: "200 response"
@@ -3413,18 +3455,18 @@ definitions:
         description: "Id do time para o qual o atendimento sera redirecionado"
       userId:
         type: "string"
-        description: "Id do usuario para o qual o atendimento sera redirecionado"
+        description: "Id do usuário para o qual o atendimento sera redirecionado"
       type:
         type: "string"
         description: "Comportamento esperado do redirecionamento, pode ser para TEAM ou USER"
-    description: "Contem as informacoes para redirecionamento dos atendimentos"
+    description: "Contem as informações para redirecionamento dos atendimentos"
   ChatFinishing:
     type: "object"
     properties:
       reason:
         type: "string"
-        description: "A razao pela qual o atendimento esta sendo finalizado"
-    description: "Contem as informacoes para redirecionamento dos atendimentos"
+        description: "A razão pela qual o atendimento esta sendo finalizado"
+    description: "Contem as informações para redirecionamento dos atendimentos"
   Branches:
     type: "object"
     properties:
@@ -3459,12 +3501,14 @@ definitions:
       createdAt:
         type: "string"
         format: "date-time"
-        description: "A data e a hora que este objeto foi criado. API retorna o valor\
+        description:
+          "A data e a hora que este objeto foi criado. API retorna o valor\
           \ no formato ISO 8601 em UTC. Exemplo: 2017-08-04T16:27:55.397Z"
       updatedAt:
         type: "string"
         format: "date-time"
-        description: "A data e a hora que este objeto foi modificado pela última vez.\
+        description:
+          "A data e a hora que este objeto foi modificado pela última vez.\
           \ API retorna o valor no formato ISO 8601 em UTC. Exemplo: 2017-08-04T16:27:55.397Z"
       zip:
         type: "string"
@@ -3491,8 +3535,8 @@ definitions:
         type: "string"
         description: "Pais"
       tradingHours:
-          $ref: "#/definitions/TradingHours"
-          description: "Horarios de funcionamento"
+        $ref: "#/definitions/TradingHours"
+        description: "Horários de funcionamento"
   TradingHours:
     type: "object"
     properties:
@@ -3520,10 +3564,10 @@ definitions:
         description: "Se existe atendimento nesse dia."
       opensAt:
         type: "string"
-        description: "Horario do inicio de atendimento"
+        description: "Horário do inicio de atendimento"
       closesAt:
         type: "string"
-        description: "Horario final de atendimento"
+        description: "Horário final de atendimento"
   User:
     type: "object"
     properties:
@@ -3534,12 +3578,14 @@ definitions:
       createdAt:
         type: "string"
         format: "date-time"
-        description: "A data e a hora que este objeto foi criado. API retorna o valor\
+        description:
+          "A data e a hora que este objeto foi criado. API retorna o valor\
           \ no formato ISO 8601 em UTC. Exemplo: 2017-08-04T16:27:55.397Z"
       updatedAt:
         type: "string"
         format: "date-time"
-        description: "A data e a hora que este objeto foi modificado pela última vez.\
+        description:
+          "A data e a hora que este objeto foi modificado pela última vez.\
           \ API retorna o valor no formato ISO 8601 em UTC. Exemplo: 2017-08-04T16:27:55.397Z"
       name:
         type: "string"
@@ -3573,7 +3619,8 @@ definitions:
         description: "Estado"
       country:
         type: "string"
-        description: "Código do pais utilizando o formato ISO 3166-1. Exemplo para\
+        description:
+          "Código do pais utilizando o formato ISO 3166-1. Exemplo para\
           \ o Brasil usamos BRA."
       zip:
         type: "string"
@@ -3581,9 +3628,9 @@ definitions:
   NewMessage:
     type: "object"
     required:
-    - templateId
-    - platformId
-    - templateTokens
+      - templateId
+      - platformId
+      - templateTokens
     properties:
       templateId:
         type: "string"
@@ -3611,12 +3658,14 @@ definitions:
       createdAt:
         type: "string"
         format: "date-time"
-        description: "A data e a hora que este objeto foi criado. API retorna o valor\
+        description:
+          "A data e a hora que este objeto foi criado. API retorna o valor\
           \ no formato ISO 8601 em UTC. Exemplo: 2017-08-04T16:27:55.397Z"
       updatedAt:
         type: "string"
         format: "date-time"
-        description: "A data e a hora que este objeto foi modificado pela última vez.\
+        description:
+          "A data e a hora que este objeto foi modificado pela última vez.\
           \ API retorna o valor no formato ISO 8601 em UTC. Exemplo: 2017-08-04T16:27:55.397Z"
       type:
         $ref: "#/definitions/MessageTypeEnum"
@@ -3702,12 +3751,14 @@ definitions:
       createdAt:
         type: "string"
         format: "date-time"
-        description: "A data e a hora que este objeto foi criado. API retorna o valor\
+        description:
+          "A data e a hora que este objeto foi criado. API retorna o valor\
           \ no formato ISO 8601 em UTC. Exemplo: 2017-08-04T16:27:55.397Z"
       updatedAt:
         type: "string"
         format: "date-time"
-        description: "A data e a hora que este objeto foi modificado pela última vez.\
+        description:
+          "A data e a hora que este objeto foi modificado pela última vez.\
           \ API retorna o valor no formato ISO 8601 em UTC. Exemplo: 2017-08-04T16:27:55.397Z"
       text:
         type: "string"
@@ -3723,42 +3774,42 @@ definitions:
   MessageTemplateStatusEnum:
     type: "string"
     enum:
-    - "REQUESTED"
-    - "READY"
+      - "REQUESTED"
+      - "READY"
 
   MessageStatus:
     type: "string"
     enum:
-    - "OUTGOING_CREATED"
-    - "OUTGOING_SENT"
-    - "OUTGOING_DELIVERED"
-    - "OUTGOING_READ"
-    - "OUTGOING_ERROR"
-    - "OUTGOING_SILENT"
-    - "EXTERNAL_OUTGOING_SILENT"
-    - "INCOMING_RECEIVED"
-    - "INCOMING_READ"
+      - "OUTGOING_CREATED"
+      - "OUTGOING_SENT"
+      - "OUTGOING_DELIVERED"
+      - "OUTGOING_READ"
+      - "OUTGOING_ERROR"
+      - "OUTGOING_SILENT"
+      - "EXTERNAL_OUTGOING_SILENT"
+      - "INCOMING_RECEIVED"
+      - "INCOMING_READ"
   MessageTypeEnum:
     type: "string"
     enum:
-    - "TEXT"
-    - "IMAGE"
-    - "AUDIO"
-    - "VIDEO"
-    - "FILE"
-    - "LOCATION"
-    - "PRODUCT"
-    - "VARIANT"
-    - "PAYMENT_REQUEST"
-    - "ORDER_CONFIRMATION"
-    - "ORDER_STATUS"
-    - "COLLECTION"
-    - "VCARD"
-    - "MULTI_VCARD"
-    - "SNOOZE_START"
-    - "SNOOZE_END"
-    - "TEMPLATE"
-    - "ROUTING"
+      - "TEXT"
+      - "IMAGE"
+      - "AUDIO"
+      - "VIDEO"
+      - "FILE"
+      - "LOCATION"
+      - "PRODUCT"
+      - "VARIANT"
+      - "PAYMENT_REQUEST"
+      - "ORDER_CONFIRMATION"
+      - "ORDER_STATUS"
+      - "COLLECTION"
+      - "VCARD"
+      - "MULTI_VCARD"
+      - "SNOOZE_START"
+      - "SNOOZE_END"
+      - "TEMPLATE"
+      - "ROUTING"
 
   Customer:
     type: "object"
@@ -3770,12 +3821,14 @@ definitions:
       createdAt:
         type: "string"
         format: "date-time"
-        description: "A data e a hora que este objeto foi criado. API retorna o valor\
+        description:
+          "A data e a hora que este objeto foi criado. API retorna o valor\
           \ no formato ISO 8601 em UTC. Exemplo: 2017-08-04T16:27:55.397Z"
       updatedAt:
         type: "string"
         format: "date-time"
-        description: "A data e a hora que este objeto foi modificado pela última vez.\
+        description:
+          "A data e a hora que este objeto foi modificado pela última vez.\
           \ API retorna o valor no formato ISO 8601 em UTC. Exemplo: 2017-08-04T16:27:55.397Z"
       name:
         type: "string"
@@ -3830,26 +3883,26 @@ definitions:
   OrderStatusEnum:
     type: "string"
     enum:
-    - "CREATING"
-    - "CREATED"
-    - "PROVISIONING"
-    - "OPEN"
-    - "WAITING"
-    - "PAID"
-    - "PACKAGED"
-    - "SHIPPED"
-    - "PARTIALLY_SHIPPED"
-    - "DELIVERED"
-    - "NOT_PAID"
-    - "PARTIAL_PAID"
-    - "OVER_PAID"
-    - "CANCELLED"
-    - "REVERTED"
-    - "ERROR"
+      - "CREATING"
+      - "CREATED"
+      - "PROVISIONING"
+      - "OPEN"
+      - "WAITING"
+      - "PAID"
+      - "PACKAGED"
+      - "SHIPPED"
+      - "PARTIALLY_SHIPPED"
+      - "DELIVERED"
+      - "NOT_PAID"
+      - "PARTIAL_PAID"
+      - "OVER_PAID"
+      - "CANCELLED"
+      - "REVERTED"
+      - "ERROR"
   NewTeam:
     type: "object"
     required:
-    - "name"
+      - "name"
     properties:
       name:
         type: "string"
@@ -3886,9 +3939,9 @@ definitions:
   Product:
     type: "object"
     required:
-    - "mainVariant"
-    - "name"
-    - "variants"
+      - "mainVariant"
+      - "name"
+      - "variants"
     properties:
       objectId:
         type: "string"
@@ -3897,12 +3950,14 @@ definitions:
       createdAt:
         type: "string"
         format: "date-time"
-        description: "A data e a hora que este objeto foi criado. API retorna o valor\
+        description:
+          "A data e a hora que este objeto foi criado. API retorna o valor\
           \ no formato ISO 8601 em UTC. Exemplo: 2017-08-04T16:27:55.397Z"
       updatedAt:
         type: "string"
         format: "date-time"
-        description: "A data e a hora que este objeto foi modificado pela última vez.\
+        description:
+          "A data e a hora que este objeto foi modificado pela última vez.\
           \ API retorna o valor no formato ISO 8601 em UTC. Exemplo: 2017-08-04T16:27:55.397Z"
       name:
         type: "string"
@@ -3912,7 +3967,8 @@ definitions:
         description: "O nome da primeira definição do produto. Por exemplo: Cor"
       definition1Values:
         type: "array"
-        description: "Todos os possíveis valores da primeira definição do produto.\
+        description:
+          "Todos os possíveis valores da primeira definição do produto.\
           \ Exemplo: Azul, Verde e Preto"
         items:
           type: "string"
@@ -3921,17 +3977,20 @@ definitions:
         description: "O nome da segunda definição do produto. Por exemplo: Tamanho"
       definition2Values:
         type: "array"
-        description: "Todos os possíveis valores da primeira definição do produto.\
+        description:
+          "Todos os possíveis valores da primeira definição do produto.\
           \ Exemplo: P, M e G"
         items:
           type: "string"
       erpId:
         type: "string"
-        description: "Código utilizado no sistema de ERP para identificar este cliente.\
+        description:
+          "Código utilizado no sistema de ERP para identificar este cliente.\
           \ Normalmente é o código de barras"
       blocked:
         type: "boolean"
-        description: "Indica se este produto esta bloqueado para vendas. Este produto\
+        description:
+          "Indica se este produto esta bloqueado para vendas. Este produto\
           \ será listado na aba de produtos da OmniChat, mas não será mostrado como\
           \ disponível para inclusão em um pedido"
         default: false
@@ -3941,18 +4000,20 @@ definitions:
         default: false
       trackInventory:
         type: "boolean"
-        description: "Se verdadeiro a OmniChat irá controla o estoque. Quando um novo\
+        description:
+          "Se verdadeiro a OmniChat irá controla o estoque. Quando um novo\
           \ pedido é criado o estoque da variante é decrementado, quando um pedido\
           \ é cancelado ou não pago o estoque é restaurado"
         default: false
       sellOutOfStock:
         type: "boolean"
-        description: "Se este produto pode ser vendido com estoque igual ou inferior\
+        description:
+          "Se este produto pode ser vendido com estoque igual ou inferior\
           \ a zero"
         default: false
       enablePricingTable:
         type: "boolean"
-        description: "Se este produto pode utilizar a configuração de tablea de preço"
+        description: "Se este produto pode utilizar a configuração de tabela de preço"
         default: false
       mainVariant:
         description: "A variante principal deste produto"
@@ -3973,15 +4034,15 @@ definitions:
   GenderEnum:
     type: "string"
     enum:
-    - "male"
-    - "female"
-    - "neutral"
-    - "other"
+      - "male"
+      - "female"
+      - "neutral"
+      - "other"
   NewCustomer:
     type: "object"
     required:
-    - "lastName"
-    - "name"
+      - "lastName"
+      - "name"
     properties:
       name:
         type: "string"
@@ -4032,11 +4093,13 @@ definitions:
     properties:
       name:
         type: "string"
-        description: "Nome deste item. É copiado de product.name quando incluído no\
+        description:
+          "Nome deste item. É copiado de product.name quando incluído no\
           \ carrinho"
       description:
         type: "string"
-        description: "Detalhes deste item. É copiado de product.detail quando incluí\
+        description:
+          "Detalhes deste item. É copiado de product.detail quando incluí\
           do no carrinho"
       price:
         type: "number"
@@ -4056,15 +4119,15 @@ definitions:
         minimum: 0.0
       length:
         type: "number"
-        description: "Comprimento desta item em centimetros. É copiado de variant.length"
+        description: "Comprimento desta item em centímetros. É copiado de variant.length"
         minimum: 0.0
       height:
         type: "number"
-        description: "Altura desta item em centimetros. É copiado de variant.height"
+        description: "Altura desta item em centímetros. É copiado de variant.height"
         minimum: 0.0
       width:
         type: "number"
-        description: "Largura desta item em centimetros. É copiado de variant.width"
+        description: "Largura desta item em centímetros. É copiado de variant.width"
         minimum: 0.0
       service:
         type: "boolean"
@@ -4078,11 +4141,13 @@ definitions:
         description: "Identificador único deste objeto na base de dados da OmniChat"
       name:
         type: "string"
-        description: "Nome deste item. É copiado de product.name quando incluído no\
+        description:
+          "Nome deste item. É copiado de product.name quando incluído no\
           \ carrinho"
       description:
         type: "string"
-        description: "Detalhes deste item. É copiado de product.detail quando incluí\
+        description:
+          "Detalhes deste item. É copiado de product.detail quando incluí\
           do no carrinho"
       price:
         type: "number"
@@ -4102,15 +4167,15 @@ definitions:
         minimum: 0.0
       length:
         type: "number"
-        description: "Comprimento desta item em centimetros. É copiado de variant.length"
+        description: "Comprimento desta item em centímetros. É copiado de variant.length"
         minimum: 0.0
       height:
         type: "number"
-        description: "Altura desta item em centimetros. É copiado de variant.height"
+        description: "Altura desta item em centímetros. É copiado de variant.height"
         minimum: 0.0
       width:
         type: "number"
-        description: "Largura desta item em centimetros. É copiado de variant.width"
+        description: "Largura desta item em centímetros. É copiado de variant.width"
         minimum: 0.0
   ResponseUpdatedObject:
     type: "object"
@@ -4118,7 +4183,8 @@ definitions:
       updatedAt:
         type: "string"
         format: "date-time"
-        description: "A data e a hora que este objeto foi modificado pela última vez.\
+        description:
+          "A data e a hora que este objeto foi modificado pela última vez.\
           \ API retorna o valor no formato ISO 8601 em UTC. Exemplo: 2017-08-04T16:27:55.397Z"
   Chat:
     type: "object"
@@ -4130,12 +4196,14 @@ definitions:
       createdAt:
         type: "string"
         format: "date-time"
-        description: "A data e a hora que este objeto foi criado. API retorna o valor\
+        description:
+          "A data e a hora que este objeto foi criado. API retorna o valor\
           \ no formato ISO 8601 em UTC. Exemplo: 2017-08-04T16:27:55.397Z"
       updatedAt:
         type: "string"
         format: "date-time"
-        description: "A data e a hora que este objeto foi modificado pela última vez.\
+        description:
+          "A data e a hora que este objeto foi modificado pela última vez.\
           \ API retorna o valor no formato ISO 8601 em UTC. Exemplo: 2017-08-04T16:27:55.397Z"
       platform:
         type: "string"
@@ -4163,7 +4231,7 @@ definitions:
         description: "Fuso horário da pessoa nesta conversa"
       gender:
         $ref: "#/definitions/GenderEnum"
-        description: "Genero informado pela pessoa nesta conversa"
+        description: "Gênero informado pela pessoa nesta conversa"
       phone:
         type: "string"
         # example: "5541909876765"
@@ -4223,7 +4291,7 @@ definitions:
   Team:
     type: "object"
     required:
-    - "name"
+      - "name"
     properties:
       objectId:
         type: "string"
@@ -4232,12 +4300,14 @@ definitions:
       createdAt:
         type: "string"
         format: "date-time"
-        description: "A data e a hora que este objeto foi criado. API retorna o valor\
+        description:
+          "A data e a hora que este objeto foi criado. API retorna o valor\
           \ no formato ISO 8601 em UTC. Exemplo: 2017-08-04T16:27:55.397Z"
       updatedAt:
         type: "string"
         format: "date-time"
-        description: "A data e a hora que este objeto foi modificado pela última vez.\
+        description:
+          "A data e a hora que este objeto foi modificado pela última vez.\
           \ API retorna o valor no formato ISO 8601 em UTC. Exemplo: 2017-08-04T16:27:55.397Z"
       name:
         type: "string"
@@ -4249,7 +4319,7 @@ definitions:
           $ref: "#/definitions/User"
       supervisors:
         type: "array"
-        description: "Supervidores deste time"
+        description: "Supervisores deste time"
         items:
           $ref: "#/definitions/User"
   Chats:
@@ -4263,10 +4333,10 @@ definitions:
   NewProduct:
     type: "object"
     required:
-    - name
-    - description
-    - mainVariant
-    - variants
+      - name
+      - description
+      - mainVariant
+      - variants
     properties:
       name:
         type: "string"
@@ -4284,7 +4354,8 @@ definitions:
         description: "Nome da variação 1 do produto. Exemplo: Cor"
       definition1Values:
         type: "array"
-        description: "Todos os possíveis valores da primeira definição do produto.\
+        description:
+          "Todos os possíveis valores da primeira definição do produto.\
           \ Exemplo: Azul, Verde e Preto"
         items:
           type: string
@@ -4294,14 +4365,16 @@ definitions:
         description: "O nome da segunda definição do produto. Por exemplo: Tamanho"
       definition2Values:
         type: "array"
-        description: "Todos os possíveis valores da primeira definição do produto.\
+        description:
+          "Todos os possíveis valores da primeira definição do produto.\
           \ Exemplo: P, M e G"
         items:
           type: string
           # example: [P, M, G]
       blocked:
         type: "boolean"
-        description: "Indica se este produto esta bloqueado para vendas. Este produto\
+        description:
+          "Indica se este produto esta bloqueado para vendas. Este produto\
           \ será listado na aba de produtos da OmniChat, mas não será mostrado como\
           \ disponível para inclusão em um pedido"
         default: false
@@ -4311,18 +4384,20 @@ definitions:
         default: false
       trackInventory:
         type: "boolean"
-        description: "Se verdadeiro a OmniChat irá controla o estoque. Quando um novo\
+        description:
+          "Se verdadeiro a OmniChat irá controla o estoque. Quando um novo\
           \ pedido é criado o estoque da variante é decrementado, quando um pedido\
           \ é cancelado ou não pago o estoque é restaurado"
         default: false
       sellOutOfStock:
         type: "boolean"
-        description: "Se este produto pode ser vendido com estoque igual ou inferior\
+        description:
+          "Se este produto pode ser vendido com estoque igual ou inferior\
           \ a zero"
         default: false
       enablePricingTable:
         type: "boolean"
-        description: "Se este produto pode utilizar a configuração de tablea de preço"
+        description: "Se este produto pode utilizar a configuração de tabela de preço"
         default: false
       mainVariant:
         $ref: "#/definitions/Variant"
@@ -4335,8 +4410,8 @@ definitions:
   StatusChange:
     type: "object"
     required:
-    - "status"
-    - "responsible"
+      - "status"
+      - "responsible"
     properties:
       status:
         type: "string"
@@ -4355,10 +4430,10 @@ definitions:
   NewUser:
     type: "object"
     required:
-    - "email"
-    - "name"
-    - "lastName"
-    - "password"
+      - "email"
+      - "name"
+      - "lastName"
+      - "password"
     properties:
       email:
         type: "string"
@@ -4375,27 +4450,27 @@ definitions:
   NewPricingTable:
     type: "object"
     required:
-    - "name"
-    - "description"
+      - "name"
+      - "description"
     properties:
       name:
         type: "string"
         description: "Nome"
       description:
         type: "string"
-        description: "Descrição"  
+        description: "Descrição"
   NewBranch:
     type: "object"
     required:
-    - "zip"
-    - "suburb"
-    - "addressLine1"
-    - "number"
-    - "city"
-    - "name"
-    - "country"
-    - "addressState"
-    - "tradingHours"
+      - "zip"
+      - "suburb"
+      - "addressLine1"
+      - "number"
+      - "city"
+      - "name"
+      - "country"
+      - "addressState"
+      - "tradingHours"
     properties:
       zip:
         type: "string"
@@ -4417,14 +4492,15 @@ definitions:
         description: "Nome"
       country:
         type: "string"
-        description: "Código do pais utilizando o formato ISO 3166-1. Exemplo para\
-        \ o Brasil usamos BRA."
+        description:
+          "Código do pais utilizando o formato ISO 3166-1. Exemplo para\
+          \ o Brasil usamos BRA."
       addressState:
         type: "string"
         description: "UF"
       tradingHours:
-          $ref: "#/definitions/TradingHours"
-          description: "Horario de funcionamento"
+        $ref: "#/definitions/TradingHours"
+        description: "Horário de funcionamento"
   Order:
     type: "object"
     properties:
@@ -4435,12 +4511,14 @@ definitions:
       createdAt:
         type: "string"
         format: "date-time"
-        description: "A data e a hora que este objeto foi criado. API retorna o valor\
+        description:
+          "A data e a hora que este objeto foi criado. API retorna o valor\
           \ no formato ISO 8601 em UTC. Exemplo: 2017-08-04T16:27:55.397Z"
       updatedAt:
         type: "string"
         format: "date-time"
-        description: "A data e a hora que este objeto foi modificado pela última vez.\
+        description:
+          "A data e a hora que este objeto foi modificado pela última vez.\
           \ API retorna o valor no formato ISO 8601 em UTC. Exemplo: 2017-08-04T16:27:55.397Z"
       canAcceptBoleto:
         type: "object"
@@ -4452,7 +4530,8 @@ definitions:
         properties:
           dueDate:
             type: "string"
-            description: "A data de vencimento do boleto. Se installments for maior\
+            description:
+              "A data de vencimento do boleto. Se installments for maior\
               \ que 1, então esta é a data de vencimento do 1.o boleto"
           installments:
             type: "string"
@@ -4462,7 +4541,8 @@ definitions:
         description: "Se este pedido pode ser pago usando cartão de crédito"
       creditCardInstructions:
         type: "object"
-        description: "Instruções relativas ao pagamento por cartão de crédito deste\
+        description:
+          "Instruções relativas ao pagamento por cartão de crédito deste\
           \ pedido"
         properties:
           installments:
@@ -4485,7 +4565,8 @@ definitions:
         description: "Valor do desconto"
       paymentInstallmentsCount:
         type: "number"
-        description: "Número de parcelas selecionadas pelo cliente para pagamento\
+        description:
+          "Número de parcelas selecionadas pelo cliente para pagamento\
           \ deste pedido. Somente usado para pagamento no cartão de crédito"
       items:
         type: "array"
@@ -4514,11 +4595,13 @@ definitions:
         $ref: "#/definitions/OrderStatusEnum"
       paymentGatewayId:
         type: "string"
-        description: "Identificador único deste pedido no Gateway de pagamento configurado\
+        description:
+          "Identificador único deste pedido no Gateway de pagamento configurado\
           \ nesta loja"
       orderId:
         type: "string"
-        description: "Identificador único deste pedido. Automaticamente incrementado\
+        description:
+          "Identificador único deste pedido. Automaticamente incrementado\
           \ quando um novo pedido é criado"
       teamId:
         type: "string"
@@ -4541,8 +4624,8 @@ definitions:
   OrderDiscountModeEnum:
     type: "string"
     enum:
-    - "PERCENTAGE"
-    - "ABOSOLUTE"
+      - "PERCENTAGE"
+      - "ABSOLUTE"
   Messages:
     type: "object"
     properties:
@@ -4561,28 +4644,32 @@ definitions:
       createdAt:
         type: "string"
         format: "date-time"
-        description: "A data e a hora que este objeto foi criado. API retorna o valor\
+        description:
+          "A data e a hora que este objeto foi criado. API retorna o valor\
           \ no formato ISO 8601 em UTC. Exemplo: 2017-08-04T16:27:55.397Z"
       updatedAt:
         type: "string"
         format: "date-time"
-        description: "A data e a hora que este objeto foi modificado pela última vez.\
+        description:
+          "A data e a hora que este objeto foi modificado pela última vez.\
           \ API retorna o valor no formato ISO 8601 em UTC. Exemplo: 2017-08-04T16:27:55.397Z"
       status:
         type: "string"
         $ref: "#/definitions/InteractionStatusEnum"
       chat:
         $ref: "#/definitions/Chat"
-        description: "Conversa que esssa interação pertence"
+        description: "Conversa que esta interação pertence"
       contactedAt:
         type: "string"
         format: "date-time"
-        description: "A data e a hora que o cliente foi atendido. API retorna o valor\
+        description:
+          "A data e a hora que o cliente foi atendido. API retorna o valor\
           \ no formato ISO 8601 em UTC. Exemplo: 2017-08-04T16:27:55.397Z"
       finishedAt:
         type: "string"
         format: "date-time"
-        description: "A data e a hora que esta interação foi concluida. API retorna o valor\
+        description:
+          "A data e a hora que esta interação foi concluída. API retorna o valor\
           \ no formato ISO 8601 em UTC. Exemplo: 2017-08-04T16:27:55.397Z"
       finishedBy:
         $ref: "#/definitions/User"
@@ -4603,7 +4690,7 @@ definitions:
         description: "Motivo do atendimento escolhido pelo usuário no fechamento desta interação"
       supportRate:
         type: number
-        description: "Nota do atendimento assinalada pelo cliente. Só diponível quando esta funcionalidade estiver disponível "
+        description: "Nota do atendimento assinalada pelo cliente. Só disponível quando esta funcionalidade estiver disponível "
       teamId:
         type: "string"
         description: "Identificador único do time que esta com a interação"
@@ -4613,7 +4700,6 @@ definitions:
       botFowardedAt:
         type: "string"
         description: "Data no qual o encaminhamento pelo bot foi feita"
-    
 
   ResponseObjectCreate:
     type: "object"
@@ -4625,7 +4711,8 @@ definitions:
       createdAt:
         type: "string"
         format: "date-time"
-        description: "A data e a hora que este objeto foi criado. API retorna o valor\
+        description:
+          "A data e a hora que este objeto foi criado. API retorna o valor\
           \ no formato ISO 8601 em UTC. Exemplo: 2017-08-04T16:27:55.397Z"
   ResponseCount:
     type: "object"
@@ -4637,9 +4724,9 @@ definitions:
   Price:
     type: "object"
     required:
-    - price
-    - variant
-    - pricingTable
+      - price
+      - variant
+      - pricingTable
     properties:
       price:
         type: "number"
@@ -4655,12 +4742,12 @@ definitions:
         default: true
       variant:
         type: "object"
-        description: "variante deste preço" 
+        description: "variante deste preço"
         items:
           $ref: "#/definitions/Variant"
       pricingTable:
         type: "object"
-        description: "variante deste preço" 
+        description: "variante deste preço"
         items:
           $ref: "#/definitions/PricingTable"
 
@@ -4674,12 +4761,14 @@ definitions:
       createdAt:
         type: "string"
         format: "date-time"
-        description: "A data e a hora que este objeto foi criado. API retorna o valor\
+        description:
+          "A data e a hora que este objeto foi criado. API retorna o valor\
           \ no formato ISO 8601 em UTC. Exemplo: 2017-08-04T16:27:55.397Z"
       updatedAt:
         type: "string"
         format: "date-time"
-        description: "A data e a hora que este objeto foi modificado pela última vez.\
+        description:
+          "A data e a hora que este objeto foi modificado pela última vez.\
           \ API retorna o valor no formato ISO 8601 em UTC. Exemplo: 2017-08-04T16:27:55.397Z"
       weight:
         type: "number"
@@ -4687,15 +4776,15 @@ definitions:
         minimum: 0.0
       length:
         type: "number"
-        description: "Comprimento desta variante em centimetros"
+        description: "Comprimento desta variante em centímetros"
         minimum: 0.0
       height:
         type: "number"
-        description: "Altura desta variante em centimetros"
+        description: "Altura desta variante em centímetros"
         minimum: 0.0
       width:
         type: "number"
-        description: "Largura desta variante em centimetros"
+        description: "Largura desta variante em centímetros"
         minimum: 0.0
       price:
         type: "number"
@@ -4708,58 +4797,60 @@ definitions:
       quantity:
         type: "integer"
         format: "int32"
-        description: "Quantidade desta variante em estoque, se aplica quando product.trackInventory\
+        description:
+          "Quantidade desta variante em estoque, se aplica quando product.trackInventory\
           \ estiver marcado como verdadeiro"
         minimum: 0.0
       erpId:
         type: "string"
-        description: "O código do sistema de ERP associado a esta variante, normalmente\
+        description:
+          "O código do sistema de ERP associado a esta variante, normalmente\
           \ é o código de barras"
       definition1Value:
         type: "string"
-        description: "O valor da primeira definição desta variante. Exmplo: Azul"
+        description: "O valor da primeira definição desta variante. Exemplo: Azul"
       definition2Value:
         type: "string"
-        description: "O valor da segunda definição desta variante. Exmplo: P"
+        description: "O valor da segunda definição desta variante. Exemplo: P"
       imageUrl:
         type: "string"
         format: "url"
         description: "A url da imagem desta variante"
       visible:
         type: "boolean"
-        description: "Se falso então esta variante não poderá ser incluida em um pedido"
+        description: "Se falso então esta variante não poderá ser incluída em um pedido"
         default: true
 
   NewPrice:
     type: "object"
     required:
-    - price
-    - variant
-    - pricingTable
-    properties: 
+      - price
+      - variant
+      - pricingTable
+    properties:
       price:
         type: "number"
-        description: "Valor deste preço" 
+        description: "Valor deste preço"
         minimum: 0.0
       salePrice:
         type: "number"
-        description: "Valor de promoção deste preço" 
+        description: "Valor de promoção deste preço"
         minimum: 0.0
       active:
         type: "boolean"
         description: "Se falso então este preço não poderá ser utilizado em um pedido"
         default: true
       variant:
-          type: "string"
-          description: "ObjectId de uma variant"
+        type: "string"
+        description: "ObjectId de uma variant"
       pricingTable:
-          type: "string"
-          description: "ObjectId de uma tabela de preço" 
+        type: "string"
+        description: "ObjectId de uma tabela de preço"
 
   NewVariant:
     type: "object"
     required:
-    - "price"
+      - "price"
     properties:
       weight:
         type: "number"
@@ -4767,15 +4858,15 @@ definitions:
         minimum: 0.0
       length:
         type: "number"
-        description: "Comprimento desta variante em centimetros"
+        description: "Comprimento desta variante em centímetros"
         minimum: 0.0
       height:
         type: "number"
-        description: "Altura desta variante em centimetros"
+        description: "Altura desta variante em centímetros"
         minimum: 0.0
       width:
         type: "number"
-        description: "Largura desta variante em centimetros"
+        description: "Largura desta variante em centímetros"
         minimum: 0.0
       price:
         type: "number"
@@ -4788,40 +4879,42 @@ definitions:
       quantity:
         type: "integer"
         format: "int32"
-        description: "Quantidade desta variante em estoque, se aplica quando product.trackInventory\
+        description:
+          "Quantidade desta variante em estoque, se aplica quando product.trackInventory\
           \ estiver marcado como verdadeiro"
         minimum: 0.0
       erpId:
         type: "string"
-        description: "O código do sistema de ERP associado a esta variante, normalmente\
+        description:
+          "O código do sistema de ERP associado a esta variante, normalmente\
           \ é o código de barras"
       definition1Value:
         type: "string"
-        description: "O valor da primeira definição desta variante. Exmplo: Azul"
+        description: "O valor da primeira definição desta variante. Exemplo: Azul"
       definition2Value:
         type: "string"
-        description: "O valor da segunda definição desta variante. Exmplo: P"
+        description: "O valor da segunda definição desta variante. Exemplo: P"
       imageUrl:
         type: "string"
         format: "url"
         description: "A url da imagem desta variante"
       visible:
         type: "boolean"
-        description: "Se falso então esta variante não poderá ser incluida em um pedido"
+        description: "Se falso então esta variante não poderá ser incluída em um pedido"
         default: true
       isMainVariant:
         type: "boolean"
         description: "Essa deve ser a variante principal deste produto. Apenas uma ```variant``` deve ser marcada como true"
         default: true
 
-  Prices: 
+  Prices:
     type: "object"
     properties:
       results:
         type: "array"
-        description: "Lista de preços" 
+        description: "Lista de preços"
         items:
-          $ref: "#/definitions/Price"     
+          $ref: "#/definitions/Price"
   Variants:
     type: "object"
     properties:
@@ -4841,7 +4934,8 @@ definitions:
         description: "Lista de clientes"
         items:
           $ref: "#/definitions/Customer"
-    description: "O cliente (customers) é o comprador cadastrado na loja e que pode\
+    description:
+      "O cliente (customers) é o comprador cadastrado na loja e que pode\
       \ efetuar pedidos. Pode ser do tipo pessoa física ou jurídica."
   Note:
     type: "object"
@@ -4852,14 +4946,14 @@ definitions:
   OrderPaymentMethodEnum:
     type: "string"
     enum:
-    - "CREDITCARD"
-    - "BOLETO"
+      - "CREDITCARD"
+      - "BOLETO"
   InteractionStatusEnum:
     type: "string"
     enum:
-    - "WAITING"
-    - "CONTACTED"
-    - "FINISHED"
+      - "WAITING"
+      - "CONTACTED"
+      - "FINISHED"
   Interactions:
     type: "object"
     properties:
@@ -4882,7 +4976,8 @@ definitions:
         properties:
           dueDate:
             type: "string"
-            description: "A data de vencimento do boleto. Se installments for maior\
+            description:
+              "A data de vencimento do boleto. Se installments for maior\
               \ que 1, então esta é a data de vencimento do 1.o boleto"
           installments:
             type: "string"
@@ -4912,7 +5007,7 @@ definitions:
         description: "Tipo de desconto do pedido"
         enum:
           - "PERCENTAGE"
-          - "ABOSOLUTE"
+          - "ABSOLUTE"
       discount:
         type: "number"
         description: "Valor do desconto do pedido"
@@ -4929,7 +5024,7 @@ definitions:
       pickUpInStore:
         type: "boolean"
         description: "Se o pedido for retirado na loja"
-      orderId: 
+      orderId:
         type: "string"
         description: "Id externo do pedido"
       shippingAddress:
@@ -4940,7 +5035,7 @@ definitions:
       shippingMethod:
         type: "string"
         description: "Método de envio do pedido"
-      paymentMethod: 
+      paymentMethod:
         type: "string"
         description: "Método de pagamento do pedido"
         enum:
@@ -4949,24 +5044,24 @@ definitions:
       status:
         type: "string"
         description: "Status do pedido"
-        enum: 
-          - 'CREATING'
-          - 'CREATED'
-          - 'PROVISIONING'
-          - 'OPEN'
-          - 'WAITING'
-          - 'COLLECT_PAYMENT'
-          - 'PAID'
-          - 'PACKAGED'
-          - 'SHIPPED'
-          - 'PARTIALLY_SHIPPED'
-          - 'DELIVERED'
-          - 'NOT_PAID'
-          - 'PARTIAL_PAID'
-          - 'OVER_PAID'
-          - 'CANCELLED'
-          - 'REVERTED'
-          - 'ERROR'
+        enum:
+          - "CREATING"
+          - "CREATED"
+          - "PROVISIONING"
+          - "OPEN"
+          - "WAITING"
+          - "COLLECT_PAYMENT"
+          - "PAID"
+          - "PACKAGED"
+          - "SHIPPED"
+          - "PARTIALLY_SHIPPED"
+          - "DELIVERED"
+          - "NOT_PAID"
+          - "PARTIAL_PAID"
+          - "OVER_PAID"
+          - "CANCELLED"
+          - "REVERTED"
+          - "ERROR"
       teamId:
         type: "string"
         description: "ObjectId do time que gerou o pedido"
@@ -4978,1073 +5073,1112 @@ x-amazon-apigateway-documentation:
   version: "1.0"
   createdDate: "2018-03-21T01:13:32Z"
   documentationParts:
-  - location:
-      type: "METHOD"
-      path: "/chats/count"
-      method: "GET"
-    properties:
-      description: "Contar conversas"
-  - location:
-      type: "METHOD"
-      path: "/chats/{objectId}/messages/count"
-      method: "GET"
-    properties:
-      description: "numero de mensagens desta conversa"
-  - location:
-      type: "METHOD"
-      path: "/chats/{objectId}/messages/{messageId}"
-      method: "GET"
-    properties:
-      description: "obter uma unica mensagem a partir de seu identificador unico"
-  - location:
-      type: "METHOD"
-      path: "/chats/{objectId}/messages"
-      method: "GET"
-    properties:
-      description: "Listar mensagens"
-  - location:
-      type: "METHOD"
-      path: "/chats/{objectId}"
-      method: "GET"
-    properties:
-      description: "Obert uma unica conversa baseada no seu identificador unico"
-  - location:
-      type: "METHOD"
-      path: "/chats"
-      method: "GET"
-    properties:
-      description: "listar clientes"
-  - location:
-      type: "MODEL"
-      name: "Address.addressLine1"
-    properties:
-      description: "Primeira linha do endereço, normalmente é no nome da rua."
-  - location:
-      type: "MODEL"
-      name: "Address.addressLine2"
-    properties:
-      description: "Segunda linha do endereço, normalmente é o complemento"
-  - location:
-      type: "MODEL"
-      name: "Address.country"
-    properties:
-      description: "Código do pais utilizando o formato ISO 3166-1. Exemplo para o\
-        \ Brasil usamos BRA."
-  - location:
-      type: "MODEL"
-      name: "Address.name"
-    properties:
-      description: "Nome de referência deste endereço. Por exemplo: Casa"
-  - location:
-      type: "MODEL"
-      name: "Address.number"
-    properties:
-      description: "Número"
-  - location:
-      type: "MODEL"
-      name: "Address.state"
-    properties:
-      description: "Estado"
-  - location:
-      type: "MODEL"
-      name: "Address.suburb"
-    properties:
-      description: "Bairro"
-  - location:
-      type: "MODEL"
-      name: "Address.zip"
-    properties:
-      description: "CEP"
-  - location:
-      type: "MODEL"
-      name: "Chat.createdAt"
-    properties:
-      description: "A data e a hora que este objeto foi criado. API retorna o valor\
-        \ no formato ISO 8601 em UTC. Exemplo: 2017-08-04T16:27:55.397Z"
-  - location:
-      type: "MODEL"
-      name: "Chat.objectId"
-    properties:
-      description: "Identificador único deste objeto na base de dados da OmniChat"
-  - location:
-      type: "MODEL"
-      name: "Chat.updatedAt"
-    properties:
-      description: "A data e a hora que este objeto foi modificado pela última vez.\
-        \ API retorna o valor no formato ISO 8601 em UTC. Exemplo: 2017-08-04T16:27:55.397Z"
-  - location:
-      type: "MODEL"
-      name: "Chats"
-    properties:
-      description: "Lista de conversas"
-  - location:
-      type: "MODEL"
-      name: "Customer.acceptsMarketing"
-    properties:
-      description: "Se o cliente aceita receber material de marketing"
-  - location:
-      type: "MODEL"
-      name: "Customer.address"
-    properties:
-      description: "O endereço de entrega do cliente"
-  - location:
-      type: "MODEL"
-      name: "Customer.birthDate"
-    properties:
-      description: "Data de nascimento"
-  - location:
-      type: "MODEL"
-      name: "Customer.businessAccount"
-    properties:
-      description: "Se este cliente representa uma empresa"
-  - location:
-      type: "MODEL"
-      name: "Customer.businessName"
-    properties:
-      description: "Se o cliente representa uma empresa. Este é o nome da empresa."
-  - location:
-      type: "MODEL"
-      name: "Customer.createdAt"
-    properties:
-      description: "A data e a hora que este objeto foi criado. API retorna o valor\
-        \ no formato ISO 8601 em UTC. Exemplo: 2017-08-04T16:27:55.397Z"
-  - location:
-      type: "MODEL"
-      name: "Customer.email"
-    properties:
-      description: "Email do cliente"
-  - location:
-      type: "MODEL"
-      name: "Customer.gender"
-    properties:
-      description: "Sexo do cliente"
-  - location:
-      type: "MODEL"
-      name: "Customer.lastName"
-    properties:
-      description: "Sobrenome do cliente"
-  - location:
-      type: "MODEL"
-      name: "Customer.name"
-    properties:
-      description: "Nome do cliente"
-  - location:
-      type: "MODEL"
-      name: "Customer.objectId"
-    properties:
-      description: "Identificador único deste objeto na base de dados da OmniChat"
-  - location:
-      type: "MODEL"
-      name: "Customer.phoneAreaCode"
-    properties:
-      description: "Código de área do telefone"
-  - location:
-      type: "MODEL"
-      name: "Customer.phoneCountryCode"
-    properties:
-      description: "Código do país"
-  - location:
-      type: "MODEL"
-      name: "Customer.phoneNumber"
-    properties:
-      description: "Número do telefone"
-  - location:
-      type: "MODEL"
-      name: "Customer.taxDocumentNumber"
-    properties:
-      description: "CPF do cliente"
-  - location:
-      type: "MODEL"
-      name: "Customer.updatedAt"
-    properties:
-      description: "A data e a hora que este objeto foi modificado pela última vez.\
-        \ API retorna o valor no formato ISO 8601 em UTC. Exemplo: 2017-08-04T16:27:55.397Z"
-  - location:
-      type: "MODEL"
-      name: "Customers.results"
-    properties:
-      description: "Lista de clientes"
-  - location:
-      type: "MODEL"
-      name: "Customers"
-    properties:
-      description: "O cliente (customers) é o comprador cadastrado na loja e que pode\
-        \ efetuar pedidos. Pode ser do tipo pessoa física ou jurídica."
-  - location:
-      type: "MODEL"
-      name: "Item.description"
-    properties:
-      description: "Detalhes deste item. É copiado de product.detail quando incluí\
-        do no carrinho"
-  - location:
-      type: "MODEL"
-      name: "Item.height"
-    properties:
-      description: "Altura desta item em centimetros. É copiado de variant.height"
-  - location:
-      type: "MODEL"
-      name: "Item.length"
-    properties:
-      description: "Comprimento desta item em centimetros. É copiado de variant.length"
-  - location:
-      type: "MODEL"
-      name: "Item.name"
-    properties:
-      description: "Nome deste item. É copiado de product.name quando incluído no\
-        \ carrinho"
-  - location:
-      type: "MODEL"
-      name: "Item.objectId"
-    properties:
-      description: "Identificador único deste objeto na base de dados da OmniChat"
-  - location:
-      type: "MODEL"
-      name: "Item.price"
-    properties:
-      description: "Preço deste item"
-  - location:
-      type: "MODEL"
-      name: "Item.productReference"
-    properties:
-      description: "Código de referência deste item. É copiado de variant.erpId"
-  - location:
-      type: "MODEL"
-      name: "Item.quantity"
-    properties:
-      description: "A quantidade deste item"
-  - location:
-      type: "MODEL"
-      name: "Item.variant"
-    properties:
-      description: "O objectId da variante que deu origem a este item."
-  - location:
-      type: "MODEL"
-      name: "Item.weight"
-    properties:
-      description: "Peso desta item em gramas. É copiado de variant.weight"
-  - location:
-      type: "MODEL"
-      name: "Item.width"
-    properties:
-      description: "Largura desta item em centimetros. É copiado de variant.width"
-  - location:
-      type: "MODEL"
-      name: "Message.createdAt"
-    properties:
-      description: "A data e a hora que este objeto foi criado. API retorna o valor\
-        \ no formato ISO 8601 em UTC. Exemplo: 2017-08-04T16:27:55.397Z"
-  - location:
-      type: "MODEL"
-      name: "Message.objectId"
-    properties:
-      description: "Identificador único deste objeto na base de dados da OmniChat"
-  - location:
-      type: "MODEL"
-      name: "Message.updatedAt"
-    properties:
-      description: "A data e a hora que este objeto foi modificado pela última vez.\
-        \ API retorna o valor no formato ISO 8601 em UTC. Exemplo: 2017-08-04T16:27:55.397Z"
-  - location:
-      type: "MODEL"
-      name: "Messages"
-    properties:
-      description: "Lista de mensagens"
-  - location:
-      type: "MODEL"
-      name: "NewCustomer.acceptsMarketing"
-    properties:
-      description: "Se o cliente aceita receber material de marketing"
-  - location:
-      type: "MODEL"
-      name: "NewCustomer.address"
-    properties:
-      description: "O endereço de entrega do cliente"
-  - location:
-      type: "MODEL"
-      name: "NewCustomer.birthDate"
-    properties:
-      description: "Data de nascimento"
-  - location:
-      type: "MODEL"
-      name: "NewCustomer.businessAccount"
-    properties:
-      description: "Se este cliente representa uma empresa"
-  - location:
-      type: "MODEL"
-      name: "NewCustomer.businessName"
-    properties:
-      description: "Se o cliente representa uma empresa. Este é o nome da empresa."
-  - location:
-      type: "MODEL"
-      name: "NewCustomer.email"
-    properties:
-      description: "Email do cliente"
-  - location:
-      type: "MODEL"
-      name: "NewCustomer.gender"
-    properties:
-      description: "Sexo do cliente"
-  - location:
-      type: "MODEL"
-      name: "NewCustomer.lastName"
-    properties:
-      description: "Sobrenome do cliente"
-  - location:
-      type: "MODEL"
-      name: "NewCustomer.name"
-    properties:
-      description: "Nome do cliente"
-  - location:
-      type: "MODEL"
-      name: "NewCustomer.phoneAreaCode"
-    properties:
-      description: "Código de área do telefone"
-  - location:
-      type: "MODEL"
-      name: "NewCustomer.phoneCountryCode"
-    properties:
-      description: "Código do país"
-  - location:
-      type: "MODEL"
-      name: "NewCustomer.phoneNumber"
-    properties:
-      description: "Número do telefone"
-  - location:
-      type: "MODEL"
-      name: "NewCustomer.taxDocumentNumber"
-    properties:
-      description: "CPF do cliente"
-  - location:
-      type: "MODEL"
-      name: "NewProduct.blocked"
-    properties:
-      description: "Indica se este produto esta bloqueado para vendas. Este produto\
-        \ será listado na aba de produtos da OmniChat, mas não será mostrado como\
-        \ disponível para inclusão em um pedido"
-  - location:
-      type: "MODEL"
-      name: "NewProduct.definition1"
-    properties:
-      description: "O nome da primeira definição do produto. Por exemplo: Cor"
-  - location:
-      type: "MODEL"
-      name: "NewProduct.definition1Values"
-    properties:
-      description: "Todos os possíveis valores da primeira definição do produto. Exemplo:\
-        \ Azul, Verde e Preto"
-  - location:
-      type: "MODEL"
-      name: "NewProduct.definition2"
-    properties:
-      description: "O nome da segunda definição do produto. Por exemplo: Tamanho"
-  - location:
-      type: "MODEL"
-      name: "NewProduct.definition2Values"
-    properties:
-      description: "Todos os possíveis valores da primeira definição do produto. Exemplo:\
-        \ P, M e G"
-  - location:
-      type: "MODEL"
-      name: "NewProduct.erpId"
-    properties:
-      description: "Código utilizado no sistema de ERP para identificar este cliente.\
-        \ Normalmente é o código de barras"
-  - location:
-      type: "MODEL"
-      name: "NewProduct.mainVariant"
-    properties:
-      description: "A variante principal deste produto"
-  - location:
-      type: "MODEL"
-      name: "NewProduct.name"
-    properties:
-      description: "Nome do produto"
-  - location:
-      type: "MODEL"
-      name: "NewProduct.sellOutOfStock"
-    properties:
-      description: "Se este produto pode ser vendido com estoque igual ou inferior\
-        \ a zero"
-  - location:
-      type: "MODEL"
-      name: "NewProduct.service"
-    properties:
-      description: "Indica se este produto é um serviço"
-  - location:
-      type: "MODEL"
-      name: "NewProduct.trackInventory"
-    properties:
-      description: "Se verdadeiro a OmniChat irá controla o estoque. Quando um novo\
-        \ pedido é criado o estoque da variante é decrementado, quando um pedido é\
-        \ cancelado ou não pago o estoque é restaurado"
-  - location:
-      type: "MODEL"
-      name: "NewProduct.variants"
-    properties:
-      description: "Todas as variantes deste produto, inclusive a variante principal"
-  - location:
-      type: "MODEL"
-      name: "Note.text"
-    properties:
-      description: "Texto desta nota"
-  - location:
-      type: "MODEL"
-      name: "Order.boletoInstructions.dueDate"
-    properties:
-      description: "A data de vencimento do boleto. Se installments for maior que\
-        \ 1, então esta é a data de vencimento do 1.o boleto"
-  - location:
-      type: "MODEL"
-      name: "Order.boletoInstructions.installments"
-    properties:
-      description: "O número de boletos que serão gerados"
-  - location:
-      type: "MODEL"
-      name: "Order.boletoInstructions"
-    properties:
-      description: "Instruções relativas ao pagamento por boleto deste pedido"
-  - location:
-      type: "MODEL"
-      name: "Order.canAcceptBoleto"
-    properties:
-      description: "Se este pedido pode ser pelo cliente usando boleto"
-  - location:
-      type: "MODEL"
-      name: "Order.canAcceptCreditCard"
-    properties:
-      description: "Se este pedido pode ser pago usando cartão de crédito"
-  - location:
-      type: "MODEL"
-      name: "Order.createdAt"
-    properties:
-      description: "A data e a hora que este objeto foi criado. API retorna o valor\
-        \ no formato ISO 8601 em UTC. Exemplo: 2017-08-04T16:27:55.397Z"
-  - location:
-      type: "MODEL"
-      name: "Order.creditCardInstructions.installments"
-    properties:
-      description: "Máximo de parcelas aceitas para pagamento deste pedido"
-  - location:
-      type: "MODEL"
-      name: "Order.creditCardInstructions"
-    properties:
-      description: "Instruções relativas ao pagamento por cartão de crédito deste\
-        \ pedido"
-  - location:
-      type: "MODEL"
-      name: "Order.customer"
-    properties:
-      description: "Comprador deste pedido"
-  - location:
-      type: "MODEL"
-      name: "Order.deliveryTime"
-    properties:
-      description: "Quanto tempo este pedido irá demorar para chegar até o cliente"
-  - location:
-      type: "MODEL"
-      name: "Order.discount"
-    properties:
-      description: "Valor do desconto"
-  - location:
-      type: "MODEL"
-      name: "Order.discountMode"
-    properties:
-      description: "Como este desconto será calculado"
-  - location:
-      type: "MODEL"
-      name: "Order.items"
-    properties:
-      description: "Lista de itens deste pedido"
-  - location:
-      type: "MODEL"
-      name: "Order.notes"
-    properties:
-      description: "Notas sobre este pedido"
-  - location:
-      type: "MODEL"
-      name: "Order.objectId"
-    properties:
-      description: "Identificador único deste objeto na base de dados da OmniChat"
-  - location:
-      type: "MODEL"
-      name: "Order.orderId"
-    properties:
-      description: "Identificador único deste pedido. Automaticamente incrementado\
-        \ quando um novo pedido é criado"
-  - location:
-      type: "MODEL"
-      name: "Order.paymentGatewayId"
-    properties:
-      description: "Identificador único deste pedido no Gateway de pagamento configurado\
-        \ nesta loja"
-  - location:
-      type: "MODEL"
-      name: "Order.paymentInstallmentsCount"
-    properties:
-      description: "Número de parcelas selecionadas pelo cliente para pagamento deste\
-        \ pedido. Somente usado para pagamento no cartão de crédito"
-  - location:
-      type: "MODEL"
-      name: "Order.paymentMethod"
-    properties:
-      description: "Como o cliente escolhei pagar por este pedido"
-  - location:
-      type: "MODEL"
-      name: "Order.pickUpInStore"
-    properties:
-      description: "Se cliente irá buscar este pedido na loja"
-  - location:
-      type: "MODEL"
-      name: "Order.shippingAddress"
-    properties:
-      description: "O endereço de entrega deste pedido"
-  - location:
-      type: "MODEL"
-      name: "Order.shippingCost"
-    properties:
-      description: "O custo do frete"
-  - location:
-      type: "MODEL"
-      name: "Order.shippingMethod"
-    properties:
-      description: "Qual o método de envio para este pedido"
-  - location:
-      type: "MODEL"
-      name: "Order.status"
-    properties:
-      description: "O status atual deste pedido"
-  - location:
-      type: "MODEL"
-      name: "Order.updatedAt"
-    properties:
-      description: "A data e a hora que este objeto foi modificado pela última vez.\
-        \ API retorna o valor no formato ISO 8601 em UTC. Exemplo: 2017-08-04T16:27:55.397Z"
-  - location:
-      type: "MODEL"
-      name: "Orders"
-    properties:
-      description: "Lista de pedidos"
-  - location:
-      type: "MODEL"
-      name: "Product.blocked"
-    properties:
-      description: "Indica se este produto esta bloqueado para vendas. Este produto\
-        \ será listado na aba de produtos da OmniChat, mas não será mostrado como\
-        \ disponível para inclusão em um pedido"
-  - location:
-      type: "MODEL"
-      name: "Product.createdAt"
-    properties:
-      description: "A data e a hora que este objeto foi criado. API retorna o valor\
-        \ no formato ISO 8601 em UTC. Exemplo: 2017-08-04T16:27:55.397Z"
-  - location:
-      type: "MODEL"
-      name: "Product.definition1"
-    properties:
-      description: "O nome da primeira definição do produto. Por exemplo: Cor"
-  - location:
-      type: "MODEL"
-      name: "Product.definition1Values"
-    properties:
-      description: "Todos os possíveis valores da primeira definição do produto. Exemplo:\
-        \ Azul, Verde e Preto"
-  - location:
-      type: "MODEL"
-      name: "Product.definition2"
-    properties:
-      description: "O nome da segunda definição do produto. Por exemplo: Tamanho"
-  - location:
-      type: "MODEL"
-      name: "Product.definition2Values"
-    properties:
-      description: "Todos os possíveis valores da primeira definição do produto. Exemplo:\
-        \ P, M e G"
-  - location:
-      type: "MODEL"
-      name: "Product.erpId"
-    properties:
-      description: "Código utilizado no sistema de ERP para identificar este cliente.\
-        \ Normalmente é o código de barras"
-  - location:
-      type: "MODEL"
-      name: "Product.mainVariant"
-    properties:
-      description: "A variante principal deste produto"
-  - location:
-      type: "MODEL"
-      name: "Product.name"
-    properties:
-      description: "Nome do produto"
-  - location:
-      type: "MODEL"
-      name: "Product.objectId"
-    properties:
-      description: "Identificador único deste objeto na base de dados da OmniChat"
-  - location:
-      type: "MODEL"
-      name: "Product.sellOutOfStock"
-    properties:
-      description: "Se este produto pode ser vendido com estoque igual ou inferior\
-        \ a zero"
-  - location:
-      type: "MODEL"
-      name: "Product.service"
-    properties:
-      description: "Indica se este produto é um serviço"
-  - location:
-      type: "MODEL"
-      name: "Product.trackInventory"
-    properties:
-      description: "Se verdadeiro a OmniChat irá controla o estoque. Quando um novo\
-        \ pedido é criado o estoque da variante é decrementado, quando um pedido é\
-        \ cancelado ou não pago o estoque é restaurado"
-  - location:
-      type: "MODEL"
-      name: "Product.updatedAt"
-    properties:
-      description: "A data e a hora que este objeto foi modificado pela última vez.\
-        \ API retorna o valor no formato ISO 8601 em UTC. Exemplo: 2017-08-04T16:27:55.397Z"
-  - location:
-      type: "MODEL"
-      name: "Product.variants"
-    properties:
-      description: "Todas as variantes deste produto, inclusive a variante principal"
-  - location:
-      type: "MODEL"
-      name: "Products"
-    properties:
-      description: "Lista de produtos"
-  - location:
-      type: "MODEL"
-      name: "ResponseCount.count"
-    properties:
-      description: "Número de objetos encontrados"
-  - location:
-      type: "MODEL"
-      name: "ResponseEmpty"
-    properties:
-      title: "ResponseEmpty Schema"
-  - location:
-      type: "MODEL"
-      name: "ResponseError.code"
-    properties:
-      description: "O código do erro"
-  - location:
-      type: "MODEL"
-      name: "ResponseError.error"
-    properties:
-      description: "Breve descrição do erro"
-  - location:
-      type: "MODEL"
-      name: "ResponseObjectCreate.createdAt"
-    properties:
-      description: "A data e a hora que este objeto foi criado. API retorna o valor\
-        \ no formato ISO 8601 em UTC. Exemplo: 2017-08-04T16:27:55.397Z"
-  - location:
-      type: "MODEL"
-      name: "ResponseObjectCreate.objectId"
-    properties:
-      description: "Identificador único deste objeto na base de dados da OmniChat"
-  - location:
-      type: "MODEL"
-      name: "ResponseUpdatedObject.updatedAt"
-    properties:
-      description: "A data e a hora que este objeto foi modificado pela última vez.\
-        \ API retorna o valor no formato ISO 8601 em UTC. Exemplo: 2017-08-04T16:27:55.397Z"
-  - location:
-      type: "MODEL"
-      name: "Variant.createdAt"
-    properties:
-      description: "A data e a hora que este objeto foi criado. API retorna o valor\
-        \ no formato ISO 8601 em UTC. Exemplo: 2017-08-04T16:27:55.397Z"
-  - location:
-      type: "MODEL"
-      name: "Variant.definition1Value"
-    properties:
-      description: "O valor da primeira definição desta variante. Exmplo: Azul"
-  - location:
-      type: "MODEL"
-      name: "Variant.definition2Value"
-    properties:
-      description: "O valor da segunda definição desta variante. Exmplo: P"
-  - location:
-      type: "MODEL"
-      name: "Variant.erpId"
-    properties:
-      description: "O código do sistema de ERP associado a esta variante, normalmente\
-        \ é o código de barras"
-  - location:
-      type: "MODEL"
-      name: "Variant.height"
-    properties:
-      description: "Altura desta variante em centimetros"
-  - location:
-      type: "MODEL"
-      name: "Variant.imageUrl"
-    properties:
-      description: "A url da imagem desta variante"
-  - location:
-      type: "MODEL"
-      name: "Variant.length"
-    properties:
-      description: "Comprimento desta variante em centimetros"
-  - location:
-      type: "MODEL"
-      name: "Variant.objectId"
-    properties:
-      description: "Identificador único deste objeto na base de dados da OmniChat"
-  - location:
-      type: "MODEL"
-      name: "Variant.price"
-    properties:
-      description: "Preço desta variante"
-  - location:
-      type: "MODEL"
-      name: "Variant.quantity"
-    properties:
-      description: "Quantidade desta variante em estoque, se aplica quando product.trackInventory\
-        \ estiver marcado como verdadeiro"
-  - location:
-      type: "MODEL"
-      name: "Variant.salePrice"
-    properties:
-      description: "Promoção desta variante"
-  - location:
-      type: "MODEL"
-      name: "Variant.updatedAt"
-    properties:
-      description: "A data e a hora que este objeto foi modificado pela última vez.\
-        \ API retorna o valor no formato ISO 8601 em UTC. Exemplo: 2017-08-04T16:27:55.397Z"
-  - location:
-      type: "MODEL"
-      name: "Variant.visible"
-    properties:
-      description: "Se falso então esta variante não poderá ser incluida em um pedido"
-  - location:
-      type: "MODEL"
-      name: "Variant.weight"
-    properties:
-      description: "Peso desta variante em gramas"
-  - location:
-      type: "MODEL"
-      name: "Variant.width"
-    properties:
-      description: "Largura desta variante em centimetros"
-  - location:
-      type: "MODEL"
-      name: "Variants.results"
-    properties:
-      description: "Lista de variantes"
-  - location:
-      type: "RESOURCE"
-      path: "/chats/{objectId}/messages/count"
-    properties:
-      description: "Contar mensagens"
-  - location:
-      type: "RESOURCE"
-      path: "/chats/{objectId}/messages"
-    properties:
-      description: "Uma mensagem (message) enviada ou recebida na OmniChat. Toda mensagen\
-        \ necessariamente pertence a uma conversa (chat)."
-  - location:
-      type: "RESOURCE"
-      path: "/chats"
-    properties:
-      description: "Uma conversa (chat) representa um conjunto de mensagens trocadas\
-        \ entre um usuario conectado a uma das plataformas integradas na OmniChat\
-        \ e um usuario da sua loja"
-  - location:
-      type: "RESPONSE"
-      path: "/chats/count"
-      method: "GET"
-      statusCode: "200"
-    properties:
-      description: "200 response"
-  - location:
-      type: "RESPONSE"
-      path: "/chats/{objectId}/messages/count"
-      method: "GET"
-      statusCode: "200"
-    properties:
-      description: "200 response"
-  - location:
-      type: "RESPONSE"
-      path: "/chats/{objectId}/messages/{messageId}"
-      method: "GET"
-      statusCode: "200"
-    properties:
-      description: "200 response"
-  - location:
-      type: "RESPONSE"
-      path: "/chats/{objectId}/messages"
-      method: "GET"
-      statusCode: "200"
-    properties:
-      description: "200 response"
-  - location:
-      type: "RESPONSE"
-      path: "/chats/{objectId}"
-      method: "GET"
-      statusCode: "200"
-    properties:
-      description: "200 response"
-  - location:
-      type: "RESPONSE"
-      path: "/chats/{objectId}"
-      method: "GET"
-      statusCode: "404"
-    properties:
-      description: "404 response"
-  - location:
-      type: "RESPONSE"
-      path: "/chats"
-      method: "GET"
-      statusCode: "200"
-    properties:
-      description: "200 response"
-  - location:
-      type: "RESPONSE"
-      path: "/customers/count"
-      method: "GET"
-      statusCode: "200"
-    properties:
-      description: "200 response"
-  - location:
-      type: "RESPONSE"
-      path: "/customers/{objectId}"
-      method: "DELETE"
-      statusCode: "200"
-    properties:
-      description: "200 response"
-  - location:
-      type: "RESPONSE"
-      path: "/customers/{objectId}"
-      method: "DELETE"
-      statusCode: "404"
-    properties:
-      description: "404 response"
-  - location:
-      type: "RESPONSE"
-      path: "/customers/{objectId}"
-      method: "GET"
-      statusCode: "200"
-    properties:
-      description: "200 response"
-  - location:
-      type: "RESPONSE"
-      path: "/customers/{objectId}"
-      method: "GET"
-      statusCode: "404"
-    properties:
-      description: "404 response"
-  - location:
-      type: "RESPONSE"
-      path: "/customers/{objectId}"
-      method: "PUT"
-      statusCode: "200"
-    properties:
-      description: "200 response"
-  - location:
-      type: "RESPONSE"
-      path: "/customers/{objectId}"
-      method: "PUT"
-      statusCode: "404"
-    properties:
-      description: "404 response"
-  - location:
-      type: "RESPONSE"
-      path: "/customers/{objectId}"
-      method: "PUT"
-      statusCode: "500"
-    properties:
-      description: "500 response"
-  - location:
-      type: "RESPONSE"
-      path: "/customers"
-      method: "GET"
-      statusCode: "200"
-    properties:
-      description: "200 response"
-  - location:
-      type: "RESPONSE"
-      path: "/customers"
-      method: "POST"
-      statusCode: "201"
-    properties:
-      description: "201 response"
-  - location:
-      type: "RESPONSE"
-      path: "/customers"
-      method: "POST"
-      statusCode: "400"
-    properties:
-      description: "400 response"
-  - location:
-      type: "RESPONSE"
-      path: "/orders/count"
-      method: "GET"
-      statusCode: "200"
-    properties:
-      description: "200 response"
-  - location:
-      type: "RESPONSE"
-      path: "/orders/{objectId}"
-      method: "GET"
-      statusCode: "200"
-    properties:
-      description: "200 response"
-  - location:
-      type: "RESPONSE"
-      path: "/orders/{objectId}"
-      method: "GET"
-      statusCode: "404"
-    properties:
-      description: "404 response"
-  - location:
-      type: "RESPONSE"
-      path: "/orders"
-      method: "GET"
-      statusCode: "200"
-    properties:
-      description: "200 response"
-  - location:
-      type: "RESPONSE"
-      path: "/products/count"
-      method: "GET"
-      statusCode: "200"
-    properties:
-      description: "200 response"
-  - location:
-      type: "RESPONSE"
-      path: "/products/{objectId}/variants/count"
-      method: "GET"
-      statusCode: "200"
-    properties:
-      description: "200 response"
-  - location:
-      type: "RESPONSE"
-      path: "/products/{objectId}/variants/{variantId}"
-      method: "DELETE"
-      statusCode: "200"
-    properties:
-      description: "200 response"
-  - location:
-      type: "RESPONSE"
-      path: "/products/{objectId}/variants/{variantId}"
-      method: "PUT"
-      statusCode: "200"
-    properties:
-      description: "200 response"
-  - location:
-      type: "RESPONSE"
-      path: "/products/{objectId}/variants"
-      method: "GET"
-      statusCode: "200"
-    properties:
-      description: "200 response"
-  - location:
-      type: "RESPONSE"
-      path: "/products/{objectId}/variants"
-      method: "POST"
-      statusCode: "200"
-    properties:
-      description: "200 response"
-  - location:
-      type: "RESPONSE"
-      path: "/products/{objectId}"
-      method: "DELETE"
-      statusCode: "200"
-    properties:
-      description: "200 response"
-  - location:
-      type: "RESPONSE"
-      path: "/products/{objectId}"
-      method: "DELETE"
-      statusCode: "404"
-    properties:
-      description: "404 response"
-  - location:
-      type: "RESPONSE"
-      path: "/products/{objectId}"
-      method: "GET"
-      statusCode: "200"
-    properties:
-      description: "200 response"
-  - location:
-      type: "RESPONSE"
-      path: "/products/{objectId}"
-      method: "GET"
-      statusCode: "404"
-    properties:
-      description: "404 response"
-  - location:
-      type: "RESPONSE"
-      path: "/products/{objectId}"
-      method: "PUT"
-      statusCode: "200"
-    properties:
-      description: "200 response"
-  - location:
-      type: "RESPONSE"
-      path: "/products/{objectId}"
-      method: "PUT"
-      statusCode: "404"
-    properties:
-      description: "404 response"
-  - location:
-      type: "RESPONSE"
-      path: "/products/{objectId}"
-      method: "PUT"
-      statusCode: "500"
-    properties:
-      description: "500 response"
-  - location:
-      type: "RESPONSE"
-      path: "/products"
-      method: "GET"
-      statusCode: "200"
-    properties:
-      description: "200 response"
-  - location:
-      type: "RESPONSE"
-      path: "/products"
-      method: "POST"
-      statusCode: "201"
-    properties:
-      description: "201 response"
-  - location:
-      type: "RESPONSE"
-      path: "/products"
-      method: "POST"
-      statusCode: "400"
-    properties:
-      description: "400 response"
-  - location:
-      type: "RESPONSE"
-      path: "/products"
-      method: "POST"
-      statusCode: "404"
-    properties:
-      description: "404 response"
-  - location:
-      type: "RESPONSE"
-      path: "/products"
-      method: "POST"
-      statusCode: "500"
-    properties:
-      description: "500 response"
-  - location:  
-      type: "RESPONSE"  
-      path: "/branches/{objectId}"  
-      method: "GET"  
-      statusCode: "200"  
-    properties:  
-      description: "200 response"  
-  - location:  
-      type: "RESPONSE"  
-      path: "/branches/{objectId}"  
-      method: "GET"  
-      statusCode: "404"
+    - location:
+        type: "METHOD"
+        path: "/chats/count"
+        method: "GET"
+      properties:
+        description: "Contar conversas"
+    - location:
+        type: "METHOD"
+        path: "/chats/{objectId}/messages/count"
+        method: "GET"
+      properties:
+        description: "numero de mensagens desta conversa"
+    - location:
+        type: "METHOD"
+        path: "/chats/{objectId}/messages/{messageId}"
+        method: "GET"
+      properties:
+        description: "Obter uma única mensagem a partir de seu identificador único"
+    - location:
+        type: "METHOD"
+        path: "/chats/{objectId}/messages"
+        method: "GET"
+      properties:
+        description: "Listar mensagens"
+    - location:
+        type: "METHOD"
+        path: "/chats/{objectId}"
+        method: "GET"
+      properties:
+        description: "Obter uma única conversa baseada no seu identificador único"
+    - location:
+        type: "METHOD"
+        path: "/chats"
+        method: "GET"
+      properties:
+        description: "listar clientes"
+    - location:
+        type: "MODEL"
+        name: "Address.addressLine1"
+      properties:
+        description: "Primeira linha do endereço, normalmente é no nome da rua."
+    - location:
+        type: "MODEL"
+        name: "Address.addressLine2"
+      properties:
+        description: "Segunda linha do endereço, normalmente é o complemento"
+    - location:
+        type: "MODEL"
+        name: "Address.country"
+      properties:
+        description:
+          "Código do pais utilizando o formato ISO 3166-1. Exemplo para o\
+          \ Brasil usamos BRA."
+    - location:
+        type: "MODEL"
+        name: "Address.name"
+      properties:
+        description: "Nome de referência deste endereço. Por exemplo: Casa"
+    - location:
+        type: "MODEL"
+        name: "Address.number"
+      properties:
+        description: "Número"
+    - location:
+        type: "MODEL"
+        name: "Address.state"
+      properties:
+        description: "Estado"
+    - location:
+        type: "MODEL"
+        name: "Address.suburb"
+      properties:
+        description: "Bairro"
+    - location:
+        type: "MODEL"
+        name: "Address.zip"
+      properties:
+        description: "CEP"
+    - location:
+        type: "MODEL"
+        name: "Chat.createdAt"
+      properties:
+        description:
+          "A data e a hora que este objeto foi criado. API retorna o valor\
+          \ no formato ISO 8601 em UTC. Exemplo: 2017-08-04T16:27:55.397Z"
+    - location:
+        type: "MODEL"
+        name: "Chat.objectId"
+      properties:
+        description: "Identificador único deste objeto na base de dados da OmniChat"
+    - location:
+        type: "MODEL"
+        name: "Chat.updatedAt"
+      properties:
+        description:
+          "A data e a hora que este objeto foi modificado pela última vez.\
+          \ API retorna o valor no formato ISO 8601 em UTC. Exemplo: 2017-08-04T16:27:55.397Z"
+    - location:
+        type: "MODEL"
+        name: "Chats"
+      properties:
+        description: "Lista de conversas"
+    - location:
+        type: "MODEL"
+        name: "Customer.acceptsMarketing"
+      properties:
+        description: "Se o cliente aceita receber material de marketing"
+    - location:
+        type: "MODEL"
+        name: "Customer.address"
+      properties:
+        description: "O endereço de entrega do cliente"
+    - location:
+        type: "MODEL"
+        name: "Customer.birthDate"
+      properties:
+        description: "Data de nascimento"
+    - location:
+        type: "MODEL"
+        name: "Customer.businessAccount"
+      properties:
+        description: "Se este cliente representa uma empresa"
+    - location:
+        type: "MODEL"
+        name: "Customer.businessName"
+      properties:
+        description: "Se o cliente representa uma empresa. Este é o nome da empresa."
+    - location:
+        type: "MODEL"
+        name: "Customer.createdAt"
+      properties:
+        description:
+          "A data e a hora que este objeto foi criado. API retorna o valor\
+          \ no formato ISO 8601 em UTC. Exemplo: 2017-08-04T16:27:55.397Z"
+    - location:
+        type: "MODEL"
+        name: "Customer.email"
+      properties:
+        description: "Email do cliente"
+    - location:
+        type: "MODEL"
+        name: "Customer.gender"
+      properties:
+        description: "Sexo do cliente"
+    - location:
+        type: "MODEL"
+        name: "Customer.lastName"
+      properties:
+        description: "Sobrenome do cliente"
+    - location:
+        type: "MODEL"
+        name: "Customer.name"
+      properties:
+        description: "Nome do cliente"
+    - location:
+        type: "MODEL"
+        name: "Customer.objectId"
+      properties:
+        description: "Identificador único deste objeto na base de dados da OmniChat"
+    - location:
+        type: "MODEL"
+        name: "Customer.phoneAreaCode"
+      properties:
+        description: "Código de área do telefone"
+    - location:
+        type: "MODEL"
+        name: "Customer.phoneCountryCode"
+      properties:
+        description: "Código do país"
+    - location:
+        type: "MODEL"
+        name: "Customer.phoneNumber"
+      properties:
+        description: "Número do telefone"
+    - location:
+        type: "MODEL"
+        name: "Customer.taxDocumentNumber"
+      properties:
+        description: "CPF do cliente"
+    - location:
+        type: "MODEL"
+        name: "Customer.updatedAt"
+      properties:
+        description:
+          "A data e a hora que este objeto foi modificado pela última vez.\
+          \ API retorna o valor no formato ISO 8601 em UTC. Exemplo: 2017-08-04T16:27:55.397Z"
+    - location:
+        type: "MODEL"
+        name: "Customers.results"
+      properties:
+        description: "Lista de clientes"
+    - location:
+        type: "MODEL"
+        name: "Customers"
+      properties:
+        description:
+          "O cliente (customers) é o comprador cadastrado na loja e que pode\
+          \ efetuar pedidos. Pode ser do tipo pessoa física ou jurídica."
+    - location:
+        type: "MODEL"
+        name: "Item.description"
+      properties:
+        description:
+          "Detalhes deste item. É copiado de product.detail quando incluí\
+          do no carrinho"
+    - location:
+        type: "MODEL"
+        name: "Item.height"
+      properties:
+        description: "Altura desta item em centímetros. É copiado de variant.height"
+    - location:
+        type: "MODEL"
+        name: "Item.length"
+      properties:
+        description: "Comprimento desta item em centímetros. É copiado de variant.length"
+    - location:
+        type: "MODEL"
+        name: "Item.name"
+      properties:
+        description:
+          "Nome deste item. É copiado de product.name quando incluído no\
+          \ carrinho"
+    - location:
+        type: "MODEL"
+        name: "Item.objectId"
+      properties:
+        description: "Identificador único deste objeto na base de dados da OmniChat"
+    - location:
+        type: "MODEL"
+        name: "Item.price"
+      properties:
+        description: "Preço deste item"
+    - location:
+        type: "MODEL"
+        name: "Item.productReference"
+      properties:
+        description: "Código de referência deste item. É copiado de variant.erpId"
+    - location:
+        type: "MODEL"
+        name: "Item.quantity"
+      properties:
+        description: "A quantidade deste item"
+    - location:
+        type: "MODEL"
+        name: "Item.variant"
+      properties:
+        description: "O objectId da variante que deu origem a este item."
+    - location:
+        type: "MODEL"
+        name: "Item.weight"
+      properties:
+        description: "Peso desta item em gramas. É copiado de variant.weight"
+    - location:
+        type: "MODEL"
+        name: "Item.width"
+      properties:
+        description: "Largura desta item em centímetros. É copiado de variant.width"
+    - location:
+        type: "MODEL"
+        name: "Message.createdAt"
+      properties:
+        description:
+          "A data e a hora que este objeto foi criado. API retorna o valor\
+          \ no formato ISO 8601 em UTC. Exemplo: 2017-08-04T16:27:55.397Z"
+    - location:
+        type: "MODEL"
+        name: "Message.objectId"
+      properties:
+        description: "Identificador único deste objeto na base de dados da OmniChat"
+    - location:
+        type: "MODEL"
+        name: "Message.updatedAt"
+      properties:
+        description:
+          "A data e a hora que este objeto foi modificado pela última vez.\
+          \ API retorna o valor no formato ISO 8601 em UTC. Exemplo: 2017-08-04T16:27:55.397Z"
+    - location:
+        type: "MODEL"
+        name: "Messages"
+      properties:
+        description: "Lista de mensagens"
+    - location:
+        type: "MODEL"
+        name: "NewCustomer.acceptsMarketing"
+      properties:
+        description: "Se o cliente aceita receber material de marketing"
+    - location:
+        type: "MODEL"
+        name: "NewCustomer.address"
+      properties:
+        description: "O endereço de entrega do cliente"
+    - location:
+        type: "MODEL"
+        name: "NewCustomer.birthDate"
+      properties:
+        description: "Data de nascimento"
+    - location:
+        type: "MODEL"
+        name: "NewCustomer.businessAccount"
+      properties:
+        description: "Se este cliente representa uma empresa"
+    - location:
+        type: "MODEL"
+        name: "NewCustomer.businessName"
+      properties:
+        description: "Se o cliente representa uma empresa. Este é o nome da empresa."
+    - location:
+        type: "MODEL"
+        name: "NewCustomer.email"
+      properties:
+        description: "Email do cliente"
+    - location:
+        type: "MODEL"
+        name: "NewCustomer.gender"
+      properties:
+        description: "Sexo do cliente"
+    - location:
+        type: "MODEL"
+        name: "NewCustomer.lastName"
+      properties:
+        description: "Sobrenome do cliente"
+    - location:
+        type: "MODEL"
+        name: "NewCustomer.name"
+      properties:
+        description: "Nome do cliente"
+    - location:
+        type: "MODEL"
+        name: "NewCustomer.phoneAreaCode"
+      properties:
+        description: "Código de área do telefone"
+    - location:
+        type: "MODEL"
+        name: "NewCustomer.phoneCountryCode"
+      properties:
+        description: "Código do país"
+    - location:
+        type: "MODEL"
+        name: "NewCustomer.phoneNumber"
+      properties:
+        description: "Número do telefone"
+    - location:
+        type: "MODEL"
+        name: "NewCustomer.taxDocumentNumber"
+      properties:
+        description: "CPF do cliente"
+    - location:
+        type: "MODEL"
+        name: "NewProduct.blocked"
+      properties:
+        description:
+          "Indica se este produto esta bloqueado para vendas. Este produto\
+          \ será listado na aba de produtos da OmniChat, mas não será mostrado como\
+          \ disponível para inclusão em um pedido"
+    - location:
+        type: "MODEL"
+        name: "NewProduct.definition1"
+      properties:
+        description: "O nome da primeira definição do produto. Por exemplo: Cor"
+    - location:
+        type: "MODEL"
+        name: "NewProduct.definition1Values"
+      properties:
+        description:
+          "Todos os possíveis valores da primeira definição do produto. Exemplo:\
+          \ Azul, Verde e Preto"
+    - location:
+        type: "MODEL"
+        name: "NewProduct.definition2"
+      properties:
+        description: "O nome da segunda definição do produto. Por exemplo: Tamanho"
+    - location:
+        type: "MODEL"
+        name: "NewProduct.definition2Values"
+      properties:
+        description:
+          "Todos os possíveis valores da primeira definição do produto. Exemplo:\
+          \ P, M e G"
+    - location:
+        type: "MODEL"
+        name: "NewProduct.erpId"
+      properties:
+        description:
+          "Código utilizado no sistema de ERP para identificar este cliente.\
+          \ Normalmente é o código de barras"
+    - location:
+        type: "MODEL"
+        name: "NewProduct.mainVariant"
+      properties:
+        description: "A variante principal deste produto"
+    - location:
+        type: "MODEL"
+        name: "NewProduct.name"
+      properties:
+        description: "Nome do produto"
+    - location:
+        type: "MODEL"
+        name: "NewProduct.sellOutOfStock"
+      properties:
+        description:
+          "Se este produto pode ser vendido com estoque igual ou inferior\
+          \ a zero"
+    - location:
+        type: "MODEL"
+        name: "NewProduct.service"
+      properties:
+        description: "Indica se este produto é um serviço"
+    - location:
+        type: "MODEL"
+        name: "NewProduct.trackInventory"
+      properties:
+        description:
+          "Se verdadeiro a OmniChat irá controla o estoque. Quando um novo\
+          \ pedido é criado o estoque da variante é decrementado, quando um pedido é\
+          \ cancelado ou não pago o estoque é restaurado"
+    - location:
+        type: "MODEL"
+        name: "NewProduct.variants"
+      properties:
+        description: "Todas as variantes deste produto, inclusive a variante principal"
+    - location:
+        type: "MODEL"
+        name: "Note.text"
+      properties:
+        description: "Texto desta nota"
+    - location:
+        type: "MODEL"
+        name: "Order.boletoInstructions.dueDate"
+      properties:
+        description:
+          "A data de vencimento do boleto. Se installments for maior que\
+          \ 1, então esta é a data de vencimento do 1.o boleto"
+    - location:
+        type: "MODEL"
+        name: "Order.boletoInstructions.installments"
+      properties:
+        description: "O número de boletos que serão gerados"
+    - location:
+        type: "MODEL"
+        name: "Order.boletoInstructions"
+      properties:
+        description: "Instruções relativas ao pagamento por boleto deste pedido"
+    - location:
+        type: "MODEL"
+        name: "Order.canAcceptBoleto"
+      properties:
+        description: "Se este pedido pode ser pelo cliente usando boleto"
+    - location:
+        type: "MODEL"
+        name: "Order.canAcceptCreditCard"
+      properties:
+        description: "Se este pedido pode ser pago usando cartão de crédito"
+    - location:
+        type: "MODEL"
+        name: "Order.createdAt"
+      properties:
+        description:
+          "A data e a hora que este objeto foi criado. API retorna o valor\
+          \ no formato ISO 8601 em UTC. Exemplo: 2017-08-04T16:27:55.397Z"
+    - location:
+        type: "MODEL"
+        name: "Order.creditCardInstructions.installments"
+      properties:
+        description: "Máximo de parcelas aceitas para pagamento deste pedido"
+    - location:
+        type: "MODEL"
+        name: "Order.creditCardInstructions"
+      properties:
+        description:
+          "Instruções relativas ao pagamento por cartão de crédito deste\
+          \ pedido"
+    - location:
+        type: "MODEL"
+        name: "Order.customer"
+      properties:
+        description: "Comprador deste pedido"
+    - location:
+        type: "MODEL"
+        name: "Order.deliveryTime"
+      properties:
+        description: "Quanto tempo este pedido irá demorar para chegar até o cliente"
+    - location:
+        type: "MODEL"
+        name: "Order.discount"
+      properties:
+        description: "Valor do desconto"
+    - location:
+        type: "MODEL"
+        name: "Order.discountMode"
+      properties:
+        description: "Como este desconto será calculado"
+    - location:
+        type: "MODEL"
+        name: "Order.items"
+      properties:
+        description: "Lista de itens deste pedido"
+    - location:
+        type: "MODEL"
+        name: "Order.notes"
+      properties:
+        description: "Notas sobre este pedido"
+    - location:
+        type: "MODEL"
+        name: "Order.objectId"
+      properties:
+        description: "Identificador único deste objeto na base de dados da OmniChat"
+    - location:
+        type: "MODEL"
+        name: "Order.orderId"
+      properties:
+        description:
+          "Identificador único deste pedido. Automaticamente incrementado\
+          \ quando um novo pedido é criado"
+    - location:
+        type: "MODEL"
+        name: "Order.paymentGatewayId"
+      properties:
+        description:
+          "Identificador único deste pedido no Gateway de pagamento configurado\
+          \ nesta loja"
+    - location:
+        type: "MODEL"
+        name: "Order.paymentInstallmentsCount"
+      properties:
+        description:
+          "Número de parcelas selecionadas pelo cliente para pagamento deste\
+          \ pedido. Somente usado para pagamento no cartão de crédito"
+    - location:
+        type: "MODEL"
+        name: "Order.paymentMethod"
+      properties:
+        description: "Como o cliente escolhei pagar por este pedido"
+    - location:
+        type: "MODEL"
+        name: "Order.pickUpInStore"
+      properties:
+        description: "Se cliente irá buscar este pedido na loja"
+    - location:
+        type: "MODEL"
+        name: "Order.shippingAddress"
+      properties:
+        description: "O endereço de entrega deste pedido"
+    - location:
+        type: "MODEL"
+        name: "Order.shippingCost"
+      properties:
+        description: "O custo do frete"
+    - location:
+        type: "MODEL"
+        name: "Order.shippingMethod"
+      properties:
+        description: "Qual o método de envio para este pedido"
+    - location:
+        type: "MODEL"
+        name: "Order.status"
+      properties:
+        description: "O status atual deste pedido"
+    - location:
+        type: "MODEL"
+        name: "Order.updatedAt"
+      properties:
+        description:
+          "A data e a hora que este objeto foi modificado pela última vez.\
+          \ API retorna o valor no formato ISO 8601 em UTC. Exemplo: 2017-08-04T16:27:55.397Z"
+    - location:
+        type: "MODEL"
+        name: "Orders"
+      properties:
+        description: "Lista de pedidos"
+    - location:
+        type: "MODEL"
+        name: "Product.blocked"
+      properties:
+        description:
+          "Indica se este produto esta bloqueado para vendas. Este produto\
+          \ será listado na aba de produtos da OmniChat, mas não será mostrado como\
+          \ disponível para inclusão em um pedido"
+    - location:
+        type: "MODEL"
+        name: "Product.createdAt"
+      properties:
+        description:
+          "A data e a hora que este objeto foi criado. API retorna o valor\
+          \ no formato ISO 8601 em UTC. Exemplo: 2017-08-04T16:27:55.397Z"
+    - location:
+        type: "MODEL"
+        name: "Product.definition1"
+      properties:
+        description: "O nome da primeira definição do produto. Por exemplo: Cor"
+    - location:
+        type: "MODEL"
+        name: "Product.definition1Values"
+      properties:
+        description:
+          "Todos os possíveis valores da primeira definição do produto. Exemplo:\
+          \ Azul, Verde e Preto"
+    - location:
+        type: "MODEL"
+        name: "Product.definition2"
+      properties:
+        description: "O nome da segunda definição do produto. Por exemplo: Tamanho"
+    - location:
+        type: "MODEL"
+        name: "Product.definition2Values"
+      properties:
+        description:
+          "Todos os possíveis valores da primeira definição do produto. Exemplo:\
+          \ P, M e G"
+    - location:
+        type: "MODEL"
+        name: "Product.erpId"
+      properties:
+        description:
+          "Código utilizado no sistema de ERP para identificar este cliente.\
+          \ Normalmente é o código de barras"
+    - location:
+        type: "MODEL"
+        name: "Product.mainVariant"
+      properties:
+        description: "A variante principal deste produto"
+    - location:
+        type: "MODEL"
+        name: "Product.name"
+      properties:
+        description: "Nome do produto"
+    - location:
+        type: "MODEL"
+        name: "Product.objectId"
+      properties:
+        description: "Identificador único deste objeto na base de dados da OmniChat"
+    - location:
+        type: "MODEL"
+        name: "Product.sellOutOfStock"
+      properties:
+        description:
+          "Se este produto pode ser vendido com estoque igual ou inferior\
+          \ a zero"
+    - location:
+        type: "MODEL"
+        name: "Product.service"
+      properties:
+        description: "Indica se este produto é um serviço"
+    - location:
+        type: "MODEL"
+        name: "Product.trackInventory"
+      properties:
+        description:
+          "Se verdadeiro a OmniChat irá controla o estoque. Quando um novo\
+          \ pedido é criado o estoque da variante é decrementado, quando um pedido é\
+          \ cancelado ou não pago o estoque é restaurado"
+    - location:
+        type: "MODEL"
+        name: "Product.updatedAt"
+      properties:
+        description:
+          "A data e a hora que este objeto foi modificado pela última vez.\
+          \ API retorna o valor no formato ISO 8601 em UTC. Exemplo: 2017-08-04T16:27:55.397Z"
+    - location:
+        type: "MODEL"
+        name: "Product.variants"
+      properties:
+        description: "Todas as variantes deste produto, inclusive a variante principal"
+    - location:
+        type: "MODEL"
+        name: "Products"
+      properties:
+        description: "Lista de produtos"
+    - location:
+        type: "MODEL"
+        name: "ResponseCount.count"
+      properties:
+        description: "Número de objetos encontrados"
+    - location:
+        type: "MODEL"
+        name: "ResponseEmpty"
+      properties:
+        title: "ResponseEmpty Schema"
+    - location:
+        type: "MODEL"
+        name: "ResponseError.code"
+      properties:
+        description: "O código do erro"
+    - location:
+        type: "MODEL"
+        name: "ResponseError.error"
+      properties:
+        description: "Breve descrição do erro"
+    - location:
+        type: "MODEL"
+        name: "ResponseObjectCreate.createdAt"
+      properties:
+        description:
+          "A data e a hora que este objeto foi criado. API retorna o valor\
+          \ no formato ISO 8601 em UTC. Exemplo: 2017-08-04T16:27:55.397Z"
+    - location:
+        type: "MODEL"
+        name: "ResponseObjectCreate.objectId"
+      properties:
+        description: "Identificador único deste objeto na base de dados da OmniChat"
+    - location:
+        type: "MODEL"
+        name: "ResponseUpdatedObject.updatedAt"
+      properties:
+        description:
+          "A data e a hora que este objeto foi modificado pela última vez.\
+          \ API retorna o valor no formato ISO 8601 em UTC. Exemplo: 2017-08-04T16:27:55.397Z"
+    - location:
+        type: "MODEL"
+        name: "Variant.createdAt"
+      properties:
+        description:
+          "A data e a hora que este objeto foi criado. API retorna o valor\
+          \ no formato ISO 8601 em UTC. Exemplo: 2017-08-04T16:27:55.397Z"
+    - location:
+        type: "MODEL"
+        name: "Variant.definition1Value"
+      properties:
+        description: "O valor da primeira definição desta variante. Exemplo: Azul"
+    - location:
+        type: "MODEL"
+        name: "Variant.definition2Value"
+      properties:
+        description: "O valor da segunda definição desta variante. Exemplo: P"
+    - location:
+        type: "MODEL"
+        name: "Variant.erpId"
+      properties:
+        description:
+          "O código do sistema de ERP associado a esta variante, normalmente\
+          \ é o código de barras"
+    - location:
+        type: "MODEL"
+        name: "Variant.height"
+      properties:
+        description: "Altura desta variante em centímetros"
+    - location:
+        type: "MODEL"
+        name: "Variant.imageUrl"
+      properties:
+        description: "A url da imagem desta variante"
+    - location:
+        type: "MODEL"
+        name: "Variant.length"
+      properties:
+        description: "Comprimento desta variante em centímetros"
+    - location:
+        type: "MODEL"
+        name: "Variant.objectId"
+      properties:
+        description: "Identificador único deste objeto na base de dados da OmniChat"
+    - location:
+        type: "MODEL"
+        name: "Variant.price"
+      properties:
+        description: "Preço desta variante"
+    - location:
+        type: "MODEL"
+        name: "Variant.quantity"
+      properties:
+        description:
+          "Quantidade desta variante em estoque, se aplica quando product.trackInventory\
+          \ estiver marcado como verdadeiro"
+    - location:
+        type: "MODEL"
+        name: "Variant.salePrice"
+      properties:
+        description: "Promoção desta variante"
+    - location:
+        type: "MODEL"
+        name: "Variant.updatedAt"
+      properties:
+        description:
+          "A data e a hora que este objeto foi modificado pela última vez.\
+          \ API retorna o valor no formato ISO 8601 em UTC. Exemplo: 2017-08-04T16:27:55.397Z"
+    - location:
+        type: "MODEL"
+        name: "Variant.visible"
+      properties:
+        description: "Se falso então esta variante não poderá ser incluída em um pedido"
+    - location:
+        type: "MODEL"
+        name: "Variant.weight"
+      properties:
+        description: "Peso desta variante em gramas"
+    - location:
+        type: "MODEL"
+        name: "Variant.width"
+      properties:
+        description: "Largura desta variante em centímetros"
+    - location:
+        type: "MODEL"
+        name: "Variants.results"
+      properties:
+        description: "Lista de variantes"
+    - location:
+        type: "RESOURCE"
+        path: "/chats/{objectId}/messages/count"
+      properties:
+        description: "Contar mensagens"
+    - location:
+        type: "RESOURCE"
+        path: "/chats/{objectId}/messages"
+      properties:
+        description:
+          "Uma mensagem (message) enviada ou recebida na OmniChat. Toda mensagem\
+          \ necessariamente pertence a uma conversa (chat)."
+    - location:
+        type: "RESOURCE"
+        path: "/chats"
+      properties:
+        description:
+          "Uma conversa (chat) representa um conjunto de mensagens trocadas\
+          \ entre um usuário conectado a uma das plataformas integradas na OmniChat\
+          \ e um usuário da sua loja"
+    - location:
+        type: "RESPONSE"
+        path: "/chats/count"
+        method: "GET"
+        statusCode: "200"
+      properties:
+        description: "200 response"
+    - location:
+        type: "RESPONSE"
+        path: "/chats/{objectId}/messages/count"
+        method: "GET"
+        statusCode: "200"
+      properties:
+        description: "200 response"
+    - location:
+        type: "RESPONSE"
+        path: "/chats/{objectId}/messages/{messageId}"
+        method: "GET"
+        statusCode: "200"
+      properties:
+        description: "200 response"
+    - location:
+        type: "RESPONSE"
+        path: "/chats/{objectId}/messages"
+        method: "GET"
+        statusCode: "200"
+      properties:
+        description: "200 response"
+    - location:
+        type: "RESPONSE"
+        path: "/chats/{objectId}"
+        method: "GET"
+        statusCode: "200"
+      properties:
+        description: "200 response"
+    - location:
+        type: "RESPONSE"
+        path: "/chats/{objectId}"
+        method: "GET"
+        statusCode: "404"
+      properties:
+        description: "404 response"
+    - location:
+        type: "RESPONSE"
+        path: "/chats"
+        method: "GET"
+        statusCode: "200"
+      properties:
+        description: "200 response"
+    - location:
+        type: "RESPONSE"
+        path: "/customers/count"
+        method: "GET"
+        statusCode: "200"
+      properties:
+        description: "200 response"
+    - location:
+        type: "RESPONSE"
+        path: "/customers/{objectId}"
+        method: "DELETE"
+        statusCode: "200"
+      properties:
+        description: "200 response"
+    - location:
+        type: "RESPONSE"
+        path: "/customers/{objectId}"
+        method: "DELETE"
+        statusCode: "404"
+      properties:
+        description: "404 response"
+    - location:
+        type: "RESPONSE"
+        path: "/customers/{objectId}"
+        method: "GET"
+        statusCode: "200"
+      properties:
+        description: "200 response"
+    - location:
+        type: "RESPONSE"
+        path: "/customers/{objectId}"
+        method: "GET"
+        statusCode: "404"
+      properties:
+        description: "404 response"
+    - location:
+        type: "RESPONSE"
+        path: "/customers/{objectId}"
+        method: "PUT"
+        statusCode: "200"
+      properties:
+        description: "200 response"
+    - location:
+        type: "RESPONSE"
+        path: "/customers/{objectId}"
+        method: "PUT"
+        statusCode: "404"
+      properties:
+        description: "404 response"
+    - location:
+        type: "RESPONSE"
+        path: "/customers/{objectId}"
+        method: "PUT"
+        statusCode: "500"
+      properties:
+        description: "500 response"
+    - location:
+        type: "RESPONSE"
+        path: "/customers"
+        method: "GET"
+        statusCode: "200"
+      properties:
+        description: "200 response"
+    - location:
+        type: "RESPONSE"
+        path: "/customers"
+        method: "POST"
+        statusCode: "201"
+      properties:
+        description: "201 response"
+    - location:
+        type: "RESPONSE"
+        path: "/customers"
+        method: "POST"
+        statusCode: "400"
+      properties:
+        description: "400 response"
+    - location:
+        type: "RESPONSE"
+        path: "/orders/count"
+        method: "GET"
+        statusCode: "200"
+      properties:
+        description: "200 response"
+    - location:
+        type: "RESPONSE"
+        path: "/orders/{objectId}"
+        method: "GET"
+        statusCode: "200"
+      properties:
+        description: "200 response"
+    - location:
+        type: "RESPONSE"
+        path: "/orders/{objectId}"
+        method: "GET"
+        statusCode: "404"
+      properties:
+        description: "404 response"
+    - location:
+        type: "RESPONSE"
+        path: "/orders"
+        method: "GET"
+        statusCode: "200"
+      properties:
+        description: "200 response"
+    - location:
+        type: "RESPONSE"
+        path: "/products/count"
+        method: "GET"
+        statusCode: "200"
+      properties:
+        description: "200 response"
+    - location:
+        type: "RESPONSE"
+        path: "/products/{objectId}/variants/count"
+        method: "GET"
+        statusCode: "200"
+      properties:
+        description: "200 response"
+    - location:
+        type: "RESPONSE"
+        path: "/products/{objectId}/variants/{variantId}"
+        method: "DELETE"
+        statusCode: "200"
+      properties:
+        description: "200 response"
+    - location:
+        type: "RESPONSE"
+        path: "/products/{objectId}/variants/{variantId}"
+        method: "PUT"
+        statusCode: "200"
+      properties:
+        description: "200 response"
+    - location:
+        type: "RESPONSE"
+        path: "/products/{objectId}/variants"
+        method: "GET"
+        statusCode: "200"
+      properties:
+        description: "200 response"
+    - location:
+        type: "RESPONSE"
+        path: "/products/{objectId}/variants"
+        method: "POST"
+        statusCode: "200"
+      properties:
+        description: "200 response"
+    - location:
+        type: "RESPONSE"
+        path: "/products/{objectId}"
+        method: "DELETE"
+        statusCode: "200"
+      properties:
+        description: "200 response"
+    - location:
+        type: "RESPONSE"
+        path: "/products/{objectId}"
+        method: "DELETE"
+        statusCode: "404"
+      properties:
+        description: "404 response"
+    - location:
+        type: "RESPONSE"
+        path: "/products/{objectId}"
+        method: "GET"
+        statusCode: "200"
+      properties:
+        description: "200 response"
+    - location:
+        type: "RESPONSE"
+        path: "/products/{objectId}"
+        method: "GET"
+        statusCode: "404"
+      properties:
+        description: "404 response"
+    - location:
+        type: "RESPONSE"
+        path: "/products/{objectId}"
+        method: "PUT"
+        statusCode: "200"
+      properties:
+        description: "200 response"
+    - location:
+        type: "RESPONSE"
+        path: "/products/{objectId}"
+        method: "PUT"
+        statusCode: "404"
+      properties:
+        description: "404 response"
+    - location:
+        type: "RESPONSE"
+        path: "/products/{objectId}"
+        method: "PUT"
+        statusCode: "500"
+      properties:
+        description: "500 response"
+    - location:
+        type: "RESPONSE"
+        path: "/products"
+        method: "GET"
+        statusCode: "200"
+      properties:
+        description: "200 response"
+    - location:
+        type: "RESPONSE"
+        path: "/products"
+        method: "POST"
+        statusCode: "201"
+      properties:
+        description: "201 response"
+    - location:
+        type: "RESPONSE"
+        path: "/products"
+        method: "POST"
+        statusCode: "400"
+      properties:
+        description: "400 response"
+    - location:
+        type: "RESPONSE"
+        path: "/products"
+        method: "POST"
+        statusCode: "404"
+      properties:
+        description: "404 response"
+    - location:
+        type: "RESPONSE"
+        path: "/products"
+        method: "POST"
+        statusCode: "500"
+      properties:
+        description: "500 response"
+    - location:
+        type: "RESPONSE"
+        path: "/branches/{objectId}"
+        method: "GET"
+        statusCode: "200"
+      properties:
+        description: "200 response"
+    - location:
+        type: "RESPONSE"
+        path: "/branches/{objectId}"
+        method: "GET"
+        statusCode: "404"
 x-amazon-apigateway-request-validators:
   Validate query string parameters and headers:
     validateRequestParameters: true
