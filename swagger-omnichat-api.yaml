@@ -1292,8 +1292,8 @@ paths:
       parameters:
         - name: "x-api-secret"
           in: "header"
-        - name: "x-api-key"
-          in: "header"
+          type: "string"
+          required: true
         - in: "body"
           name: "NewOrder"
           required: true
@@ -3412,6 +3412,11 @@ paths:
           description: "400 response"
         500:
           description: "500 response"
+      security:
+        - api_key: []
+      x-amazon-apigateway-request-validator:
+        "Validate query string parameters and\
+        \ headers"
       x-amazon-apigateway-integration:
         uri: "https://api-adapter.omni.chat/users/settings"
         responses:
