@@ -1185,6 +1185,7 @@ paths:
           integration.request.header.X-Parse-REST-API-Key: "'RFxCx77Nf9VEFNnFIUxSXTrLrdfb4ntZRHG7NBIO'"
           integration.request.header.X-Parse-Application-Id: "'lHC0oT3G1oZRPB2otwYngjMjKnsOVFGfxWw5PrTM'"
           integration.request.header.x-api-secret: "method.request.header.x-api-secret"
+          integration.request.header.x-api-key: "method.request.header.x-api-key"
         passthroughBehavior: "when_no_match"
         httpMethod: "POST"
         type: "http"
@@ -1293,6 +1294,10 @@ paths:
           in: "header"
           type: "string"
           required: true
+        - name: "x-api-key"
+          in: "header"
+          type: "string"
+          required: true
         - in: "body"
           name: "NewOrder"
           required: true
@@ -1314,6 +1319,7 @@ paths:
           integration.request.header.X-Parse-REST-API-Key: "'RFxCx77Nf9VEFNnFIUxSXTrLrdfb4ntZRHG7NBIO'"
           integration.request.header.X-Parse-Application-Id: "'lHC0oT3G1oZRPB2otwYngjMjKnsOVFGfxWw5PrTM'"
           integration.request.header.x-api-secret: "method.request.header.x-api-secret"
+          integration.request.header.x-api-key: "method.request.header.x-api-key"
         passthroughBehavior: "when_no_match"
         httpMethod: "POST"
         type: "http"
