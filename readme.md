@@ -8,7 +8,7 @@ O fluxo é:
 
 OBS: Essa mudança é a que garante que novas rotas, parâmetros e configurações estarão disponíveis para serem utilizadas.
 
-  - #### 2.1. Acessar API-Gateway de  [Desenvolvimento](httpshttps://console.aws.amazon.com/apigateway/home?region=us-east-1#/apis/x6w7g275si/resources/e94cqmkyig) | [Produção](https://console.aws.amazon.com/apigateway/home?region=us-east-1#/apis/8rncqhk3ac/resources/1p7jgav17c)
+  - #### 2.1. Acessar API-Gateway de [Desenvolvimento](https://console.aws.amazon.com/apigateway/home?region=us-east-1#/apis/x6w7g275si/resources/e94cqmkyig) | [Produção](https://console.aws.amazon.com/apigateway/home?region=us-east-1#/apis/8rncqhk3ac/resources/1p7jgav17c)
 
   - #### 2.2. Importar API
 

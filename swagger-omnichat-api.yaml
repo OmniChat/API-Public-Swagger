@@ -7,17 +7,17 @@ info:
   description: |
 
     # Introdução
-    A API da OmniChat foi desenvolvida de acordo com os melhores padrões REST. 
-    Seus endpoints possuem nomes intuitivos que indicam os recursos disponíveis. 
-    As operações são feitas de acordo com os verbos HTTP, com corpos de mensagem em JSON. 
-    As respostas podem ser interpretadas através do código de status HTTP. 
+    A API da OmniChat foi desenvolvida de acordo com os melhores padrões REST.
+    Seus endpoints possuem nomes intuitivos que indicam os recursos disponíveis.
+    As operações são feitas de acordo com os verbos HTTP, com corpos de mensagem em JSON.
+    As respostas podem ser interpretadas através do código de status HTTP.
     Isso permite que quaisquer aplicações consumam a API de forma simples e clara, independente da linguagem utilizada.
 
     ## Endpoint
     As chamadas para a API devem ser feitas para o mesmo endpoint `https://api.omni.chat/v1`
 
     ## Paginação
-    Nossa API tem suporte a buscas em massa através dos métodos "GET". Deste modo, vocês podem paginar pela listagem de objetos usando ```limit``` e ```offset```. 
+    Nossa API tem suporte a buscas em massa através dos métodos "GET". Deste modo, vocês podem paginar pela listagem de objetos usando ```limit``` e ```offset```.
     Todos esses métodos de listagem possuem uma estrutura em comum, que é a de paginação.
 
     ```curl
@@ -53,10 +53,10 @@ info:
     ```
 
     ## Filtros
-    Existem várias maneiras de colocar filtros nos objetos encontrados, usando o parâmetro *where* na URL da chamada REST. 
+    Existem várias maneiras de colocar filtros nos objetos encontrados, usando o parâmetro *where* na URL da chamada REST.
     O valor do parâmetro *where* deve ser codificado como JSON.
-    Assim, se você olhar para o URL real solicitado, ele seria codificado em JSON e depois codificado como URL. 
-    O uso mais simples do parâmetro *where* está filtrando o valor das propriedades. 
+    Assim, se você olhar para o URL real solicitado, ele seria codificado em JSON e depois codificado como URL.
+    O uso mais simples do parâmetro *where* está filtrando o valor das propriedades.
 
     Por exemplo, para filtrar todos os pedidos que estão como status de pago:
     ```curl
@@ -65,12 +65,12 @@ info:
       -H 'x-api-secret: <YOUR_API_SECRET>' \
       -H 'Content-Type: application/json' \
       -H "Accept: application/json" \
-      --data-urlencode 'where={"status":"PAID"}'  
+      --data-urlencode 'where={"status":"PAID"}'
     ```
 
     ### Operações
-    Os valores do parâmetro *where* também suportam comparações além da correspondência exata. 
-    Em vez de um valor exato, forneça um JSON com as chaves correspondentes às comparações a serem feitas. 
+    Os valores do parâmetro *where* também suportam comparações além da correspondência exata.
+    Em vez de um valor exato, forneça um JSON com as chaves correspondentes às comparações a serem feitas.
     O parâmetro *where* aceita estas opções:
 
     | Key     | Operação                   |
@@ -113,7 +113,7 @@ info:
       -H 'x-api-secret: <YOUR_API_SECRET>' \
       -H 'Content-Type: application/json' \
       -H "Accept: application/json" \
-      --data-urlencode 'where={"definition1":{"$exists": true }}' 
+      --data-urlencode 'where={"definition1":{"$exists": true }}'
       ```
 
     Todos os clientes atualizados após 5/Set/2017:
@@ -123,9 +123,9 @@ info:
     -H 'x-api-secret: <YOUR_API_SECRET>' \
     -H 'Content-Type: application/json' \
     -H "Accept: application/json" \
-    --data-urlencode 'where={"updatedAt":{"$gte":{"__type":"Date","iso":"2017-09-05T03:00:00.000Z"}}}' 
+    --data-urlencode 'where={"updatedAt":{"$gte":{"__type":"Date","iso":"2017-09-05T03:00:00.000Z"}}}'
     ```
-    Uma observação importante no exemplo anterior. 
+    Uma observação importante no exemplo anterior.
     Como JSON não possui um mecanismo formal para inclusão de propriedades do tipo Date, nossa API padronizou o seguinte formato:
     ```json
     {
@@ -137,10 +137,10 @@ info:
 
     ## Modelo
     A OmniChat utiliza uma base de dados NoSQL para melhor performance e escalabilidade.
-    Para que um objeto possa ser relacionado com outro primeiro você precisa criar o objeto na OmniChat para obter o *objectId* do mesmo. 
+    Para que um objeto possa ser relacionado com outro primeiro você precisa criar o objeto na OmniChat para obter o *objectId* do mesmo.
     Com o *objectId* do objeto você pode incluir em uma relação.
 
-    Todos os objetos possuem 3 propriedades criadas pelo Backend após ele ser salvo. 
+    Todos os objetos possuem 3 propriedades criadas pelo Backend após ele ser salvo.
     O Backend responde qualquer *POST* com objectId e createdAt e qualquer PUT com o *updatedAt*
 
     | Propriedade | Descrição                                                                                                      | Exemplo                  |
@@ -162,7 +162,7 @@ tags:
   - name: interactions
     description: |
       Interações com clientes da sua loja e seus indicadores
-      A conversa entre um cliente e a empresa em um determinado canal (ex WhatsApp) é 
+      A conversa entre um cliente e a empresa em um determinado canal (ex WhatsApp) é
       representada por um único object `Chat`, mesmo que esta conversa seja finalizada e aberta inúmeras vezes.
       Para que seja possível medir e gerenciar quantas vezes o cliente chamou, tempo que um atendente demorou para
   - name: customers
@@ -1292,8 +1292,12 @@ paths:
       parameters:
         - name: "x-api-secret"
           in: "header"
+          type: "string"
+          required: true
         - name: "x-api-key"
           in: "header"
+          type: "string"
+          required: true
         - in: "body"
           name: "NewOrder"
           required: true
@@ -3412,6 +3416,11 @@ paths:
           description: "400 response"
         500:
           description: "500 response"
+      security:
+        - api_key: []
+      x-amazon-apigateway-request-validator:
+        "Validate query string parameters and\
+        \ headers"
       x-amazon-apigateway-integration:
         uri: "https://api-adapter.omni.chat/users/settings"
         responses:
@@ -3425,7 +3434,6 @@ paths:
           integration.request.header.X-Parse-REST-API-Key: "'RFxCx77Nf9VEFNnFIUxSXTrLrdfb4ntZRHG7NBIO'"
           integration.request.header.X-Parse-Application-Id: "'lHC0oT3G1oZRPB2otwYngjMjKnsOVFGfxWw5PrTM'"
           integration.request.header.x-api-secret: "method.request.header.x-api-secret"
-          integration.request.path.objectId: "method.request.path.objectId"
         passthroughBehavior: "when_no_match"
         httpMethod: "POST"
         type: "http"
@@ -3525,6 +3533,12 @@ definitions:
       number:
         type: "string"
         description: "Número"
+      phone:
+        type: "string"
+        description: "Número telefone"
+      identificator:
+        type: "string"
+        description: "Identificador das filiais"
       city:
         type: "string"
         description: "Cidade"
@@ -3590,9 +3604,6 @@ definitions:
       name:
         type: "string"
         description: "Nome do usuário"
-      lastName:
-        type: "string"
-        description: "Sobrenome do usuário"
       disabled:
         type: "boolean"
         description: "Se este usuário esta desabilitado"
@@ -3857,6 +3868,9 @@ definitions:
       birthDate:
         type: "string"
         description: "Data de nascimento"
+      maskedBirthDate:
+        type: "string"
+        description: "Data de nascimento com o mascaramento aplicado"
       businessAccount:
         type: "boolean"
         description: "Se este cliente representa uma empresa"
@@ -4081,10 +4095,8 @@ definitions:
         type: "string"
         description: "CPF do cliente"
       address:
-        type: "array"
         description: "O endereço de entrega do cliente"
-        items:
-          $ref: "#/definitions/Address"
+        $ref: "#/definitions/Address"
       gender:
         description: "Sexo do cliente"
         $ref: "#/definitions/GenderEnum"
@@ -4334,14 +4346,14 @@ definitions:
     type: "object"
     required:
       - name
-      - description
+      - productDescription
       - mainVariant
       - variants
     properties:
       name:
         type: "string"
         description: "Nome do produto"
-      description:
+      productDescription:
         type: "string"
         description: "Descrição do produto"
       erpId:
@@ -4432,7 +4444,6 @@ definitions:
     required:
       - "email"
       - "name"
-      - "lastName"
       - "password"
     properties:
       email:
@@ -4441,9 +4452,6 @@ definitions:
       name:
         type: "string"
         description: "Nome do usuário"
-      lastName:
-        type: "string"
-        description: "Último nome do usuário"
       password:
         type: "string"
         description: "Senha do usuário que está sendo criado"
@@ -4466,6 +4474,8 @@ definitions:
       - "suburb"
       - "addressLine1"
       - "number"
+      - "phone"
+      - "identificator"
       - "city"
       - "name"
       - "country"
@@ -4484,6 +4494,12 @@ definitions:
       number:
         type: "string"
         description: "Número"
+      phone:
+        type: "string"
+        description: "Número telefone"
+      identificator:
+        type: "string"
+        description: "Identificador das filiais"
       city:
         type: "string"
         description: "Cidade"
@@ -4581,6 +4597,9 @@ definitions:
       pickUpInStore:
         type: "boolean"
         description: "Se cliente irá buscar este pedido na loja"
+      salesChannel:
+        type: "string"
+        description: "Canal de vendas informado pelo vendedor"
       shippingAddress:
         description: "O endereço de entrega deste pedido"
         $ref: "#/definitions/Address"
@@ -4609,6 +4628,29 @@ definitions:
       paymentDetail:
         description: "Detalhes do pagamento"
         $ref: "#/definitions/PaymentDetail"
+      paymentGatewayMundipagg:
+        description: "Dados da MundiPagg selecionada"
+        type: object
+        properties:
+          id:
+            type: string
+          title:
+            type: string
+          branch:
+            type: object
+            properties:
+              merchantCategoryCode:
+                type: string
+              paymentFacilitatorCode:
+                type: string
+              code:
+                type: string
+              name:
+                type: string
+              phone:
+                type: string
+              document:
+                type: string
   PaymentDetail:
     type: "object"
     properties:
@@ -5190,6 +5232,11 @@ x-amazon-apigateway-documentation:
         name: "Customer.birthDate"
       properties:
         description: "Data de nascimento"
+    - location:
+        type: "MODEL"
+        name: "Customer.maskedBirthDate"
+      properties:
+        description: "Data de nascimento com o mascaramento aplicado"
     - location:
         type: "MODEL"
         name: "Customer.businessAccount"
