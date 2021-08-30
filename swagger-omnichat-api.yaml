@@ -16,7 +16,30 @@ info:
     ## Endpoint
     As chamadas para a API devem ser feitas para o mesmo endpoint `https://api.omni.chat/v1`
 
+    ## Obsoleto
+    Por motivos de performance e estabilidade, estamos removendo (e/ou) alterando compatibilidade de alguns recursos de nossa API v1. Os seguintes recursos serão removidos (e/ou) alterados:
+    * ```limit``` - agora todas as consultas serão limitadas ao máximo de 100 objetos, caso seja informado um valor superior à 100 um erro será retornado;
+    
+    * ```offset``` - não será mais possível utilizar o skip em queries com paginação, em sequência disponibilizamos uma recomendação de como fazer paginação sem skip;
+    
+    * ```where``` - não será mais permitido utilizar esse campo, disponibilizaremos campos com filtros pré-determinados para filtros;
+    
     ## Paginação
+     Sugerimos utilizar o seguinte método para paginação:
+    * Efetuar query pelo ```createdAt``` com início e fim
+    
+    * Utilizar o valor do último registro como início da próxima página; 
+    
+    Exemplo de uma requisição com createdAt:
+     ```curl
+    curl "https://api.omni.chat/v1/chats?createdAt.gt=2021-08-25T20:20:00.000&createdAt.lt=2021-08-28T20:30:00.000" \
+    -H 'x-api-key: <YOUR_API_KEY>' \
+    -H 'x-api-secret: <YOUR_API_SECRET>' \
+    -H 'Content-Type: application/json' \
+    -H 'Accept: application/json'
+     ```
+
+    ## Paginação - Obsoleto
     Nossa API tem suporte a buscas em massa através dos métodos "GET". Deste modo, vocês podem paginar pela listagem de objetos usando ```limit``` e ```offset```.
     Todos esses métodos de listagem possuem uma estrutura em comum, que é a de paginação.
 
@@ -53,6 +76,25 @@ info:
     ```
 
     ## Filtros
+    
+    Para todos os métodos de listagem na API, são permitidos os seguintes filtros:
+
+    - ```createdAt.gt``` - filtra todos os documentos com data de criação maior que o informado;
+    
+    - ```createdAt.lt``` - filtra todos os documentos com data de criação inferior que o informado;
+    
+    - ```order.createdAt``` - ordenação apenas por createdAt (ASC | DESC);
+    
+    Por exemplo, para filtrar os usuários de forma decrescente:
+    ```curl
+    curl "https://api.omni.chat/v1/users?order.createdAt=DESC&createdAt.gt=2021-08-01&createdAt.lt=2021-08-16" \
+    -H 'x-api-key: <YOUR_API_KEY>' \
+    -H 'x-api-secret: <YOUR_API_SECRET>' \
+    -H 'Content-Type: application/json' \
+    -H 'Accept: application/json'
+     ```
+
+    ## Filtros - Obsoleto
     Existem várias maneiras de colocar filtros nos objetos encontrados, usando o parâmetro *where* na URL da chamada REST.
     O valor do parâmetro *where* deve ser codificado como JSON.
     Assim, se você olhar para o URL real solicitado, ele seria codificado em JSON e depois codificado como URL.
@@ -68,7 +110,7 @@ info:
       --data-urlencode 'where={"status":"PAID"}'
     ```
 
-    ### Operações
+    ### Operações - Obsoleto
     Os valores do parâmetro *where* também suportam comparações além da correspondência exata.
     Em vez de um valor exato, forneça um JSON com as chaves correspondentes às comparações a serem feitas.
     O parâmetro *where* aceita estas opções:
@@ -1119,10 +1161,19 @@ paths:
           required: false
           type: "string"
           description: '**Deprecated**'
+        - name: "createdAt.gt"
+          in: "query"
+          required: false
+          type: "string"
+        - name: "createdAt.lt"
+          in: "query"
+          required: false
+          type: "string"
         - name: "limit"
           in: "query"
           required: false
           type: "string"
+          default: 100
           maximum: 100
           minimum: 1
         - name: "x-api-secret"
@@ -1133,10 +1184,17 @@ paths:
           in: "query"
           required: false
           type: "string"
+          description: '**Deprecated**'
+        - name: "order.createdAt"
+          in: "query"
+          required: false
+          type: "string"
+          enum: [ASC, DESC]
         - name: "offset"
           in: "query"
           required: false
           type: "string"
+          description: '**Deprecated**'
       responses:
         200:
           description: "200 response"
