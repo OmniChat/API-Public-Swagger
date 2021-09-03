@@ -16,7 +16,37 @@ info:
     ## Endpoint
     As chamadas para a API devem ser feitas para o mesmo endpoint `https://api.omni.chat/v1`
 
+    ## Por motivos de performance e estabilidade, estamos removendo (e/ou) alterando compatibilidade de alguns recursos de nossa API v1.
+
+    ## Os seguintes recursos serão removidos (e/ou) alterados a partir de 31/10/2021:
+
+    * ```where``` - Não será mais permitido utilizar esse campo, disponibilizaremos campos com filtros pré-determinados;
+
+    * ```order``` - Não será mais permitido utilizar esse campo, disponibilizaremos campos com ordenação pré-determinados;
+
+    * ```limit``` - Agora todas as consultas serão limitadas ao máximo de 100 objetos, caso seja informado um valor superior à 100 um erro será retornado;
+
+    * ```offset``` - Não será mais possível utilizar o offset em queries com paginação, em sequência disponibilizamos uma recomendação de como fazer paginação sem offset;
+
     ## Paginação
+     Sugerimos utilizar o seguinte método para paginação:
+    * Efetuar query pelo ```createdAt``` com início e fim
+
+    * Utilizar o valor do último registro como início da próxima página;
+
+    **Exemplo** de uma requisição com `createdAt.gt` (maior que) e `createdAt.lt` (menor que):
+     ```curl
+    curl "https://api.omni.chat/v1/chats?createdAt.gt=2021-08-25T20:20:00.000&createdAt.lt=2021-08-28T20:30:00.000" \
+    -H 'x-api-key: <YOUR_API_KEY>' \
+    -H 'x-api-secret: <YOUR_API_SECRET>' \
+    -H 'Content-Type: application/json' \
+    -H 'Accept: application/json'
+     ```
+
+    ## Os seguintes recursos serão removidos (e/ou) alterados a partir de 31/10/2021:
+
+    ## Paginação - Obsoleto
+
     Nossa API tem suporte a buscas em massa através dos métodos "GET". Deste modo, vocês podem paginar pela listagem de objetos usando ```limit``` e ```offset```.
     Todos esses métodos de listagem possuem uma estrutura em comum, que é a de paginação.
 
@@ -42,7 +72,7 @@ info:
       - ```x-api-key```: Chave de autorização obtida da OmniChat que identifica a sua loja.
     Além disso, devem ainda ser adicionados os headers Content-Type e Accept, com o valor application/json
 
-    Exemplo de uma requisição contendo dos os campo obrigatórios:
+    **Exemplo** de uma requisição contendo dos os campo obrigatórios:
 
     ```curl
     ## Count customers
@@ -53,12 +83,34 @@ info:
     ```
 
     ## Filtros
+
+    Para todos os métodos de listagem na API, são permitidos os seguintes filtros:
+
+    - ```createdAt.gt``` - filtra todos os documentos com data de criação maior que o informado;
+
+    - ```createdAt.lt``` - filtra todos os documentos com data de criação inferior que o informado;
+
+    - ```order.createdAt``` - ordenação apenas por createdAt (ASC | DESC);
+
+    **Por exemplo**, para filtrar os usuários de forma decrescente:
+    ```curl
+    curl "https://api.omni.chat/v1/users?order.createdAt=DESC&createdAt.gt=2021-08-01&createdAt.lt=2021-08-16" \
+    -H 'x-api-key: <YOUR_API_KEY>' \
+    -H 'x-api-secret: <YOUR_API_SECRET>' \
+    -H 'Content-Type: application/json' \
+    -H 'Accept: application/json'
+     ```
+
+    ## Os seguintes recursos serão removidos (e/ou) alterados a partir de 31/10/2021:
+
+    ## Filtros - Obsoleto
+
     Existem várias maneiras de colocar filtros nos objetos encontrados, usando o parâmetro *where* na URL da chamada REST.
     O valor do parâmetro *where* deve ser codificado como JSON.
     Assim, se você olhar para o URL real solicitado, ele seria codificado em JSON e depois codificado como URL.
     O uso mais simples do parâmetro *where* está filtrando o valor das propriedades.
 
-    Por exemplo, para filtrar todos os pedidos que estão como status de pago:
+    **Por exemplo**, para filtrar todos os pedidos que estão como status de pago:
     ```curl
       curl "https://api.omni.chat/v1/products \
       -H 'x-api-key: <YOUR_API_KEY>' \
@@ -68,7 +120,9 @@ info:
       --data-urlencode 'where={"status":"PAID"}'
     ```
 
-    ### Operações
+    ## Os seguintes recursos serão removidos (e/ou) alterados a partir de 31/10/2021:
+
+    ## Operações - Obsoleto
     Os valores do parâmetro *where* também suportam comparações além da correspondência exata.
     Em vez de um valor exato, forneça um JSON com as chaves correspondentes às comparações a serem feitas.
     O parâmetro *where* aceita estas opções:
@@ -180,7 +234,13 @@ tags:
 paths:
   /chats:
     get:
-      description: "listar conversas"
+      description: "listar conversas
+
+
+      **Observação**: É possível utilizar somente um dos filtros a seguir por request (`salesPersonId | teamId | status`) em conjunto com filtros de data.
+
+
+      Ex: `/chats?salesPersonId=S3madcbe9H&createdAt.gt=2021-05-02&createdAt.lt=2021-05-10`"
       tags:
         - chats
       produces:
@@ -190,10 +250,35 @@ paths:
           in: "query"
           required: false
           type: "string"
+          description: '**Deprecated**'
+        - name: "salesPersonId"
+          in: "query"
+          required: false
+          type: "string"
+        - name: "teamId"
+          in: "query"
+          required: false
+          type: "string"
+        - name: "status"
+          in: "query"
+          required: false
+          type: "string"
+          enum: [FINISHED, UNASSIGNED]
+        - name: "createdAt.gt"
+          in: "query"
+          required: false
+          type: "string"
+        - name: "createdAt.lt"
+          in: "query"
+          required: false
+          type: "string"
         - name: "limit"
           in: "query"
           required: false
           type: "string"
+          default: 100
+          maximum: 100
+          minimum: 1
         - name: "x-api-secret"
           in: "header"
           required: true
@@ -202,15 +287,26 @@ paths:
           in: "query"
           required: false
           type: "string"
+          description: '**Deprecated**'
+        - name: "order.createdAt"
+          in: "query"
+          required: false
+          type: "string"
+          enum: [ASC, DESC]
         - name: "offset"
           in: "query"
           required: false
           type: "string"
+          description: '**Deprecated**'
       responses:
         200:
           description: "200 response"
           schema:
             $ref: "#/definitions/Chats"
+        422:
+          description: "Unprocessable Entity"
+          schema:
+            $ref: "#/definitions/UnprocessableEntityError"
       security:
         - api_key: []
       x-amazon-apigateway-request-validator:
@@ -221,6 +317,8 @@ paths:
         responses:
           default:
             statusCode: "200"
+          422:
+            statusCode: "422"
         requestParameters:
           integration.request.querystring.where: "method.request.querystring.where"
           integration.request.header.X-Parse-REST-API-Key: "'RFxCx77Nf9VEFNnFIUxSXTrLrdfb4ntZRHG7NBIO'"
@@ -228,13 +326,20 @@ paths:
           integration.request.querystring.limit: "method.request.querystring.limit"
           integration.request.header.x-api-secret: "method.request.header.x-api-secret"
           integration.request.querystring.order: "method.request.querystring.order"
+          integration.request.querystring.order.createdAt: "method.request.querystring.order.createdAt"
           integration.request.querystring.skip: "method.request.querystring.offset"
+          integration.request.querystring.createdAt.lt: "method.request.querystring.createdAt.lt"
+          integration.request.querystring.createdAt.gt: "method.request.querystring.createdAt.gt"
+          integration.request.querystring.salesPersonId: "method.request.querystring.salesPersonId"
+          integration.request.querystring.teamId: "method.request.querystring.teamId"
+          integration.request.querystring.status: "method.request.querystring.status"
         passthroughBehavior: "when_no_match"
         httpMethod: "GET"
         type: "http"
   /chats/count:
     get:
       description: "Contar conversas"
+      deprecated: true
       tags:
         - chats
       produces:
@@ -363,14 +468,26 @@ paths:
           in: "query"
           required: false
           type: "string"
+          description: '**Deprecated**'
         - name: "objectId"
           in: "path"
           required: true
+          type: "string"
+        - name: "createdAt.gt"
+          in: "query"
+          required: false
+          type: "string"
+        - name: "createdAt.lt"
+          in: "query"
+          required: false
           type: "string"
         - name: "limit"
           in: "query"
           required: false
           type: "string"
+          default: 100
+          maximum: 100
+          minimum: 1
         - name: "x-api-secret"
           in: "header"
           required: true
@@ -379,15 +496,26 @@ paths:
           in: "query"
           required: false
           type: "string"
+          description: '**Deprecated**'
+        - name: "order.createdAt"
+          in: "query"
+          required: false
+          type: "string"
+          enum: [ASC, DESC]
         - name: "offset"
           in: "query"
           required: false
           type: "string"
+          description: '**Deprecated**'
       responses:
         200:
           description: "200 response"
           schema:
             $ref: "#/definitions/Messages"
+        422:
+          description: "Unprocessable Entity"
+          schema:
+            $ref: "#/definitions/UnprocessableEntityError"
       security:
         - api_key: []
       x-amazon-apigateway-integration:
@@ -395,6 +523,8 @@ paths:
         responses:
           default:
             statusCode: "200"
+          422:
+            statusCode: "422"
         requestParameters:
           integration.request.header.X-Parse-REST-API-Key: "'RFxCx77Nf9VEFNnFIUxSXTrLrdfb4ntZRHG7NBIO'"
           integration.request.querystring.where: "method.request.querystring.where"
@@ -402,14 +532,18 @@ paths:
           integration.request.querystring.limit: "method.request.querystring.limit"
           integration.request.header.x-api-secret: "method.request.header.x-api-secret"
           integration.request.querystring.order: "method.request.querystring.order"
+          integration.request.querystring.order.createdAt: "method.request.querystring.order.createdAt"
           integration.request.querystring.skip: "method.request.querystring.offset"
           integration.request.path.objectId: "method.request.path.objectId"
+          integration.request.querystring.createdAt.lt: "method.request.querystring.createdAt.lt"
+          integration.request.querystring.createdAt.gt: "method.request.querystring.createdAt.gt"
         passthroughBehavior: "when_no_match"
         httpMethod: "GET"
         type: "http"
   /chats/{objectId}/messages/count:
     get:
       description: "Contar mensagens de uma conversa"
+      deprecated: true
       tags:
         - chats
       produces:
@@ -594,10 +728,26 @@ paths:
           in: "query"
           required: false
           type: "string"
+          description: '**Deprecated**'
+        - name: "salesPersonId"
+          in: "query"
+          required: false
+          type: "string"
+        - name: "createdAt.lt"
+          in: "query"
+          required: false
+          type: "string"
+        - name: "createdAt.gt"
+          in: "query"
+          required: false
+          type: "string"
         - name: "limit"
           in: "query"
           required: false
           type: "string"
+          default: 100
+          maximum: 100
+          minimum: 1
         - name: "x-api-secret"
           in: "header"
           required: true
@@ -606,15 +756,26 @@ paths:
           in: "query"
           required: false
           type: "string"
+          description: '**Deprecated**'
         - name: "offset"
           in: "query"
           required: false
           type: "string"
+          description: '**Deprecated**'
+        - name: "order.createdAt"
+          in: "query"
+          required: false
+          type: "string"
+          enum: [ASC, DESC]
       responses:
         200:
           description: "200 response"
           schema:
             $ref: "#/definitions/Customers"
+        422:
+          description: "Unprocessable Entity"
+          schema:
+            $ref: "#/definitions/UnprocessableEntityError"
       security:
         - api_key: []
       x-amazon-apigateway-request-validator:
@@ -625,6 +786,8 @@ paths:
         responses:
           default:
             statusCode: "200"
+          422:
+            statusCode: "422"
         requestParameters:
           integration.request.querystring.where: "method.request.querystring.where"
           integration.request.header.X-Parse-REST-API-Key: "'RFxCx77Nf9VEFNnFIUxSXTrLrdfb4ntZRHG7NBIO'"
@@ -632,6 +795,10 @@ paths:
           integration.request.querystring.limit: "method.request.querystring.limit"
           integration.request.header.x-api-secret: "method.request.header.x-api-secret"
           integration.request.querystring.order: "method.request.querystring.order"
+          integration.request.querystring.salesPersonId: "method.request.querystring.salesPersonId"
+          integration.request.querystring.order.createdAt: "method.request.querystring.order.createdAt"
+          integration.request.querystring.createdAt.lt: "method.request.querystring.createdAt.lt"
+          integration.request.querystring.createdAt.gt: "method.request.querystring.createdAt.gt"
           integration.request.querystring.skip: "method.request.querystring.offset"
         passthroughBehavior: "when_no_match"
         httpMethod: "GET"
@@ -685,6 +852,7 @@ paths:
   /customers/count:
     get:
       description: "Contar clientes"
+      deprecated: true
       tags:
         - customers
       produces:
@@ -869,10 +1037,22 @@ paths:
           in: "query"
           required: false
           type: "string"
+          description: '**Deprecated**'
+        - name: "createdAt.gt"
+          in: "query"
+          required: false
+          type: "string"
+        - name: "createdAt.lt"
+          in: "query"
+          required: false
+          type: "string"
         - name: "limit"
           in: "query"
           required: false
           type: "string"
+          default: 100
+          maximum: 100
+          minimum: 1
         - name: "x-api-secret"
           in: "header"
           required: true
@@ -881,15 +1061,26 @@ paths:
           in: "query"
           required: false
           type: "string"
+          description: '**Deprecated**'
+        - name: "order.createdAt"
+          in: "query"
+          required: false
+          type: "string"
+          enum: [ASC, DESC]
         - name: "offset"
           in: "query"
           required: false
           type: "string"
+          description: '**Deprecated**'
       responses:
         200:
           description: "200 response"
           schema:
             $ref: "#/definitions/Interactions"
+        422:
+          description: "Unprocessable Entity"
+          schema:
+            $ref: "#/definitions/UnprocessableEntityError"
       security:
         - api_key: []
       x-amazon-apigateway-request-validator:
@@ -900,6 +1091,8 @@ paths:
         responses:
           default:
             statusCode: "200"
+          422:
+            statusCode: "422"
         requestParameters:
           integration.request.querystring.where: "method.request.querystring.where"
           integration.request.header.X-Parse-REST-API-Key: "'RFxCx77Nf9VEFNnFIUxSXTrLrdfb4ntZRHG7NBIO'"
@@ -907,13 +1100,17 @@ paths:
           integration.request.querystring.limit: "method.request.querystring.limit"
           integration.request.header.x-api-secret: "method.request.header.x-api-secret"
           integration.request.querystring.order: "method.request.querystring.order"
+          integration.request.querystring.order.createdAt: "method.request.querystring.order.createdAt"
           integration.request.querystring.skip: "method.request.querystring.offset"
+          integration.request.querystring.createdAt.lt: "method.request.querystring.createdAt.lt"
+          integration.request.querystring.createdAt.gt: "method.request.querystring.createdAt.gt"
         passthroughBehavior: "when_no_match"
         httpMethod: "GET"
         type: "http"
   /interactions/count:
     get:
       description: "Contar interações"
+      deprecated: true
       tags:
         - interactions
       produces:
@@ -923,6 +1120,7 @@ paths:
           in: "query"
           required: false
           type: "string"
+          description: '**Deprecated**'
         - name: "x-api-secret"
           in: "header"
           required: true
@@ -1007,10 +1205,22 @@ paths:
           in: "query"
           required: false
           type: "string"
+          description: '**Deprecated**'
+        - name: "createdAt.gt"
+          in: "query"
+          required: false
+          type: "string"
+        - name: "createdAt.lt"
+          in: "query"
+          required: false
+          type: "string"
         - name: "limit"
           in: "query"
           required: false
           type: "string"
+          default: 100
+          maximum: 100
+          minimum: 1
         - name: "x-api-secret"
           in: "header"
           required: true
@@ -1019,15 +1229,26 @@ paths:
           in: "query"
           required: false
           type: "string"
+          description: '**Deprecated**'
+        - name: "order.createdAt"
+          in: "query"
+          required: false
+          type: "string"
+          enum: [ASC, DESC]
         - name: "offset"
           in: "query"
           required: false
           type: "string"
+          description: '**Deprecated**'
       responses:
         200:
           description: "200 response"
           schema:
             $ref: "#/definitions/MessageTemplate"
+        422:
+          description: "Unprocessable Entity"
+          schema:
+            $ref: "#/definitions/UnprocessableEntityError"
       security:
         - api_key: []
       x-amazon-apigateway-request-validator:
@@ -1038,6 +1259,8 @@ paths:
         responses:
           default:
             statusCode: "200"
+          422:
+            statusCode: "422"
         requestParameters:
           integration.request.header.X-Parse-REST-API-Key: "'RFxCx77Nf9VEFNnFIUxSXTrLrdfb4ntZRHG7NBIO'"
           integration.request.querystring.where: "method.request.querystring.where"
@@ -1045,13 +1268,17 @@ paths:
           integration.request.querystring.limit: "method.request.querystring.limit"
           integration.request.header.x-api-secret: "method.request.header.x-api-secret"
           integration.request.querystring.order: "method.request.querystring.order"
+          integration.request.querystring.order.createdAt: "method.request.querystring.order.createdAt"
           integration.request.querystring.skip: "method.request.querystring.offset"
+          integration.request.querystring.createdAt.lt: "method.request.querystring.createdAt.lt"
+          integration.request.querystring.createdAt.gt: "method.request.querystring.createdAt.gt"
         passthroughBehavior: "when_no_match"
         httpMethod: "GET"
         type: "http"
   /message-templates/count:
     get:
       description: "Contar templates de mensagem"
+      deprecated: true
       tags:
         - message-templates
       parameters:
@@ -1098,10 +1325,22 @@ paths:
           in: "query"
           required: false
           type: "string"
+          description: '**Deprecated**'
+        - name: "createdAt.gt"
+          in: "query"
+          required: false
+          type: "string"
+        - name: "createdAt.lt"
+          in: "query"
+          required: false
+          type: "string"
         - name: "limit"
           in: "query"
           required: false
           type: "string"
+          default: 100
+          maximum: 100
+          minimum: 1
         - name: "x-api-secret"
           in: "header"
           required: true
@@ -1110,15 +1349,26 @@ paths:
           in: "query"
           required: false
           type: "string"
+          description: '**Deprecated**'
+        - name: "order.createdAt"
+          in: "query"
+          required: false
+          type: "string"
+          enum: [ASC, DESC]
         - name: "offset"
           in: "query"
           required: false
           type: "string"
+          description: '**Deprecated**'
       responses:
         200:
           description: "200 response"
           schema:
             $ref: "#/definitions/Messages"
+        422:
+          description: "Unprocessable Entity"
+          schema:
+            $ref: "#/definitions/UnprocessableEntityError"
       security:
         - api_key: []
       x-amazon-apigateway-request-validator:
@@ -1129,6 +1379,8 @@ paths:
         responses:
           default:
             statusCode: "200"
+          422:
+            statusCode: "422"
         requestParameters:
           integration.request.header.X-Parse-REST-API-Key: "'RFxCx77Nf9VEFNnFIUxSXTrLrdfb4ntZRHG7NBIO'"
           integration.request.querystring.where: "method.request.querystring.where"
@@ -1136,7 +1388,10 @@ paths:
           integration.request.querystring.limit: "method.request.querystring.limit"
           integration.request.header.x-api-secret: "method.request.header.x-api-secret"
           integration.request.querystring.order: "method.request.querystring.order"
+          integration.request.querystring.order.createdAt: "method.request.querystring.order.createdAt"
           integration.request.querystring.skip: "method.request.querystring.offset"
+          integration.request.querystring.createdAt.lt: "method.request.querystring.createdAt.lt"
+          integration.request.querystring.createdAt.gt: "method.request.querystring.createdAt.gt"
         passthroughBehavior: "when_no_match"
         httpMethod: "GET"
         type: "http"
@@ -1243,10 +1498,26 @@ paths:
           in: "query"
           required: false
           type: "string"
+          description: '**Deprecated**'
+        - name: "salesPersonId"
+          in: "query"
+          required: false
+          type: "string"
+        - name: "createdAt.gt"
+          in: "query"
+          required: false
+          type: "string"
+        - name: "createdAt.lt"
+          in: "query"
+          required: false
+          type: "string"
         - name: "limit"
           in: "query"
           required: false
           type: "string"
+          default: 100
+          maximum: 100
+          minimum: 1
         - name: "x-api-secret"
           in: "header"
           required: true
@@ -1255,15 +1526,26 @@ paths:
           in: "query"
           required: false
           type: "string"
+          description: '**Deprecated**'
         - name: "offset"
           in: "query"
           required: false
           type: "string"
+          description: '**Deprecated**'
+        - name: "order.createdAt"
+          in: "query"
+          required: false
+          type: "string"
+          enum: [ASC, DESC]
       responses:
         200:
           description: "200 response"
           schema:
             $ref: "#/definitions/Orders"
+        422:
+          description: "Unprocessable Entity"
+          schema:
+            $ref: "#/definitions/UnprocessableEntityError"
       security:
         - api_key: []
       x-amazon-apigateway-integration:
@@ -1271,6 +1553,8 @@ paths:
         responses:
           default:
             statusCode: "200"
+          422:
+            statusCode: "422"
         requestParameters:
           integration.request.querystring.where: "method.request.querystring.where"
           integration.request.header.X-Parse-REST-API-Key: "'RFxCx77Nf9VEFNnFIUxSXTrLrdfb4ntZRHG7NBIO'"
@@ -1279,6 +1563,10 @@ paths:
           integration.request.header.x-api-secret: "method.request.header.x-api-secret"
           integration.request.querystring.order: "method.request.querystring.order"
           integration.request.querystring.skip: "method.request.querystring.offset"
+          integration.request.querystring.order.createdAt: "method.request.querystring.order.createdAt"
+          integration.request.querystring.createdAt.lt: "method.request.querystring.createdAt.lt"
+          integration.request.querystring.createdAt.gt: "method.request.querystring.createdAt.gt"
+          integration.request.querystring.salesPersonId: "method.request.querystring.salesPersonId"
         passthroughBehavior: "when_no_match"
         httpMethod: "GET"
         type: "http"
@@ -1327,6 +1615,7 @@ paths:
   /orders/count:
     get:
       description: "Contar pedidos"
+      deprecated: true
       tags:
         - orders
       produces:
@@ -1465,10 +1754,22 @@ paths:
           in: "query"
           required: false
           type: "string"
+          description: '**Deprecated**'
+        - name: "createdAt.gt"
+          in: "query"
+          required: false
+          type: "string"
+        - name: "createdAt.lt"
+          in: "query"
+          required: false
+          type: "string"
         - name: "limit"
           in: "query"
           required: false
           type: "string"
+          default: 100
+          maximum: 100
+          minimum: 1
         - name: "x-api-secret"
           in: "header"
           required: true
@@ -1477,15 +1778,26 @@ paths:
           in: "query"
           required: false
           type: "string"
+          description: '**Deprecated**'
+        - name: "order.createdAt"
+          in: "query"
+          required: false
+          type: "string"
+          enum: [ASC, DESC]
         - name: "offset"
           in: "query"
           required: false
           type: "string"
+          description: '**Deprecated**'
       responses:
         200:
           description: "200 response"
           schema:
             $ref: "#/definitions/Products"
+        422:
+          description: "Unprocessable Entity"
+          schema:
+            $ref: "#/definitions/UnprocessableEntityError"
       security:
         - api_key: []
       x-amazon-apigateway-request-validator:
@@ -1496,6 +1808,8 @@ paths:
         responses:
           default:
             statusCode: "200"
+          422:
+            statusCode: "422"
         requestParameters:
           integration.request.querystring.where: "method.request.querystring.where"
           integration.request.header.X-Parse-REST-API-Key: "'RFxCx77Nf9VEFNnFIUxSXTrLrdfb4ntZRHG7NBIO'"
@@ -1503,7 +1817,10 @@ paths:
           integration.request.header.X-Parse-Application-Id: "'lHC0oT3G1oZRPB2otwYngjMjKnsOVFGfxWw5PrTM'"
           integration.request.header.x-api-secret: "method.request.header.x-api-secret"
           integration.request.querystring.order: "method.request.querystring.order"
+          integration.request.querystring.order.createdAt: "method.request.querystring.order.createdAt"
           integration.request.querystring.skip: "method.request.querystring.offset"
+          integration.request.querystring.createdAt.lt: "method.request.querystring.createdAt.lt"
+          integration.request.querystring.createdAt.gt: "method.request.querystring.createdAt.gt"
         passthroughBehavior: "when_no_match"
         httpMethod: "GET"
         type: "http"
@@ -1568,6 +1885,7 @@ paths:
   /products/count:
     get:
       description: "Contar produtos"
+      deprecated: true
       tags:
         - products
       produces:
@@ -1818,6 +2136,7 @@ paths:
   /products/{objectId}/variants/count:
     get:
       description: "Contar variantes de um produto"
+      deprecated: true
       tags:
         - products
       produces:
@@ -2185,27 +2504,50 @@ paths:
           in: "query"
           required: false
           type: "string"
+          description: '**Deprecated**'
+        - name: "createdAt.gt"
+          in: "query"
+          required: false
+          type: "string"
+        - name: "createdAt.lt"
+          in: "query"
+          required: false
+          type: "string"
         - name: "limit"
           in: "query"
           required: false
           type: "string"
+          default: 100
+          maximum: 100
+          minimum: 1
         - name: "x-api-secret"
           in: "header"
-          required: false
+          required: true
           type: "string"
         - name: "order"
           in: "query"
           required: false
           type: "string"
+          description: '**Deprecated**'
+        - name: "order.createdAt"
+          in: "query"
+          required: false
+          type: "string"
+          enum: [ASC, DESC]
         - name: "offset"
           in: "query"
           required: false
           type: "string"
+          description: '**Deprecated**'
       responses:
         200:
           description: "200 response"
           schema:
             $ref: "#/definitions/Teams"
+        422:
+          description: "Unprocessable Entity"
+          schema:
+            $ref: "#/definitions/UnprocessableEntityError"
       security:
         - api_key: []
       x-amazon-apigateway-request-validator:
@@ -2216,6 +2558,8 @@ paths:
         responses:
           default:
             statusCode: "200"
+          422:
+            statusCode: "422"
         requestParameters:
           integration.request.header.X-Parse-REST-API-Key: "'RFxCx77Nf9VEFNnFIUxSXTrLrdfb4ntZRHG7NBIO'"
           integration.request.querystring.where: "method.request.querystring.where"
@@ -2223,7 +2567,10 @@ paths:
           integration.request.querystring.limit: "method.request.querystring.limit"
           integration.request.header.x-api-secret: "method.request.header.x-api-secret"
           integration.request.querystring.order: "method.request.querystring.order"
+          integration.request.querystring.order.createdAt: "method.request.querystring.order.createdAt"
           integration.request.querystring.skip: "method.request.querystring.offset"
+          integration.request.querystring.createdAt.lt: "method.request.querystring.createdAt.lt"
+          integration.request.querystring.createdAt.gt: "method.request.querystring.createdAt.gt"
         passthroughBehavior: "when_no_match"
         httpMethod: "GET"
         type: "http"
@@ -2562,10 +2909,22 @@ paths:
           in: "query"
           required: false
           type: "string"
+          description: '**Deprecated**'
+        - name: "createdAt.gt"
+          in: "query"
+          required: false
+          type: "string"
+        - name: "createdAt.lt"
+          in: "query"
+          required: false
+          type: "string"
         - name: "limit"
           in: "query"
           required: false
           type: "string"
+          default: 100
+          maximum: 100
+          minimum: 1
         - name: "x-api-secret"
           in: "header"
           required: true
@@ -2574,15 +2933,26 @@ paths:
           in: "query"
           required: false
           type: "string"
+          description: '**Deprecated**'
+        - name: "order.createdAt"
+          in: "query"
+          required: false
+          type: "string"
+          enum: [ASC, DESC]
         - name: "offset"
           in: "query"
           required: false
           type: "string"
+          description: '**Deprecated**'
       responses:
         200:
           description: "200 response"
           schema:
             $ref: "#/definitions/Branches"
+        422:
+          description: "Unprocessable Entity"
+          schema:
+            $ref: "#/definitions/UnprocessableEntityError"
       security:
         - api_key: []
       x-amazon-apigateway-request-validator:
@@ -2593,6 +2963,8 @@ paths:
         responses:
           default:
             statusCode: "200"
+          422:
+            statusCode: "422"
         requestParameters:
           integration.request.header.X-Parse-REST-API-Key: "'RFxCx77Nf9VEFNnFIUxSXTrLrdfb4ntZRHG7NBIO'"
           integration.request.querystring.where: "method.request.querystring.where"
@@ -2600,7 +2972,10 @@ paths:
           integration.request.querystring.limit: "method.request.querystring.limit"
           integration.request.header.x-api-secret: "method.request.header.x-api-secret"
           integration.request.querystring.order: "method.request.querystring.order"
+          integration.request.querystring.order.createdAt: "method.request.querystring.order.createdAt"
           integration.request.querystring.skip: "method.request.querystring.offset"
+          integration.request.querystring.createdAt.lt: "method.request.querystring.createdAt.lt"
+          integration.request.querystring.createdAt.gt: "method.request.querystring.createdAt.gt"
         passthroughBehavior: "when_no_match"
         httpMethod: "GET"
         type: "http"
@@ -2792,27 +3167,50 @@ paths:
           in: "query"
           required: false
           type: "string"
+          description: '**Deprecated**'
+        - name: "createdAt.gt"
+          in: "query"
+          required: false
+          type: "string"
+        - name: "createdAt.lt"
+          in: "query"
+          required: false
+          type: "string"
         - name: "limit"
           in: "query"
           required: false
           type: "string"
+          default: 100
+          maximum: 100
+          minimum: 1
         - name: "x-api-secret"
           in: "header"
-          required: false
+          required: true
           type: "string"
         - name: "order"
           in: "query"
           required: false
           type: "string"
+          description: '**Deprecated**'
+        - name: "order.createdAt"
+          in: "query"
+          required: false
+          type: "string"
+          enum: [ASC, DESC]
         - name: "offset"
           in: "query"
           required: false
           type: "string"
+          description: '**Deprecated**'
       responses:
         200:
           description: "200 response"
           schema:
             $ref: "#/definitions/PricingTables"
+        422:
+          description: "Unprocessable Entity"
+          schema:
+            $ref: "#/definitions/UnprocessableEntityError"
       security:
         - api_key: []
       x-amazon-apigateway-request-validator:
@@ -2823,6 +3221,8 @@ paths:
         responses:
           default:
             statusCode: "200"
+          422:
+            statusCode: "422"
         requestParameters:
           integration.request.header.X-Parse-REST-API-Key: "'RFxCx77Nf9VEFNnFIUxSXTrLrdfb4ntZRHG7NBIO'"
           integration.request.querystring.where: "method.request.querystring.where"
@@ -2830,7 +3230,10 @@ paths:
           integration.request.querystring.limit: "method.request.querystring.limit"
           integration.request.header.x-api-secret: "method.request.header.x-api-secret"
           integration.request.querystring.order: "method.request.querystring.order"
+          integration.request.querystring.order.createdAt: "method.request.querystring.order.createdAt"
           integration.request.querystring.skip: "method.request.querystring.offset"
+          integration.request.querystring.createdAt.lt: "method.request.querystring.createdAt.lt"
+          integration.request.querystring.createdAt.gt: "method.request.querystring.createdAt.gt"
         passthroughBehavior: "when_no_match"
         httpMethod: "GET"
         type: "http"
@@ -3169,10 +3572,26 @@ paths:
           in: "query"
           required: false
           type: "string"
+          description: '**Deprecated**'
+        - name: "email"
+          in: "query"
+          required: false
+          type: "string"
+        - name: "createdAt.gt"
+          in: "query"
+          required: false
+          type: "string"
+        - name: "createdAt.lt"
+          in: "query"
+          required: false
+          type: "string"
         - name: "limit"
           in: "query"
           required: false
           type: "string"
+          default: 100
+          maximum: 100
+          minimum: 1
         - name: "x-api-secret"
           in: "header"
           required: true
@@ -3181,15 +3600,26 @@ paths:
           in: "query"
           required: false
           type: "string"
+          description: '**Deprecated**'
         - name: "offset"
           in: "query"
           required: false
           type: "string"
+          description: '**Deprecated**'
+        - name: "order.createdAt"
+          in: "query"
+          required: false
+          type: "string"
+          enum: [ASC, DESC]
       responses:
         200:
           description: "200 response"
           schema:
             $ref: "#/definitions/Users"
+        422:
+          description: "Unprocessable Entity"
+          schema:
+            $ref: "#/definitions/UnprocessableEntityError"
       security:
         - api_key: []
       x-amazon-apigateway-request-validator:
@@ -3200,6 +3630,8 @@ paths:
         responses:
           default:
             statusCode: "200"
+          422:
+            statusCode: "422"
         requestParameters:
           integration.request.header.X-Parse-REST-API-Key: "'RFxCx77Nf9VEFNnFIUxSXTrLrdfb4ntZRHG7NBIO'"
           integration.request.querystring.where: "method.request.querystring.where"
@@ -3207,7 +3639,11 @@ paths:
           integration.request.querystring.limit: "method.request.querystring.limit"
           integration.request.header.x-api-secret: "method.request.header.x-api-secret"
           integration.request.querystring.order: "method.request.querystring.order"
+          integration.request.querystring.email: "method.request.querystring.email"
+          integration.request.querystring.order.createdAt: "method.request.querystring.order.createdAt"
           integration.request.querystring.skip: "method.request.querystring.offset"
+          integration.request.querystring.createdAt.lt: "method.request.querystring.createdAt.lt"
+          integration.request.querystring.createdAt.gt: "method.request.querystring.createdAt.gt"
         passthroughBehavior: "when_no_match"
         httpMethod: "GET"
         type: "http"
@@ -3260,6 +3696,7 @@ paths:
   /users/count:
     get:
       description: "Contar usuários"
+      deprecated: true
       tags:
         - users
       produces:
@@ -3877,6 +4314,9 @@ definitions:
       taxDocumentNumber:
         type: "string"
         description: "CPF do cliente"
+      salesPerson:
+        description: "Atendente responsável"
+        $ref: "#/definitions/User"
       address:
         type: "array"
         description: "O endereço de entrega do cliente"
@@ -3894,6 +4334,43 @@ definitions:
       error:
         type: "string"
         description: "Breve descrição do erro"
+  UnprocessableEntityError:
+    type: "object"
+    properties:
+      message:
+        type: "string"
+        description: "Mensagem de erro"
+      code:
+        type: "number"
+        description: "Código do erro"
+      type:
+        type: "string"
+        description: "Tipo do erro"
+      details:
+        type: "array"
+        description: "Lista de erros"
+        items:
+          type: "object"
+          properties:
+            message:
+              type: "string"
+            path:
+              type: "array"
+              items:
+                type: "string"
+            type:
+              type: "string"
+            context:
+              type: "object"
+              properties:
+                type:
+                  type: "string"
+                label:
+                  type: "string"
+                value:
+                  type: "string"
+                key:
+                  type: "string"
   OrderStatusEnum:
     type: "string"
     enum:
