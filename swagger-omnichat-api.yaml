@@ -4044,6 +4044,38 @@ definitions:
       disabled:
         type: "boolean"
         description: "Se este usuário esta desabilitado"
+  RoutedToUser:
+    type: "object"
+    properties:
+      objectId:
+        type: "string"
+        format: "uuid10"
+        description: "Identificador único deste objeto na base de dados da OmniChat"
+      createdAt:
+        type: "string"
+        format: "date-time"
+        description:
+          "A data e a hora que este objeto foi criado. API retorna o valor\
+          \ no formato ISO 8601 em UTC. Exemplo: 2017-08-04T16:27:55.397Z"
+      name:
+        type: "string"
+        description: "Nome do usuário"
+  RoutedToTeam:
+    type: "object"
+    properties:
+      objectId:
+        type: "string"
+        format: "uuid10"
+        description: "Identificador único deste objeto na base de dados da OmniChat"
+      createdAt:
+        type: "string"
+        format: "date-time"
+        description:
+          "A data e a hora que este objeto foi criado. API retorna o valor\
+          \ no formato ISO 8601 em UTC. Exemplo: 2017-08-04T16:27:55.397Z"
+      name:
+        type: "string"
+        description: "Nome do time"
   Address:
     type: "object"
     properties:
@@ -4137,44 +4169,28 @@ definitions:
       error:
         type: string
         description: Mensagem teve algum erro no seu processamento
-      isCreatingNewChat:
+      forceSend:
         type: boolean
-        description: Caso a conversa seja iniciada pela empresa
-      note:
-        type: boolean
-        description: "Se esta mensagem é uma nota interna"
+        description: Se mensagem foi enviada de forma forçada
       user:
         $ref: "#/definitions/User"
         description: "Usuário que envio esta mensagem"
       routedToUser:
-        $ref: "#/definitions/User"
+        $ref: "#/definitions/RoutedToUser"
         description: "Caso seja uma mensagem de roteamento para usuário, este é o usuário destino"
-      readBy:
-        $ref: "#/definitions/User"
-        description: "Quem leu esta mensagem pela primeira vez"
       routedToTeam:
-        $ref: "#/definitions/Team"
+        $ref: "#/definitions/RoutedToTeam"
         description: "Caso seja uma mensagem de roteamento para time, este é o time destino"
-      snoozedUntil:
-        type: "string"
-        format: "date-time"
-        description: "Caso seja uma mensagem de adiamento, este é o dia e horário que a mensagem voltara para o atendimento"
       attachmentUrl:
         type: string
         # example: https://api-private.omni.chat/parse/files/UCeS99itvZg1tsea2OSoyKvpLbKddhoVAPotIQOy/3160bedc9649094822e493f90380a7a_file.ogg"
         description: URL do anexo desta mensagem
-      quotedMessage:
-        $ref: "#/definitions/QuotedMessage"
-        description: "Esta mensagem faz referência a outra mensagem desta conversa"
       order:
         $ref: "#/definitions/Order"
         description: "Caso o type seja ```Order``` esta propriedade estará presente"
       product:
         $ref: "#/definitions/Product"
         description: "Caso o type seja ```Product``` esta propriedade estará presente"
-      variant:
-        $ref: "#/definitions/Variant"
-        description: "Caso o type seja ```Variant``` esta propriedade estará presente"
   QuotedMessage:
     type: "object"
     properties:
