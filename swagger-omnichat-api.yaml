@@ -28,6 +28,9 @@ info:
 
     * ```offset``` - Não será mais possível utilizar o offset em queries com paginação, em sequência disponibilizamos uma recomendação de como fazer paginação sem offset;
 
+    ### Observação:
+      Somente parâmetros documentados estarão disponíveis para utilização na API, caso sejam enviados parâmetros não permitidos, um erro será retornado.
+
     ## Paginação
      Sugerimos utilizar o seguinte método para paginação:
     * Efetuar query pelo ```createdAt``` com início e fim
