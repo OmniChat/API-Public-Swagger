@@ -4497,6 +4497,10 @@ definitions:
         description:
           "Código utilizado no sistema de ERP para identificar este cliente.\
           \ Normalmente é o código de barras"
+      externalId:
+        type: "string"
+        description:
+          "Código utilizado para identificar este produto em sistemas externos"
       blocked:
         type: "boolean"
         description:
@@ -5344,6 +5348,10 @@ definitions:
         description:
           "O código do sistema de ERP associado a esta variante, normalmente\
           \ é o código de barras"
+      externalId:
+        type: "string"
+        description:
+          "Código utilizado para identificar esta variante em sistemas externos"
       definition1Value:
         type: "string"
         description: "O valor da primeira definição desta variante. Exemplo: Azul"
