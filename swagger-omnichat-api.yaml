@@ -5242,6 +5242,26 @@ definitions:
       botFowardedAt:
         type: "string"
         description: "Data no qual o encaminhamento pelo bot foi feita"
+      origin:
+        type: "object"
+        description: "Origem desta interação"
+        $ref: "#/definitions/Origin"
+
+  Origin:
+    type: "object"
+    properties:
+      id:
+        type: "string"
+        description: "Identificador do canal utilizado"
+      channel:
+        type: "string"
+        description: "Canal utilizado (Facebook, Whatsapp...)"
+      type:
+        type: "string"
+        description: "Tipo do canal utilizado (ADS, Banner...)"
+      url:
+        type: "string"
+        description: "Url do anúncio ou promoção"
 
   ResponseObjectCreate:
     type: "object"
