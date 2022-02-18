@@ -4974,6 +4974,9 @@ definitions:
       password:
         type: "string"
         description: "Senha do usuário que está sendo criado"
+      salesPersonCode:
+        type: "string"
+        description: "Código do vendedor"
   NewPricingTable:
     type: "object"
     required:
