@@ -275,14 +275,6 @@ paths:
           in: "query"
           required: false
           type: "string"
-        - name: "updatedAt.gt"
-          in: "query"
-          required: false
-          type: "string"
-        - name: "updatedAt.lt"
-          in: "query"
-          required: false
-          type: "string"
         - name: "limit"
           in: "query"
           required: false
@@ -341,8 +333,6 @@ paths:
           integration.request.querystring.skip: "method.request.querystring.offset"
           integration.request.querystring.createdAt.lt: "method.request.querystring.createdAt.lt"
           integration.request.querystring.createdAt.gt: "method.request.querystring.createdAt.gt"
-          integration.request.querystring.updatedAt.lt: "method.request.querystring.updatedAt.lt"
-          integration.request.querystring.updatedAt.gt: "method.request.querystring.updatedAt.gt"
           integration.request.querystring.salesPersonId: "method.request.querystring.salesPersonId"
           integration.request.querystring.teamId: "method.request.querystring.teamId"
           integration.request.querystring.status: "method.request.querystring.status"
@@ -4790,9 +4780,6 @@ definitions:
         description: "Labels do chat"
         items:
           $ref: "#/definitions/Labels"
-      lastMessage:
-        $ref: "#/definitions/Message"
-        description: "Última mensagem da conversa"
       user:
         $ref: "#/definitions/User"
         description: "Usuário atual na OmniChat dono desta conversa"
