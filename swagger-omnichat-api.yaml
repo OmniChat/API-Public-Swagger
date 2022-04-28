@@ -1449,6 +1449,8 @@ paths:
             statusCode: "200"
           201:
             statusCode: "201"
+          400:
+            statusCode: "400"
         requestParameters:
           integration.request.header.X-Parse-REST-API-Key: "'RFxCx77Nf9VEFNnFIUxSXTrLrdfb4ntZRHG7NBIO'"
           integration.request.header.X-Parse-Application-Id: "'lHC0oT3G1oZRPB2otwYngjMjKnsOVFGfxWw5PrTM'"
