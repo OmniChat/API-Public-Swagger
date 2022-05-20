@@ -4139,6 +4139,14 @@ definitions:
       - platformId
       - templateTokens
     properties:
+      type:
+        type: "string"
+        description: "Tipo da mensagem, pode ser TEXT, LIST, BUTTON, GROUPED, IMAGE, VIDEO ou DOCUMENT"
+      chatObjectId:
+        type: "string"
+      attachmentUrl:
+        type: "string"
+        description: "Obrigatório quando o tipo for IMAGE, DOCUMENT ou VIDEO"
       templateId:
         type: "string"
         format: "uuid10"
@@ -4158,6 +4166,25 @@ definitions:
         type: string
         # example: gaW16ESxZF
         description: Identificador único da campanha via HSM  
+      list:
+        type: object
+        properties: 
+          header:
+            type: "string"
+          body:
+            type: "string"
+          footer:
+            type: "string"
+          options:
+            type: array
+            items:
+              type: object
+              properties: 
+                header:
+                  type: "string"
+                text:
+                  type: "string"
+        description: "Obrigatório quando o tipo for LIST"
   Message:
     type: "object"
     properties:
