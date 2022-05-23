@@ -4141,7 +4141,16 @@ definitions:
     properties:
       type:
         type: "string"
-        description: "Tipo da mensagem, pode ser TEXT, LIST, BUTTON, GROUPED, IMAGE, VIDEO ou DOCUMENT"
+        enum:
+          - 'TEXT'
+          - 'LIST'
+          - 'BUTTON'
+          - 'GROUPED'
+          - 'IMAGE'
+          - 'VIDEO'
+          - 'DOCUMENT'
+        default: 'TEXT'
+        description: "Tipo da mensagem, o valor padrão é TEXT"
       chatObjectId:
         type: "string"
       attachmentUrl:
