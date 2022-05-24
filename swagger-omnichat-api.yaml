@@ -4151,7 +4151,7 @@ definitions:
           - 'DOCUMENT'
         default: 'TEXT'
         description: "Tipo da mensagem, o valor padrão é TEXT"
-      chatObjectId:
+      chatId:
         type: "string"
       attachmentUrl:
         type: "string"
@@ -4185,14 +4185,21 @@ definitions:
           footer:
             type: "string"
           options:
-            type: array
-            items:
-              type: object
-              properties: 
-                header:
-                  type: "string"
-                text:
-                  type: "string"
+            type: object
+            properties: 
+              title: 
+                type: "string"
+              items:
+                type: array
+                items:
+                  type: object
+                  properties: 
+                    header:
+                      type: "string"
+                    body:
+                      type: "string"
+                    footer:
+                      type: "string"
         description: "Obrigatório quando o tipo for LIST"
   Message:
     type: "object"
