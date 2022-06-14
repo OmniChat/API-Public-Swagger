@@ -4176,8 +4176,6 @@ definitions:
         type: string
         # example: gaW16ESxZF
         description: Identificador único da campanha via HSM
-      forceSend:
-        type: boolean
       button:
         type: object
         properties:
