@@ -4189,6 +4189,7 @@ definitions:
             type: array
             items:
               type: string
+        description: "Obrigatório quando o tipo for INTERACTIVE_BUTTON"
       list:
         type: object
         properties: 
