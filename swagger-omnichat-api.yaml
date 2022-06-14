@@ -4149,6 +4149,7 @@ definitions:
           - 'IMAGE'
           - 'VIDEO'
           - 'DOCUMENT'
+          - 'INTERACTIVE_BUTTON'
         default: 'TEXT'
         description: "Tipo da mensagem, o valor padrão é TEXT"
       chatId:
@@ -4174,7 +4175,22 @@ definitions:
       campaignId:
         type: string
         # example: gaW16ESxZF
-        description: Identificador único da campanha via HSM  
+        description: Identificador único da campanha via HSM
+      forceSend:
+        type: boolean
+      button:
+        type: object
+        properties:
+          header:
+            type: string
+          body:
+            type: string
+          footer:
+            type: string
+          buttons:
+            type: array
+            items:
+              type: string
       list:
         type: object
         properties: 
