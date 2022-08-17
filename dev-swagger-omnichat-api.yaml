@@ -4059,6 +4059,10 @@ definitions:
       disabled:
         type: "boolean"
         description: "Se este usuário esta desabilitado"
+      picture:
+        type: string
+        # example: https://api-private.omni.chat/parse/files/some-image.jpg"
+        description: URL do avatar do usuário
   RoutedToUser:
     type: "object"
     properties:
