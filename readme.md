@@ -3,8 +3,8 @@
 Dentro do repo [API-Adapter](https://github.com/OmniChat/API-Adapter) existe o yaml que deve ser atualizado aqui.
 O fluxo é:
 
-### 1. Atualizar o `swagger-omnichat-api.yaml` no  [API-Adapter](https://github.com/OmniChat/API-Adapter)
-### 2. Atualizar o AWS API-Gateway com o arquivo já atualizado `swagger-omnichat-api.yaml` (nunca direto nos resources do API-Gateway)
+### 1. Atualizar o `swagger-omnichat-api.yaml` e `dev-swagger-omnichat-api.yaml` no [API-Adapter](https://github.com/OmniChat/API-Adapter)
+### 2. Atualizar o AWS API-Gateway com o arquivo já atualizado `swagger-omnichat-api.yaml` no ambiente de produção e `dev-swagger-omnichat-api.yaml` no ambiente de desenvolvimento (nunca direto nos resources do API-Gateway)
 
 OBS: Essa mudança é a que garante que novas rotas, parâmetros e configurações estarão disponíveis para serem utilizadas.
 
@@ -32,4 +32,4 @@ OBS: Essa mudança é a que garante que novas rotas, parâmetros e configuraçõ
 
   ![Actions](./img/rollback-deploy.png)
 
-### 4. Atualizar este repo com novo arquivo de documentação `swagger-omnichat-api.yaml` cópia de [API-Adapter](https://github.com/OmniChat/API-Adapter)  e commit no github
+### 4. Atualizar este repo com novo arquivo de documentação `swagger-omnichat-api.yaml` e `dev-swagger-omnichat-api.yaml` cópia de [API-Adapter](https://github.com/OmniChat/API-Adapter) e commit no github
