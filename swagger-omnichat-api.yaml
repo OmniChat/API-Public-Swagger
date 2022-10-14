@@ -304,6 +304,11 @@ paths:
           required: false
           type: "string"
           enum: [ASC, DESC]
+        - name: "order.updatedAt"
+          in: "query"
+          required: false
+          type: "string"
+          enum: [ASC, DESC]
         - name: "offset"
           in: "query"
           required: false
@@ -338,6 +343,7 @@ paths:
           integration.request.header.x-api-secret: "method.request.header.x-api-secret"
           integration.request.querystring.order: "method.request.querystring.order"
           integration.request.querystring.order.createdAt: "method.request.querystring.order.createdAt"
+          integration.request.querystring.order.updatedAt: "method.request.querystring.order.updatedAt"
           integration.request.querystring.skip: "method.request.querystring.offset"
           integration.request.querystring.createdAt.lt: "method.request.querystring.createdAt.lt"
           integration.request.querystring.createdAt.gt: "method.request.querystring.createdAt.gt"
