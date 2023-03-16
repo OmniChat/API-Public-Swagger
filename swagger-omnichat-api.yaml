@@ -4186,7 +4186,7 @@ definitions:
         description: Identificador único da campanha via HSM
       forceSend:
         type: boolean
-        description: Forçar o envio da mensagem
+        description: Força o envio da mensagem, ou seja, envia a mensagem mesmo que a conversa esteja em atendimento.
       context:
         type: object
         description: Informa o contexto da mensagem enviada
