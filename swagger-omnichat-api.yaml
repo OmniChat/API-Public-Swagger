@@ -4230,6 +4230,11 @@ definitions:
                     footer:
                       type: "string"
         description: "Obrigatório quando o tipo for LIST"
+      integrationId:
+        type: "string""Obrigatório quando o tipo for LIST"
+        format: "uuid10"
+        # example: tzY41eSn6r
+        description: "ObjectId da Integração a ser usada para o envio desta mensagem - Útil para informar o número de saída da mensagem"
   Message:
     type: "object"
     properties:
