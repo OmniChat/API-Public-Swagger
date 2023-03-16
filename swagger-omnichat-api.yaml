@@ -211,8 +211,7 @@ schemes:
   - "https"
 tags:
   - name: chats
-    description: |
-      Representa uma conversa entre um cliente e a loja. Possui uma ou mais mensagens relacionadas.
+    description: Representa uma conversa entre um cliente e a loja. Possui uma ou mais mensagens relacionadas.
   - name: messages
     description: Mensagens enviadas ou recebidas
   - name: message-templates
@@ -238,10 +237,13 @@ tags:
 paths:
   /chats:
     get:
-      summary: Listar conversas
-      description: | 
-        **Observação**: É possível utilizar somente um dos filtros a seguir por request (`salesPersonId | teamId | status`) em conjunto com filtros de data.
-        Ex: `/chats?salesPersonId=S3madcbe9H&createdAt.gt=2021-05-02&createdAt.lt=2021-05-10`
+      description: "listar conversas
+
+
+      **Observação**: É possível utilizar somente um dos filtros a seguir por request (`salesPersonId | teamId | status`) em conjunto com filtros de data.
+
+
+      Ex: `/chats?salesPersonId=S3madcbe9H&createdAt.gt=2021-05-02&createdAt.lt=2021-05-10`"
       tags:
         - chats
       produces:
@@ -4184,6 +4186,12 @@ definitions:
         type: string
         # example: gaW16ESxZF
         description: Identificador único da campanha via HSM
+      forceSend:
+        type: boolean
+        description: Força o envio da mensage, ou seja, envia a mensagem mesmo que a conversa esteja em atendimento.
+      context:
+        type: object
+        description: Informa o contexto da mensagem enviada
       button:
         type: object
         properties:
@@ -4224,6 +4232,11 @@ definitions:
                     footer:
                       type: "string"
         description: "Obrigatório quando o tipo for LIST"
+      integrationId:
+        type: "string"
+        format: "uuid10"
+        # example: tzY41eSn6r
+        description: "ObjectId da Integração a ser usada para o envio desta mensagem - Útil para informar o número de saída da mensagem"
   Message:
     type: "object"
     properties:
@@ -4291,6 +4304,12 @@ definitions:
       contactOrigin:
         $ref: "#/definitions/ContactOrigin"
         description: "Caso exista um id de campanha, um objeto contendo os dados da origem do contato é criado"
+    templateTokens:
+      templateTokens:
+        type: array        
+        items:
+          type: string
+        description: Substituições a usadas na mensagem de template
   QuotedMessage:
     type: "object"
     properties:
