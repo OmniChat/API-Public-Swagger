@@ -4297,6 +4297,11 @@ definitions:
       contactOrigin:
         $ref: "#/definitions/ContactOrigin"
         description: "Caso exista um id de campanha, um objeto contendo os dados da origem do contato é criado"
+      templateTokens:
+        type: array        
+        items:
+          type: string
+        description: Substituições a usadas na mensagem de template
   QuotedMessage:
     type: "object"
     properties:
