@@ -4184,6 +4184,12 @@ definitions:
         type: string
         # example: gaW16ESxZF
         description: Identificador único da campanha via HSM
+      forceSend:
+        type: boolean
+        description: Força o envio da mensagem, ou seja, envia a mensagem mesmo que a conversa esteja em atendimento.
+      context:
+        type: object
+        description: Informa o contexto da mensagem enviada
       button:
         type: object
         properties:
@@ -4224,6 +4230,11 @@ definitions:
                     footer:
                       type: "string"
         description: "Obrigatório quando o tipo for LIST"
+      integrationId:
+        type: "string"
+        format: "uuid10"
+        # example: tzY41eSn6r
+        description: "ObjectId da Integração a ser usada para o envio desta mensagem - Útil para informar o número de saída da mensagem"
   Message:
     type: "object"
     properties:
@@ -4291,6 +4302,11 @@ definitions:
       contactOrigin:
         $ref: "#/definitions/ContactOrigin"
         description: "Caso exista um id de campanha, um objeto contendo os dados da origem do contato é criado"
+      templateTokens:
+        type: array        
+        items:
+          type: string
+        description: Substituições a usadas na mensagem de template
   QuotedMessage:
     type: "object"
     properties:
