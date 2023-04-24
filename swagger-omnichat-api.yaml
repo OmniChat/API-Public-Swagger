@@ -4950,7 +4950,7 @@ definitions:
         description: "Supervisores deste time"
         items:
           $ref: "#/definitions/User"
-      groups:
+      teamGroups:
         type: "array"
         description: "Grupos que esse time faz parte"
   Chats:
