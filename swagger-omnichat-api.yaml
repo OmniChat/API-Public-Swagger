@@ -2701,6 +2701,11 @@ paths:
           in: "header"
           required: true
           type: "string"
+        - in: "body"
+          name: "UpdateTeam"
+          required: true
+          schema:
+            $ref: "#/definitions/UpdateTeam"
       responses:
         200:
           description: "200 response"
@@ -4530,6 +4535,25 @@ definitions:
       name:
         type: "string"
         description: "Nome do produto"
+      slaTiming:
+        type: number
+        description: Tempo em minutos da SLA
+      slaRule:
+        type: object
+        description: Configuração da SLA do time
+        properties:
+          ruleData:
+            type: object
+            properties:
+              teamId:
+                type: string
+                description: ObjectId do time que irá receber atendimentos com SLA expirado deste time
+  UpdateTeam:
+    type: "object"
+    properties:
+      name:
+        type: "string"
+        description: "Nome do time"
       slaTiming:
         type: number
         description: Tempo em minutos da SLA
