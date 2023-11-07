@@ -784,6 +784,18 @@ paths:
           required: false
           type: "string"
           enum: [ASC, DESC]
+        - name: "phoneCountryCode"
+          in: "query"
+          required: false
+          type: "string"
+        - name: "phoneAreaCode"
+          in: "query"
+          required: false
+          type: "string"
+        - name: "phoneNumber"
+          in: "query"
+          required: false
+          type: "string"
       responses:
         200:
           description: "200 response"
