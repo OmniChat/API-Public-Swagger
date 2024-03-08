@@ -4282,6 +4282,21 @@ definitions:
       forceSend:
         type: boolean
         description: Se mensagem foi enviada de forma forçada
+      reactions:
+        type: array
+        description: Lista de reações que a mensagem recebeu
+        items:
+          type: object
+          properties:
+            id:
+              type: string
+              description: Id da mensagem de reação
+            emoji:
+              type: string
+              description: Emoji da reação
+            type:
+              type: string
+              description: Tipo da reação, se foi feita por um consumidor (INCOMING) ou vendedor (OUTGOING)
       user:
         $ref: "#/definitions/User"
         description: "Usuário que envio esta mensagem"
