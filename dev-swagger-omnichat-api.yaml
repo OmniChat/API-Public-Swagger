@@ -5385,7 +5385,10 @@ definitions:
         description: "Motivo do atendimento escolhido pelo usuário no fechamento desta interação"
       supportRate:
         type: number
-        description: "Nota do atendimento assinalada pelo cliente. Só disponível quando esta funcionalidade estiver disponível "
+        description: "Nota do atendimento assinalada pelo cliente. Só disponível quando esta funcionalidade estiver disponível"
+      supportRateComment:
+        type: string
+        description: "Comentário acerca da nota do atendimento assinalada pelo cliente. Só disponível quando esta funcionalidade estiver disponível"
       teamId:
         type: "string"
         description: "Identificador único do time que esta com a interação"
