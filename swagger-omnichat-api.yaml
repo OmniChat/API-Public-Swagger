@@ -4951,7 +4951,7 @@ definitions:
         type: "number"
         description: "Posição do estágio dentro do funil"
       pipeline:
-        $ref: "#/definitions/Stage"
+        $ref: "#/definitions/Pipeline"
         description: "Funil de vendas a qual o estágio pertence"
   Pipeline:
     type: "object"
