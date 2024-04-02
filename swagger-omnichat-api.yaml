@@ -4934,6 +4934,35 @@ definitions:
       customer:
         $ref: "#/definitions/Customer"
         description: "Cliente cadastrado na loja associado a esta conversa"
+      pipelineStage:
+        $ref: "#/definitions/Stage"
+        description: "Estágio do Funil de Vendas a qual o chat está"        
+  Stage:
+    type: "object"
+    properties:
+      objectId:
+        type: "string"
+        format: "uuid10"
+        description: "Identificador único deste objeto na base de dados da OmniChat"
+      name:
+        type: "string"
+        description: "Título do estágio do funil de vendas"
+      position:
+        type: "number"
+        description: "Posição do estágio dentro do funil"
+      pipeline:
+        $ref: "#/definitions/Stage"
+        description: "Funil de vendas a qual o estágio pertence"
+  Pipeline:
+    type: "object"
+    properties:
+      objectId:
+        type: "string"
+        format: "uuid10"
+        description: "Identificador único deste objeto na base de dados da OmniChat"
+      name:
+        type: "string"
+        description: "Título do funil de vendas"  
   Labels:
     type: "object"
     properties:
