@@ -4175,9 +4175,15 @@ definitions:
         description: "Tipo da mensagem, o valor padrão é TEXT"
       chatId:
         type: "string"
+      message:
+        type: "string"
+        description: "Texto enviado na mensagem. Obrigatório quando o tipo for TEXT"
       attachmentUrl:
         type: "string"
         description: "Obrigatório quando o tipo for IMAGE, DOCUMENT ou VIDEO"
+      attachmentOriginalName:
+        type: "string"
+        description: "Nome do arquivo, por ex: 'orçamento.pdf'"
       templateId:
         type: "string"
         format: "uuid10"
