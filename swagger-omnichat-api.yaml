@@ -4584,6 +4584,12 @@ definitions:
               teamId:
                 type: string
                 description: ObjectId do time que irá receber atendimentos com SLA expirado deste time
+      isAutomaticDistributionEnabled:
+        type: boolean
+        description: Configuração da distribuição automática de atendimento
+      automaticDistributionCapacity:
+        type: number
+        description: Capacidade máxima de atendimentos distribuido para um vendedor
   UpdateTeam:
     type: "object"
     properties:
@@ -4603,6 +4609,12 @@ definitions:
               teamId:
                 type: string
                 description: ObjectId do time que irá receber atendimentos com SLA expirado deste time
+      isAutomaticDistributionEnabled:
+        type: boolean
+        description: Configuração da distribuição automática de atendimento
+      automaticDistributionCapacity:
+        type: number
+        description: Capacidade máxima de atendimentos distribuido para um vendedor
   Teams:
     type: "object"
     properties:
@@ -5042,6 +5054,12 @@ definitions:
       teamGroups:
         type: "array"
         description: "Grupos que esse time faz parte"
+      isAutomaticDistributionEnabled:
+        type: boolean
+        description: Configuração da distribuição automática de atendimento
+      automaticDistributionCapacity:
+        type: number
+        description: Capacidade máxima de atendimentos distribuido para um vendedor
   Chats:
     type: "object"
     properties:
