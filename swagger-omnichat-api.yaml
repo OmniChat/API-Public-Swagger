@@ -1537,6 +1537,10 @@ paths:
           in: "query"
           required: false
           type: "string"
+        - name: "externalId"
+          in: "query"
+          required: false
+          type: "string"    
         - name: "createdAt.gt"
           in: "query"
           required: false
@@ -1601,6 +1605,7 @@ paths:
           integration.request.querystring.createdAt.lt: "method.request.querystring.createdAt.lt"
           integration.request.querystring.createdAt.gt: "method.request.querystring.createdAt.gt"
           integration.request.querystring.salesPersonId: "method.request.querystring.salesPersonId"
+          integration.request.querystring.externalId: "method.request.querystring.externalId"
         passthroughBehavior: "when_no_match"
         httpMethod: "GET"
         type: "http"
@@ -5380,6 +5385,10 @@ definitions:
                 type: string
               document:
                 type: string
+        externalId:
+          type: "string"
+          description:
+            "Código utilizado para identificar este pedido em sistemas externos"
   PaymentDetail:
     type: "object"
     properties:
