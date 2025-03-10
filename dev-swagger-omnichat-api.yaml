@@ -4856,6 +4856,9 @@ definitions:
         type: "number"
         description: "Largura desta item em centímetros. É copiado de variant.width"
         minimum: 0.0
+      sellerId:
+        type: "string"
+        description: "Identificador do vendedor no marketplace"
   ResponseUpdatedObject:
     type: "object"
     properties:
