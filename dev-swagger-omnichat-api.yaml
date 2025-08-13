@@ -13,6 +13,11 @@ info:
     As respostas podem ser interpretadas através do código de status HTTP.
     Isso permite que quaisquer aplicações consumam a API de forma simples e clara, independente da linguagem utilizada.
 
+    ## Aviso sobre a documentação
+    Esta página contém informações de APIs que podem não refletir as versões mais recentes.
+    Consulte a [nova documentação de APIs](https://developers.omni.chat/) para acessar os recursos atualizados.
+    Observação: a migração está em andamento e nem todas as APIs estão disponíveis na nova página.
+
     ## Endpoint
     As chamadas para a API devem ser feitas para o mesmo endpoint `https://dev-api.omni.chat/v1`
 
