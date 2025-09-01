@@ -4181,6 +4181,7 @@ definitions:
           - 'VIDEO'
           - 'DOCUMENT'
           - 'INTERACTIVE_BUTTON'
+          - 'AUDIO'
         default: 'TEXT'
         description: "Tipo da mensagem, o valor padrão é TEXT"
       chatId:
@@ -4190,7 +4191,7 @@ definitions:
         description: "Texto enviado na mensagem. Obrigatório quando o tipo for TEXT"
       attachmentUrl:
         type: "string"
-        description: "Obrigatório quando o tipo for IMAGE, DOCUMENT ou VIDEO"
+        description: "Obrigatório quando o tipo for IMAGE, DOCUMENT, VIDEO ou AUDIO"
       attachmentOriginalName:
         type: "string"
         description: "Nome do arquivo, por ex: 'orçamento.pdf'"
