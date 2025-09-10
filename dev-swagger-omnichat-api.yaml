@@ -1520,7 +1520,10 @@ paths:
         type: "http"
   /orders:
     get:
-      description: "Listar pedidos"
+      description: |
+        Listar pedidos
+        
+        **⚠️ AVISO:** Esta API pode não refletir a versão mais recente. Consulte a [nova documentação](https://developers.omni.chat/) para recursos atualizados.
       tags:
         - orders
       produces:
@@ -1609,7 +1612,10 @@ paths:
         type: "http"
 
     post:
-      description: "Criar um pedido"
+      description: |
+        Criar um pedido
+        
+        **⚠️ AVISO:** Esta API pode não refletir a versão mais recente. Consulte a [nova documentação](https://developers.omni.chat/) para recursos atualizados.
       tags:
         - orders
       produces:
@@ -1651,7 +1657,10 @@ paths:
 
   /orders/count:
     get:
-      description: "Contar pedidos"
+      description: |
+        Contar pedidos
+        
+        **⚠️ AVISO:** Esta API pode não refletir a versão mais recente. Consulte a [nova documentação](https://developers.omni.chat/) para recursos atualizados.
       deprecated: true
       tags:
         - orders
@@ -1691,7 +1700,10 @@ paths:
         type: "http"
   /orders/{objectId}:
     get:
-      description: "Obter um único pedido"
+      description: |
+        Obter um único pedido
+        
+        **⚠️ AVISO:** Esta API pode não refletir a versão mais recente. Consulte a [nova documentação](https://developers.omni.chat/) para recursos atualizados.
       tags:
         - orders
       produces:
@@ -1741,7 +1753,10 @@ paths:
     post:
       tags:
         - orders
-      description: "Alterar o status de uma ordem"
+      description: |
+        Alterar o status de uma ordem
+        
+        **⚠️ AVISO:** Esta API pode não refletir a versão mais recente. Consulte a [nova documentação](https://developers.omni.chat/) para recursos atualizados.
       consumes:
         - "application/json"
       produces:
@@ -1781,7 +1796,10 @@ paths:
 
   /products:
     get:
-      description: "Listar produtos"
+      description: |
+        Listar produtos
+        
+        **⚠️ AVISO:** Esta API pode não refletir a versão mais recente. Consulte a [nova documentação](https://developers.omni.chat/) para recursos atualizados.
       tags:
         - products
       produces:
@@ -1862,7 +1880,10 @@ paths:
         httpMethod: "GET"
         type: "http"
     post:
-      description: "Criar produto"
+      description: |
+        Criar produto
+        
+        **⚠️ AVISO:** Esta API pode não refletir a versão mais recente. Consulte a [nova documentação](https://developers.omni.chat/) para recursos atualizados.
       tags:
         - products
       consumes:
@@ -1921,7 +1942,10 @@ paths:
         type: "http"
   /products/count:
     get:
-      description: "Contar produtos"
+      description: |
+        Contar produtos
+        
+        **⚠️ AVISO:** Esta API pode não refletir a versão mais recente. Consulte a [nova documentação](https://developers.omni.chat/) para recursos atualizados.
       deprecated: true
       tags:
         - products
@@ -1961,7 +1985,10 @@ paths:
         type: "http"
   /products/{objectId}:
     get:
-      description: "Obter um único produto"
+      description: |
+        Obter um único produto
+        
+        **⚠️ AVISO:** Esta API pode não refletir a versão mais recente. Consulte a [nova documentação](https://developers.omni.chat/) para recursos atualizados.
       tags:
         - products
       produces:
@@ -2006,7 +2033,10 @@ paths:
         httpMethod: "GET"
         type: "http"
     put:
-      description: "Atualizar um produto"
+      description: |
+        Atualizar um produto
+        
+        **⚠️ AVISO:** Esta API pode não refletir a versão mais recente. Consulte a [nova documentação](https://developers.omni.chat/) para recursos atualizados.
       tags:
         - products
       produces:
@@ -2054,7 +2084,10 @@ paths:
         httpMethod: "PUT"
         type: "http"
     delete:
-      description: "Apagar um produto"
+      description: |
+        Apagar um produto
+        
+        **⚠️ AVISO:** Esta API pode não refletir a versão mais recente. Consulte a [nova documentação](https://developers.omni.chat/) para recursos atualizados.
       tags:
         - products
       produces:
@@ -2096,7 +2129,10 @@ paths:
         type: "http"
   /products/{objectId}/variants:
     get:
-      description: "Listar variantes de um produto"
+      description: |
+        Listar variantes de um produto
+        
+        **⚠️ AVISO:** Esta API pode não refletir a versão mais recente. Consulte a [nova documentação](https://developers.omni.chat/) para recursos atualizados.
       tags:
         - products
       produces:
@@ -2131,7 +2167,10 @@ paths:
         httpMethod: "GET"
         type: "http"
     post:
-      description: "Criar variante de um produto"
+      description: |
+        Criar variante de um produto
+        
+        **⚠️ AVISO:** Esta API pode não refletir a versão mais recente. Consulte a [nova documentação](https://developers.omni.chat/) para recursos atualizados.
       tags:
         - products
       produces:
@@ -2172,7 +2211,10 @@ paths:
         type: "http"
   /products/{objectId}/variants/count:
     get:
-      description: "Contar variantes de um produto"
+      description: |
+        Contar variantes de um produto
+        
+        **⚠️ AVISO:** Esta API pode não refletir a versão mais recente. Consulte a [nova documentação](https://developers.omni.chat/) para recursos atualizados.
       deprecated: true
       tags:
         - products
@@ -2212,7 +2254,10 @@ paths:
         type: "http"
   /products/{objectId}/variants/{variantId}:
     put:
-      description: "Atualizar variante de um produto"
+      description: |
+        Atualizar variante de um produto
+        
+        **⚠️ AVISO:** Esta API pode não refletir a versão mais recente. Consulte a [nova documentação](https://developers.omni.chat/) para recursos atualizados.
       tags:
         - products
       produces:
@@ -2252,7 +2297,10 @@ paths:
         httpMethod: "PUT"
         type: "http"
     delete:
-      description: "Apagar variante de um produto"
+      description: |
+        Apagar variante de um produto
+        
+        **⚠️ AVISO:** Esta API pode não refletir a versão mais recente. Consulte a [nova documentação](https://developers.omni.chat/) para recursos atualizados.
       tags:
         - products
       produces:
@@ -2293,7 +2341,10 @@ paths:
         type: "http"
   /products/{objectId}/variants/{variantId}/prices:
     get:
-      description: "Listar os preços de um produto por uma variante."
+      description: |
+        Listar os preços de um produto por uma variante
+        
+        **⚠️ AVISO:** Esta API pode não refletir a versão mais recente. Consulte a [nova documentação](https://developers.omni.chat/) para recursos atualizados.
       tags:
         - products
       produces:
@@ -2343,7 +2394,10 @@ paths:
         type: "http"
   /products/{objectId}/prices:
     post:
-      description: "Criar um preço para o produto"
+      description: |
+        Criar um preço para o produto
+        
+        **⚠️ AVISO:** Esta API pode não refletir a versão mais recente. Consulte a [nova documentação](https://developers.omni.chat/) para recursos atualizados.
       tags:
         - products
       produces:
@@ -2405,7 +2459,10 @@ paths:
         type: "http"
   /products/{objectId}/prices/{priceId}:
     get:
-      description: "Obter um único preço de produto"
+      description: |
+        Obter um único preço de produto
+        
+        **⚠️ AVISO:** Esta API pode não refletir a versão mais recente. Consulte a [nova documentação](https://developers.omni.chat/) para recursos atualizados.
       tags:
         - products
       produces:
@@ -2452,7 +2509,10 @@ paths:
         httpMethod: "GET"
         type: "http"
     put:
-      description: "Atualizar preço de um produto"
+      description: |
+        Atualizar preço de um produto
+        
+        **⚠️ AVISO:** Esta API pode não refletir a versão mais recente. Consulte a [nova documentação](https://developers.omni.chat/) para recursos atualizados.
       tags:
         - products
       produces:
@@ -2492,7 +2552,10 @@ paths:
         httpMethod: "PUT"
         type: "http"
     delete:
-      description: "Deletar preço de um produto"
+      description: |
+        Deletar preço de um produto
+        
+        **⚠️ AVISO:** Esta API pode não refletir a versão mais recente. Consulte a [nova documentação](https://developers.omni.chat/) para recursos atualizados.
       tags:
         - products
       produces:
