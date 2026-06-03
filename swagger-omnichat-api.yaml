@@ -5398,6 +5398,9 @@ definitions:
           type: "string"
           description:
             "Código utilizado para identificar este pedido em sistemas externos"
+      isPaid:
+        type: "boolean"
+        description: "Indica se o pedido foi pago"
   PaymentDetail:
     type: "object"
     properties:
