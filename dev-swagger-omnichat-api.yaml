@@ -4188,7 +4188,31 @@ definitions:
         type: "string"
       message:
         type: "string"
-        description: "Texto enviado na mensagem. Obrigatório quando o tipo for TEXT"
+        description: "Texto enviado na mensagem. Obrigatório quando o tipo for TEXT. Não utilizado quando o tipo for GROUPED; nesse caso use groupedMessages[].text."
+      groupedMessages:
+        type: array
+        description: "Obrigatório quando o tipo for GROUPED. Lista de mensagens que serão enviadas agrupadas."
+        items:
+          type: object
+          properties:
+            type:
+              type: string
+              enum:
+                - TEXT
+                - IMAGE
+                - VIDEO
+                - AUDIO
+                - FILE
+              description: "Tipo da mensagem agrupada."
+            text:
+              type: string
+              description: "Texto da mensagem agrupada. Usado quando type for TEXT."
+            attachmentUrl:
+              type: string
+              description: "URL do anexo da mensagem agrupada. Usado quando type for IMAGE, VIDEO, AUDIO ou FILE."
+            attachmentOriginalName:
+              type: string
+              description: "Nome original do arquivo da mensagem agrupada."
       attachmentUrl:
         type: "string"
         description: "Obrigatório quando o tipo for IMAGE, DOCUMENT, VIDEO ou AUDIO"
@@ -4406,6 +4430,7 @@ definitions:
       - "AUDIO"
       - "VIDEO"
       - "FILE"
+      - "GROUPED"
       - "LOCATION"
       - "PRODUCT"
       - "VARIANT"
