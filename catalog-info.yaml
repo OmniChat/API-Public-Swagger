@@ -1,0 +1,29 @@
+apiVersion: backstage.io/v1alpha1
+kind: Component
+metadata:
+  name: api-public-swagger
+  description: Site estático com a documentação pública (Redoc) da API Omnichat, publicado em api-docs.omni.chat
+  annotations:
+    github.com/project-slug: OmniChat/API-Public-Swagger
+    backstage.io/source-location: url:https://github.com/OmniChat/API-Public-Swagger
+    omnichat.io/compliance-autoscaling: 'false'
+    omnichat.io/compliance-encryption-transit: 'true'
+    omnichat.io/compliance-encryption-rest: 'false'
+    omnichat.io/compliance-has-internal-apigw: 'false'
+    omnichat.io/compliance-has-external-apigw: 'false'
+  tags:
+    - html
+    - redoc
+    - api
+  links:
+    - url: https://github.com/OmniChat/API-Public-Swagger
+      title: GitHub Repository
+      icon: github
+    - url: https://api-docs.omni.chat
+      title: API Docs (Production)
+      icon: api
+spec:
+  type: website
+  lifecycle: production
+  owner: squad-sales
+  system: api-docs
