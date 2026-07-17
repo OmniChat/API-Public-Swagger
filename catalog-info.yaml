@@ -5,7 +5,6 @@ metadata:
   description: Site estático com a documentação pública (Redoc) da API Omnichat, publicado em api-docs.omni.chat
   annotations:
     github.com/project-slug: OmniChat/API-Public-Swagger
-    backstage.io/techdocs-ref: dir:.
     backstage.io/source-location: url:https://github.com/OmniChat/API-Public-Swagger
     omnichat.io/compliance-autoscaling: 'false'
     omnichat.io/compliance-encryption-transit: 'true'
